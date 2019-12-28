@@ -1,0 +1,11 @@
+{
+  "name": "ripple-public",
+  "version": "0.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/01397/ripple-public.git",
+  "author": "01397 <41501869+01397@users.noreply.github.com>",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
