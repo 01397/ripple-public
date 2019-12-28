@@ -1,14 +1,14 @@
+'use strict'
 const express = require('express')
 const app = express()
-app.use(express.urlencoded({ extended: true }))
-app.use(express.json())
 
-app.get('/', (req, res) => res.send('Hello World!?'))
-
-app.get('/test', (req, res) => {
-  result = {
-    timestamp: new Date().toUTCString(),
-    message: 'Hello everyone!!?',
-  }
-  res.json(result)
+app.get('/', (req, res) => {
+  res.status(200).send('Hello, world!!')
 })
+
+if (module === require.main) {
+  const server = app.listen(process.env.PORT || 8080, () => {
+    const port = server.address().port
+    console.log(`App listening on port ${port}`)
+  })
+}
