@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "prettier": "prettier --write src/**/**/*.ts"
+    "prettier": "prettier --write \"src/**/*.ts\""
   },
   "engines": {
     "node": "12.x.x"

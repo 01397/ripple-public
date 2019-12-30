@@ -1,0 +1,13 @@
+#app-root {
+  display: flex;
+  flex-direction: column;
+}
+
+#app-bottom-container {
+  flex: 1;
+  display: flex;
+}
+
+#main {
+  flex: 1;
+}
