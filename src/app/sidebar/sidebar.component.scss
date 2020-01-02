@@ -1,3 +1,34 @@
-.active {
+@import '../../assets/styles/variables';
+@import '../../assets/styles/mixin';
+
+:host {
+  background: $primary-600-grad-vertical;
+}
+a {
+  display: flex;
+  height: 48px;
+  width: 100%;
+  align-items: center;
+  text-decoration: none;
+  color: $white-a50;
+  @include font-size(16);
   font-weight: bold;
+
+  &.active {
+    color: $mono-100;
+    @include bg-gradient($white-a25 transparent, 90deg);
+  }
+}
+a.active > .signal {
+  @include bg-gradient($white-a50 $mono-100);
+}
+.signal {
+  width: 4px;
+  height: 100%;
+}
+.icon {
+  width: 48px;
+}
+.label {
+  flex: 1;
 }

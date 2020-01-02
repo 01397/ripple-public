@@ -1,0 +1,7 @@
+@mixin font-size($size, $base: 16) {
+  font-size: $size / $base + rem;
+}
+
+@mixin bg-gradient($colors, $degree: 0deg) {
+  background-image: linear-gradient($degree, append($colors, (), $separator: comma));
+}

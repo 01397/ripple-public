@@ -1,9 +1,7 @@
-<div id="app-root">
-  <app-header></app-header>
-  <div id="app-bottom-container">
-    <app-sidebar></app-sidebar>
-    <div id="main">
-      <router-outlet></router-outlet>
-    </div>
+<app-header id="header" *ngIf="headerVisiblity"></app-header>
+<div id="app-bottom-container">
+  <app-sidebar id="sidebar" *ngIf="sidebarVisiblity"></app-sidebar>
+  <div id="main">
+    <router-outlet></router-outlet>
   </div>
 </div>

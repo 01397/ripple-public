@@ -1,6 +1,9 @@
-#app-root {
+@import '../assets/styles/variables';
+
+:host  {
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 #app-bottom-container {
@@ -8,6 +11,15 @@
   display: flex;
 }
 
+#header {
+  height: 64px;
+}
+
+#sidebar {
+  width: 192px;
+}
+
 #main {
   flex: 1;
+  background-color: $primary-50;
 }
