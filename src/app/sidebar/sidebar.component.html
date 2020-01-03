@@ -1,22 +1,18 @@
-<div>
-  <a routerLink="/home" routerLinkActive="active">
+<div id="logo">
+  <a class="item" routerLink="/home"></a>
+</div>
+<div id="menu">
+  <a class="item" *ngFor="let item of menuItems" [routerLink]="item.path" routerLinkActive="active">
     <div class="signal"></div>
     <div class="icon"></div>
-    <div class="label">ホーム</div>
+    <div class="label">{{ item.title }}</div>
   </a>
-  <a routerLink="/courses" routerLinkActive="active">
-    <div class="signal"></div>
-    <div class="icon"></div>
-    <div class="label">学習</div>
-  </a>
-  <a routerLink="/notifications" routerLinkActive="active">
-    <div class="signal"></div>
-    <div class="icon"></div>
-    <div class="label">お知らせ</div>
-  </a>
-  <a routerLink="/settings" routerLinkActive="active">
-    <div class="signal"></div>
-    <div class="icon"></div>
-    <div class="label">設定</div>
+</div>
+<div id="spacer"></div>
+<div id="presentor">
+  <a href="https://uec-programming.com" target="_blank">
+    <div class="en">Presented By</div>
+    <div class="ja">電気通信大学</div>
+    <div class="ja">プログラミング教室</div>
   </a>
 </div>

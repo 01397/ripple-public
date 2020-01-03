@@ -3,8 +3,19 @@
 
 :host {
   background: $primary-600-grad-vertical;
+  display: flex;
+  flex-direction: column;
 }
-a {
+#logo {
+  padding: 8px 0;
+}
+#logo a {
+  background-image: url(/assets/images/logo.svg);
+  background-position: 16px center;
+  background-repeat: no-repeat;
+  background-size: 96px 32px;
+}
+.item {
   display: flex;
   height: 48px;
   width: 100%;
@@ -17,10 +28,15 @@ a {
   &.active {
     color: $mono-100;
     @include bg-gradient($white-a25 transparent, 90deg);
+
+    &>.signal {
+      @include bg-gradient($white-a50 $mono-100);
+    }
   }
-}
-a.active > .signal {
-  @include bg-gradient($white-a50 $mono-100);
+
+  &:hover {
+    color: $mono-100;
+  }
 }
 .signal {
   width: 4px;
@@ -31,4 +47,24 @@ a.active > .signal {
 }
 .label {
   flex: 1;
+}
+#spacer {
+  flex: 1;
+}
+#presentor {
+  padding: 16px;
+  color: $white-a50;
+  line-height: 1.25;
+  a {
+    align-items: center;
+    text-decoration: none;
+    color: $white-a50;
+  }
+  .en {
+    font-size: 10px;
+    padding-bottom: 2px;
+  }
+  .ja {
+    font-size: 14px;
+  }
 }
