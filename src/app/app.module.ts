@@ -11,6 +11,7 @@ import { CoursesComponent } from './courses/courses.component'
 import { NotificationsComponent } from './notifications/notifications.component'
 import { NotFoundComponent } from './not-found/not-found.component'
 import { SettingsComponent } from './settings/settings.component'
+import { LessonComponent } from './lesson/lesson.component'
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -43,6 +44,7 @@ const appRoutes: Routes = [
     NotificationsComponent,
     NotFoundComponent,
     SettingsComponent,
+    LessonComponent,
   ],
   imports: [
     RouterModule.forRoot(

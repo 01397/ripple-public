@@ -10,7 +10,7 @@ export class SidebarComponent implements OnInit {
     { title: 'ホーム', path: '/home' },
     { title: '学習', path: '/courses' },
     { title: 'お知らせ', path: '/notifications' },
-    { title: '設定', path: '/settings' }
+    { title: '設定', path: '/settings' },
   ]
   constructor() {}
 
