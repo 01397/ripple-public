@@ -1,8 +1,23 @@
 @import './variables';
 
 .card {
-  background-color: #ffffff;
+  background-color: $mono-100;
   border-radius: 6px;
   box-shadow: $card-shadow;
-  padding: 24px;
+  margin: 24px;
+
+  h1 {
+    font-size: 20px;
+    color: $mono-20;
+    margin: 0;
+  }
+}
+.card > *:first-child {
+  padding-top: 24px;
+}
+.card > *:last-child {
+  padding-bottom: 24px;
+}
+.card > * {
+  padding: 0 24px;
 }
