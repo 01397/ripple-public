@@ -7,10 +7,10 @@ import { Component, OnInit } from '@angular/core'
 })
 export class SidebarComponent implements OnInit {
   public menuItems = [
-    { title: 'ホーム', path: '/home' },
-    { title: '学習', path: '/courses' },
-    { title: 'お知らせ', path: '/notifications' },
-    { title: '設定', path: '/settings' },
+    { title: 'ホーム', path: '/home', icon: 'home' },
+    { title: '学習', path: '/courses', icon: 'edit' },
+    { title: 'お知らせ', path: '/notifications', icon: 'notifications' },
+    { title: '設定', path: '/settings', icon: 'settings' },
   ]
   constructor() {}
 

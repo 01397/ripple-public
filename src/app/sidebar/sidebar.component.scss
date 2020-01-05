@@ -16,6 +16,7 @@
   background-size: 96px 32px;
 }
 .item {
+  cursor: pointer;
   display: flex;
   height: 48px;
   width: 100%;
@@ -29,7 +30,7 @@
     color: $mono-100;
     @include bg-gradient($white-a25 transparent, 90deg);
 
-    &>.signal {
+    & > .signal {
       @include bg-gradient($white-a50 $mono-100);
     }
   }
@@ -43,7 +44,23 @@
   height: 100%;
 }
 .icon {
+  text-align: center;
   width: 48px;
+  height: 24px;
+  .material-icons {
+    display: none;
+  }
+  .material-icons-outlined {
+    display: inline;
+  }
+}
+.item.active > .icon {
+  .material-icons {
+    display: inline;
+  }
+  .material-icons-outlined {
+    display: none;
+  }
 }
 .label {
   flex: 1;
