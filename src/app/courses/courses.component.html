@@ -1,1 +1,37 @@
-<p>courses works!</p>
+<section class="course">
+  <h2 class="course-heading">コース一覧</h2>
+  <ul class="course-list">
+    <li *ngFor="let course of courses" class="course-item">
+      <div class="course-item-left">
+        <div class="course-item-circle">{{ course.progress }}</div>
+      </div>
+      <div class="course-item-title">{{ course.title }}</div>
+      <div class="course-item-date">前回の学習: {{ course.date }}</div>
+    </li>
+  </ul>
+</section>
+
+<section class="lessons">
+  <h2 class="lessons-heading">{{ selectedCourses.title }}</h2>
+  <div class="lessons-overview">
+    <div class="lessons-progress"></div>
+    <div class="lessons-description">{{ selectedCourses.description }}</div>
+  </div>
+  <div class="lesson-list">
+    <section *ngFor="let section of selectedCourses.sections">
+      <h3 class="lesson-section">{{ section.title }}</h3>
+      <ul>
+        <li class="lesson-item" *ngFor="let lesson of section.lessons">
+          <div class="lesson-item-title">
+            {{ lesson.title }}
+          </div>
+          <div class="lesson-item-count">学習回数: {{ lesson.studyCount }}回</div>
+          <div class="lesson-item-date">前回学習: {{ lesson.lastStudiedAt }}</div>
+          <div class="lesson-item-star">
+            <i class="material-icons">star_border</i>
+          </div>
+        </li>
+      </ul>
+    </section>
+  </div>
+</section>

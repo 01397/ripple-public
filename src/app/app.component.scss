@@ -1,6 +1,6 @@
 @import '../assets/styles/variables';
 
-:host  {
+:host {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -17,6 +17,7 @@
 
 #sidebar {
   width: 192px;
+  min-width: 192px;
 }
 
 #main {

@@ -5,6 +5,7 @@
   border-radius: 6px;
   box-shadow: $card-shadow;
   margin: 24px;
+  overflow: hidden;
 
   h1 {
     font-size: 20px;
@@ -19,5 +20,6 @@
   padding-bottom: 24px;
 }
 .card > * {
-  padding: 0 24px;
+  padding-left: 24px;
+  padding-right: 24px;
 }
