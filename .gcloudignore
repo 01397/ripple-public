@@ -24,4 +24,7 @@ tsconfig.*
 tslint.*
 .DS_Store
 .editorconfig
+.vscode
+.github
+!dist
 
