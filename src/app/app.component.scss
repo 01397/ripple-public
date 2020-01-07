@@ -9,6 +9,7 @@
 #app-bottom-container {
   flex: 1;
   display: flex;
+  min-height: 0;
 }
 
 #header {
@@ -23,4 +24,5 @@
 #main {
   flex: 1;
   background-color: $primary-50;
+  overflow: auto;
 }
