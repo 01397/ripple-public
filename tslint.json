@@ -41,6 +41,7 @@
     "no-empty": false,
     "no-non-null-assertion": true,
     "no-redundant-jsdoc": true,
+    "no-submodule-imports": false,
     "no-switch-case-fall-through": true,
     "no-use-before-declare": true,
     "no-var-requires": false,

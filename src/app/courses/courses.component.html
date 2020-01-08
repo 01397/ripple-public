@@ -21,15 +21,17 @@
     <section *ngFor="let section of selectedCourses.sections">
       <h3 class="lesson-section">{{ section.title }}</h3>
       <ul>
-        <li class="lesson-item" *ngFor="let lesson of section.lessons">
-          <div class="lesson-item-title">
-            {{ lesson.title }}
-          </div>
-          <div class="lesson-item-count">学習回数: {{ lesson.studyCount }}回</div>
-          <div class="lesson-item-date">前回学習: {{ lesson.lastStudiedAt }}</div>
-          <div class="lesson-item-star">
-            <i class="material-icons">star_border</i>
-          </div>
+        <li class="lesson-item-wrapper" *ngFor="let lesson of section.lessons">
+          <a class="lesson-item">
+            <div class="lesson-item-title">
+              {{ lesson.title }}
+            </div>
+            <div class="lesson-item-count">学習回数: {{ lesson.studyCount }}回</div>
+            <div class="lesson-item-date">前回学習: {{ lesson.lastStudiedAt }}</div>
+            <div class="lesson-item-star">
+              <i class="material-icons">star_border</i>
+            </div>
+          </a>
         </li>
       </ul>
     </section>

@@ -99,10 +99,12 @@ $section-margin: 24px;
   font-weight: 500;
   margin-top: 24px;
 }
+.lesson-item-wrapper {
+  list-style: none;
+}
 .lesson-item {
   cursor: pointer;
   padding: 12px;
-  list-style: none;
   display: grid;
   grid-template-rows: 1fr 1em;
   grid-template-columns: 1fr 1fr 64px;

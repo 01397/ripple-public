@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ViewChild } from '@angular/core'
+import { AceEditorComponent } from 'ng2-ace-editor'
+import * as ace from 'ace-builds'
 
 @Component({
   selector: 'app-lesson',
@@ -6,7 +8,15 @@ import { Component, OnInit } from '@angular/core'
   styleUrls: ['./lesson.component.scss'],
 })
 export class LessonComponent implements OnInit {
-  constructor() {}
+  @ViewChild('editor', { static: false }) editor: AceEditorComponent
+  text: string = ''
+  options = { maxLines: 1000, printMargin: false }
 
-  ngOnInit() {}
+  ngOnInit() {
+    ace.config.set('basePath', 'path')
+  }
+
+  executeCode() {
+    this.text
+  }
 }
