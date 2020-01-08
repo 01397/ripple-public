@@ -1,0 +1,13 @@
+@import '../../assets/styles/variables';
+
+:host {
+  display: flex;
+  flex-direction: column;
+}
+#editor {
+  flex: 1;
+}
+#console {
+  height: 8em;
+  background-color: $mono-10;
+}

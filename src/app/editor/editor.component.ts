@@ -3,11 +3,11 @@ import { AceEditorComponent } from 'ng2-ace-editor'
 import * as ace from 'ace-builds'
 
 @Component({
-  selector: 'app-lesson',
-  templateUrl: './lesson.component.html',
-  styleUrls: ['./lesson.component.scss'],
+  selector: 'app-editor',
+  templateUrl: './editor.component.html',
+  styleUrls: ['./editor.component.scss'],
 })
-export class LessonComponent implements OnInit {
+export class EditorComponent implements OnInit {
   @ViewChild('editor', { static: false }) editor: AceEditorComponent
   text: string = ''
   options = { maxLines: 1000, printMargin: false }
@@ -15,6 +15,4 @@ export class LessonComponent implements OnInit {
   ngOnInit() {
     ace.config.set('basePath', 'path')
   }
-
-  executeCode() {}
 }
