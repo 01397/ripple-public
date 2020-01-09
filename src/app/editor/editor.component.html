@@ -1,7 +1,7 @@
-  <div id="editor-title">
-    script.py
-  </div>
-  <ace-editor
+<div id="editor-title">
+  script.py
+</div>
+<ace-editor
   id="editor"
   [(text)]="text"
   [mode]="'python'"
@@ -10,11 +10,9 @@
   [readOnly]="false"
   [autoUpdateContent]="true"
   [durationBeforeCallback]="1000"
-  ></ace-editor>
-  <div id="console-title">
-    <div>コンソール</div>
-    <div>実行</div>
-  </div>
-  <div id="console">
-
-  </div>
+></ace-editor>
+<div id="console-title">
+  <div>コンソール</div>
+  <div (click)="onClick()">実行</div>
+</div>
+<div id="console"></div>
