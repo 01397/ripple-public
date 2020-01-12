@@ -7,6 +7,7 @@
 var app = require('../app')
 var debug = require('debug')('ripple-tmp:server')
 var http = require('http')
+var PythonShell = require('python-shell').PythonShell
 
 /**
  * Get port from environment and store in Express.
@@ -30,7 +31,10 @@ io.on('connection', function(socket) {
   console.log('connected')
   socket.on('test message', msg => {
     console.log(msg)
-    io.emit('test message', msg)
+    PythonShell.runString(msg, null, function(err, result) {
+      if (err) throw err
+      io.emit('test message', result)
+    })
   })
 })
 server.listen(port, function() {

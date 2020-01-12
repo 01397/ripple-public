@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core'
 import * as io from 'socket.io-client'
+import { Subject } from 'rxjs'
 
 @Injectable({
   providedIn: 'root',
 })
 export class WebsocketService {
   private socket
+  public testSubject = new Subject<string>()
 
   constructor() {}
 
@@ -42,6 +44,7 @@ export class WebsocketService {
     })
     this.socket.on('test message', msg => {
       this.log('test ' + msg)
+      this.testSubject.next(msg);
     })
   }
   emit(name: string, msg: string) {

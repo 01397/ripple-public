@@ -12,12 +12,16 @@ export class EditorComponent implements OnInit {
   @ViewChild('editor', { static: false }) editor: AceEditorComponent
   text: string = ''
   options = { maxLines: 1000, printMargin: false }
+  consoleText: string
 
   constructor(private websocketService: WebsocketService) {}
 
   ngOnInit() {
     ace.config.set('basePath', 'path')
     this.websocketService.connect()
+    this.websocketService.testSubject.subscribe((result: string) => {
+      this.consoleText = result
+    })
   }
 
   onClick() {
