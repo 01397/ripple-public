@@ -1,0 +1,12 @@
+:host {
+  box-shadow: 2px 2px 64px #00000088;
+  overflow: hidden;
+}
+
+.slide-host {
+  width: 1280px;
+  height: 720px;
+  overflow-y: auto;
+  transform: scale(1);
+  transform-origin: left top;
+}

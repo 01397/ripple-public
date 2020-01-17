@@ -24,7 +24,7 @@
   text-decoration: none;
   color: $white-a50;
   @include font-size(16);
-  font-weight: bold;
+  font-weight: 700;
 
   &.active {
     color: $mono-100;

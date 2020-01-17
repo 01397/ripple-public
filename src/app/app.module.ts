@@ -15,6 +15,11 @@ import { NotFoundComponent } from './not-found/not-found.component'
 import { SettingsComponent } from './settings/settings.component'
 import { LessonComponent } from './lesson/lesson.component'
 import { EditorComponent } from './editor/editor.component'
+import { SlideComponent } from './slide/slide/slide.component'
+import { SlideCoverComponent } from './slide/slide-cover/slide-cover.component'
+import { SlideCodingComponent } from './slide/slide-coding/slide-coding.component'
+import { SlideDirective } from './slide/slide/slide.directive'
+import { SlideContainerComponent } from './slide/slide-container/slide-container.component'
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -53,7 +58,12 @@ const appRoutes: Routes = [
     SettingsComponent,
     LessonComponent,
     EditorComponent,
+    SlideCoverComponent,
+    SlideCodingComponent,
+    SlideDirective,
+    SlideContainerComponent,
   ],
+  entryComponents: [SlideCoverComponent, SlideCodingComponent],
   imports: [
     RouterModule.forRoot(
       appRoutes,

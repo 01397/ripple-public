@@ -44,7 +44,7 @@ export class WebsocketService {
     })
     this.socket.on('test message', msg => {
       this.log('test ' + msg)
-      this.testSubject.next(msg);
+      this.testSubject.next(msg)
     })
   }
   emit(name: string, msg: string) {

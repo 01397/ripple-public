@@ -1,5 +1,28 @@
-<div id="materials">
-
+<div class="header">
+  <a class="logo" routerLink="/home"></a>
+  <div class="header-spacer"></div>
+  <a class="close"></a>
 </div>
-
-<app-editor id="development"></app-editor>
+<div class="tools">
+  <div class="tools-item">
+    <i class="material-icons">list</i>
+  </div>
+  <div class="tools-item">
+    <i class="material-icons">volume_down</i>
+  </div>
+  <div class="tools-item">
+    <i class="material-icons">subtitles</i>
+  </div>
+</div>
+<div class="prev-button">
+  <i class="material-icons">arrow_back</i>
+</div>
+<div class="next-button">
+  <i class="material-icons">arrow_forward</i>
+</div>
+<div class="footer">
+  <div class="progress-background"></div>
+  <div class="progress-active"></div>
+  <div class="progress-picker"></div>
+</div>
+<app-slide-container class="slide" [slide]="slide"></app-slide-container >

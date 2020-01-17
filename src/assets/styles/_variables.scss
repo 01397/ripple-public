@@ -1,18 +1,15 @@
 @import './mixin';
 
-$h: 255;
-$s: 50;
-
-$primary-50: hsl($h, $s, 95);
-$primary-100: hsl($h, $s, 90);
-$primary-200: hsl($h, $s, 80);
-$primary-300: hsl($h, $s, 70);
-$primary-400: hsl($h, $s, 60);
-$primary-500: hsl($h, $s, 50);
-$primary-600: hsl($h, $s, 40);
-$primary-700: hsl($h, $s, 30);
-$primary-800: hsl($h, $s, 20);
-$primary-900: hsl($h, $s, 10);
+$primary-50: hsl(255, 50, 95);
+$primary-100: hsl(255, 50, 90);
+$primary-200: hsl(255, 50, 80);
+$primary-300: hsl(255, 50, 70);
+$primary-400: hsl(255, 50, 60);
+$primary-500: hsl(255, 50, 50);
+$primary-600: hsl(255, 50, 40);
+$primary-700: hsl(255, 50, 30);
+$primary-800: hsl(255, 50, 20);
+$primary-900: hsl(255, 50, 10);
 $primary-600-grad-vertical: linear-gradient(180deg, $primary-600, adjust-color($primary-500, $hue: -30));
 $primary-600-grad-horizontal: linear-gradient(90deg, $primary-600, adjust-color($primary-500, $hue: -30));
 
@@ -39,3 +36,5 @@ $white-a75: hsla(0, 0, 100, 0.75);
 $white-grad: linear-gradient(90deg, $white-a25, transparent);
 
 $card-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
+
+$slide-main: rgb(0, 126, 189);

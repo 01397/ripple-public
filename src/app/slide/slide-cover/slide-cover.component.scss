@@ -1,0 +1,38 @@
+@import '../../../assets/styles/extends';
+@import '../../../assets/styles/variables';
+@import '../../../assets/styles/mixin';
+
+:host {
+  @extend .slide;
+}
+.course {
+  position: absolute;
+  left: 32px;
+  bottom: (720 - 240 + 16) + px;
+  color: $slide-main;
+  @include font-size(32);
+}
+.lesson {
+  position: absolute;
+  top: 240px;
+  left: 0;
+  right: 0;
+  padding: 32px 32px;
+  background-color: $slide-main;
+  color: $mono-100;
+  font-weight: 700;
+  @include font-size(60);
+}
+.footer {
+  position: absolute;
+  bottom: 32px;
+  right: 32px;
+  text-align: right;
+  color: $mono-40;
+}
+.organization {
+  @include font-size(32);
+}
+.author {
+  @include font-size(24);
+}
