@@ -15,11 +15,13 @@ import { NotFoundComponent } from './not-found/not-found.component'
 import { SettingsComponent } from './settings/settings.component'
 import { LessonComponent } from './lesson/lesson.component'
 import { EditorComponent } from './editor/editor.component'
-import { SlideComponent } from './slide/slide/slide.component'
-import { SlideCoverComponent } from './slide/slide-cover/slide-cover.component'
-import { SlideCodingComponent } from './slide/slide-coding/slide-coding.component'
-import { SlideDirective } from './slide/slide/slide.directive'
+import { SlideComponent } from './slide/layouts/slide.component'
+import { SlideCoverComponent } from './slide/layouts/slide-cover/slide-cover.component'
+import { SlideCodingComponent } from './slide/layouts/slide-coding/slide-coding.component'
+import { SlideDirective } from './slide/slide-container/slide.directive'
 import { SlideContainerComponent } from './slide/slide-container/slide-container.component'
+import { SlideOneColumnComponent } from './slide/layouts/slide-one-column/slide-one-column.component'
+import { SlideElementComponent } from './slide/elements/slide-element.component'
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -62,6 +64,8 @@ const appRoutes: Routes = [
     SlideCodingComponent,
     SlideDirective,
     SlideContainerComponent,
+    SlideOneColumnComponent,
+    SlideElementComponent,
   ],
   entryComponents: [SlideCoverComponent, SlideCodingComponent],
   imports: [

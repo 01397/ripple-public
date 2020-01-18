@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core'
-import { SlideComponent } from '../slide/slide.component'
+import { SlideComponent } from '../slide.component'
 
 @Component({
   selector: 'app-slide-cover',

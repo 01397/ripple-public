@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { AceEditorComponent } from 'ng2-ace-editor'
 import * as ace from 'ace-builds'
-import { SlideData } from '../slide/slide/slide-item'
+import { SlideData } from '../slide/slide-item'
 
 @Component({
   selector: 'app-lesson',

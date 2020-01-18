@@ -1,6 +1,6 @@
 import { Type } from '@angular/core'
-import { SlideCodingComponent } from '../slide-coding/slide-coding.component'
-import { SlideCoverComponent } from '../slide-cover/slide-cover.component'
+import { SlideCodingComponent } from './layouts/slide-coding/slide-coding.component'
+import { SlideCoverComponent } from './layouts/slide-cover/slide-cover.component'
 
 export type SlideType = 'Cover' | 'OneColumn'
 

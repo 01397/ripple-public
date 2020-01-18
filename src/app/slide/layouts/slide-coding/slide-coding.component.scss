@@ -1,5 +1,6 @@
-@import '../../../assets/styles/variables';
-@import '../../../assets/styles/mixin';
+@import '~assets/styles/variables';
+@import '~assets/styles/mixin';
+
 .button {
   background-color: $mono-20;
   color: $mono-100;
