@@ -9,7 +9,7 @@ import {
   HostListener,
 } from '@angular/core'
 import { SlideDirective } from '../slide/slide.directive'
-import { SlideItem } from '../slide/slide-item'
+import { SlideItem, SlideData } from '../slide/slide-item'
 import { SlideComponent } from '../slide/slide.component'
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser'
 
@@ -19,7 +19,12 @@ import { DomSanitizer, SafeStyle } from '@angular/platform-browser'
   styleUrls: ['./slide-container.component.scss'],
 })
 export class SlideContainerComponent implements OnInit, OnDestroy {
-  @Input() slide: SlideItem
+  @Input() slides: SlideData[]
+  private _slideIndex: number = 0
+  @Input() set slideIndex(value: number) {
+    this._slideIndex = value
+    this.setSlide(this._slideIndex)
+  }
   @ViewChild(SlideDirective, { static: true }) slideHost: SlideDirective
   private transform: string
   public safeTransform: SafeStyle
@@ -35,15 +40,20 @@ export class SlideContainerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.slide.component)
-    const viewContainerRef = this.slideHost.viewContainerRef
-    // viewContainerRef.clear()
-    const componentRef = viewContainerRef.createComponent(componentFactory)
-    ;(componentRef.instance as SlideComponent).data = this.slide.data
+    this.setSlide(this._slideIndex)
     this.adjustScale()
   }
   ngOnDestroy() {
     clearInterval(this.interval)
+  }
+  setSlide(index) {
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
+      SlideItem.getComponent(this.slides[index].type)
+    )
+    const viewContainerRef = this.slideHost.viewContainerRef
+    viewContainerRef.clear()
+    const componentRef = viewContainerRef.createComponent(componentFactory)
+    ;(componentRef.instance as SlideComponent).data = this.slides[index].data
   }
   @HostListener('window:resize')
   adjustScale() {

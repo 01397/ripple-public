@@ -14,10 +14,10 @@
     <i class="material-icons">subtitles</i>
   </div>
 </div>
-<div class="prev-button">
+<div class="prev-button" (click)="slidePrev()">
   <i class="material-icons">arrow_back</i>
 </div>
-<div class="next-button">
+<div class="next-button" (click)="slideNext()">
   <i class="material-icons">arrow_forward</i>
 </div>
 <div class="footer">
@@ -25,4 +25,4 @@
   <div class="progress-active"></div>
   <div class="progress-picker"></div>
 </div>
-<app-slide-container class="slide" [slide]="slide"></app-slide-container >
+<app-slide-container class="slide" [slides]="slides" [slideIndex]="slideIndex"></app-slide-container>
