@@ -28,7 +28,16 @@ export class LessonComponent implements OnInit {
       type: 'OneColumn',
       data: {
         title: '〇〇について',
-        body: [{ type: 'paragraph', content: 'こんにちは' }],
+        body: [{ type: 'paragraph', content: 'one-column test' }],
+      },
+    },
+    {
+      title: '〇〇について',
+      type: 'TwoColumn',
+      data: {
+        title: '〇〇について',
+        left: [{ type: 'paragraph', content: 'two-column test\n左！！！' }],
+        right: [{ type: 'paragraph', content: 'two-column test\n右！！！' }],
       },
     },
   ]

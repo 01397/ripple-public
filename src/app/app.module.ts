@@ -22,7 +22,8 @@ import { SlideDirective } from './slide/slide-container/slide.directive'
 import { SlideContainerComponent } from './slide/slide-container/slide-container.component'
 import { SlideOneColumnComponent } from './slide/layouts/slide-one-column/slide-one-column.component'
 import { SlideElementComponent } from './slide/elements/slide-element.component';
-import { SlideParagraphComponent } from './slide/elements/slide-paragraph/slide-paragraph.component'
+import { SlideParagraphComponent } from './slide/elements/slide-paragraph/slide-paragraph.component';
+import { SlideTwoColumnComponent } from './slide/slide-two-column/slide-two-column.component'
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -68,8 +69,15 @@ const appRoutes: Routes = [
     SlideOneColumnComponent,
     SlideElementComponent,
     SlideParagraphComponent,
+    SlideTwoColumnComponent,
   ],
-  entryComponents: [SlideCoverComponent, SlideCodingComponent, SlideOneColumnComponent, SlideParagraphComponent],
+  entryComponents: [
+    SlideCoverComponent,
+    SlideCodingComponent,
+    SlideOneColumnComponent,
+    SlideTwoColumnComponent,
+    SlideParagraphComponent,
+  ],
   imports: [
     RouterModule.forRoot(
       appRoutes,

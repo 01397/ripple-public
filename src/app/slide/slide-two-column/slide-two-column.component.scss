@@ -5,17 +5,23 @@
 :host {
   @extend .slide;
 }
-
 .title {
   @extend .slide-title;
   @include fadein(0);
-  text-align: center;
   padding: 48px 32px;
 }
 .body {
+  display: flex;
+}
+.left, .right {
   @extend .slide-body;
-  @include fadein(1);
-  margin: 0 auto;
-  max-width: 80%;
+  width: 50%;
+  box-sizing: border-box;
   padding: 0 32px;
+}
+.left {
+  @include fadein(1);
+}
+.right {
+  @include fadein(2);
 }

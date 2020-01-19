@@ -3,8 +3,9 @@ import { SlideCodingComponent } from './layouts/slide-coding/slide-coding.compon
 import { SlideCoverComponent } from './layouts/slide-cover/slide-cover.component'
 import { SlideOneColumnComponent } from './layouts/slide-one-column/slide-one-column.component'
 import { SlideComponent } from './layouts/slide.component'
+import { SlideTwoColumnComponent } from './slide-two-column/slide-two-column.component'
 
-export type SlideType = 'Cover' | 'OneColumn'
+export type SlideType = 'Cover' | 'OneColumn' | 'TwoColumn'
 
 export class SlideItem {
   constructor(public component: Type<any>, public data: any) {}
@@ -15,6 +16,8 @@ export class SlideItem {
         return SlideCoverComponent
       case 'OneColumn':
         return SlideOneColumnComponent
+      case 'TwoColumn':
+        return SlideTwoColumnComponent
     }
   }
 }

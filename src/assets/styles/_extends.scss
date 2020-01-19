@@ -32,3 +32,14 @@
   position: relative;
   box-sizing: border-box;
 }
+
+.slide-title {
+  @include font-size(32);
+  color: $mono-40;
+  font-weight: 600;
+}
+.slide-body {
+  @include font-size(24);
+  width: max-content;
+  display: block;
+}
