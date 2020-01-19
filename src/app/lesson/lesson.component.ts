@@ -24,13 +24,11 @@ export class LessonComponent implements OnInit {
       },
     },
     {
-      title: '〇〇してみよう2',
-      type: 'Cover',
+      title: '〇〇について',
+      type: 'OneColumn',
       data: {
-        author: '〇〇 太郎',
-        organization: '〇〇教室',
-        course: '〇〇 Step 1',
-        lesson: '〇〇してみよう2',
+        title: '〇〇について',
+        body: [{ type: 'paragraph', content: 'こんにちは' }],
       },
     },
   ]

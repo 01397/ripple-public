@@ -1,0 +1,23 @@
+@import '~assets/styles/variables';
+@import '~assets/styles/extends';
+@import '~assets/styles/mixin';
+
+:host {
+  @extend .slide;
+  padding: 32px;
+}
+
+.title {
+  @include font-size(32);
+  color: $mono-40;
+  font-weight: 600;
+  text-align: center;
+}
+.body {
+  @include font-size(24);
+  margin: 24px auto 0;
+  width: 80%;
+  width: max-content;
+  max-width: 80%;
+  display: block;
+}

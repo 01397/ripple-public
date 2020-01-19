@@ -21,7 +21,8 @@ import { SlideCodingComponent } from './slide/layouts/slide-coding/slide-coding.
 import { SlideDirective } from './slide/slide-container/slide.directive'
 import { SlideContainerComponent } from './slide/slide-container/slide-container.component'
 import { SlideOneColumnComponent } from './slide/layouts/slide-one-column/slide-one-column.component'
-import { SlideElementComponent } from './slide/elements/slide-element.component'
+import { SlideElementComponent } from './slide/elements/slide-element.component';
+import { SlideParagraphComponent } from './slide/elements/slide-paragraph/slide-paragraph.component'
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -66,8 +67,9 @@ const appRoutes: Routes = [
     SlideContainerComponent,
     SlideOneColumnComponent,
     SlideElementComponent,
+    SlideParagraphComponent,
   ],
-  entryComponents: [SlideCoverComponent, SlideCodingComponent],
+  entryComponents: [SlideCoverComponent, SlideCodingComponent, SlideOneColumnComponent, SlideParagraphComponent],
   imports: [
     RouterModule.forRoot(
       appRoutes,
