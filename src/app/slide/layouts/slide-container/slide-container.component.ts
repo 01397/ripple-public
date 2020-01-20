@@ -9,8 +9,8 @@ import {
   HostListener,
 } from '@angular/core'
 import { SlideDirective } from './slide.directive'
-import { SlideItem, SlideData } from '../slide-item'
-import { SlideComponent } from '../layouts/slide.component'
+import { SlideItem, SlideData } from '../../slide-item'
+import { SlideComponent } from '../slide.component'
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser'
 
 @Component({

@@ -1,0 +1,67 @@
+@import '~assets/styles/variables';
+@import '~assets/styles/extends';
+@import '~assets/styles/mixin';
+
+:host {
+  @extend .slide;
+}
+.title {
+  @include fadein(1);
+  @include font-size(60);
+  color: $slide-main;
+  font-weight: 600;
+  padding-top: 16px;
+  position: relative;
+  text-align: center;
+}
+.title-underline {
+  height: 2px;
+  background-color: $slide-main;
+  width: 0;
+  animation: 0.4s ease 0s 1 normal both anim-scale;
+  margin: 0 auto 24px;
+  position: relative;
+}
+.title-underline::after,
+.title-underline::before {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: -5px;
+  width: 8px;
+  height: 8px;
+  border-radius: 8px;
+  border: 2px solid $slide-main;
+  background-color: $mono-95;
+}
+.title-underline::before {
+  left: -4px;
+}
+.title-underline::after {
+  right: -4px;
+}
+@keyframes anim-scale {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 60%;
+  }
+}
+
+.body {
+  display: flex;
+}
+.left,
+.right {
+  @extend .slide-body;
+  width: 50%;
+  box-sizing: border-box;
+  padding: 0 32px;
+}
+.left {
+  @include fadein(2);
+}
+.right {
+  @include fadein(3);
+}

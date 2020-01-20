@@ -18,12 +18,13 @@ import { EditorComponent } from './editor/editor.component'
 import { SlideComponent } from './slide/layouts/slide.component'
 import { SlideCoverComponent } from './slide/layouts/slide-cover/slide-cover.component'
 import { SlideCodingComponent } from './slide/layouts/slide-coding/slide-coding.component'
-import { SlideDirective } from './slide/slide-container/slide.directive'
-import { SlideContainerComponent } from './slide/slide-container/slide-container.component'
+import { SlideDirective } from './slide/layouts/slide-container/slide.directive'
+import { SlideContainerComponent } from './slide/layouts/slide-container/slide-container.component'
 import { SlideOneColumnComponent } from './slide/layouts/slide-one-column/slide-one-column.component'
 import { SlideElementComponent } from './slide/elements/slide-element.component';
 import { SlideParagraphComponent } from './slide/elements/slide-paragraph/slide-paragraph.component';
-import { SlideTwoColumnComponent } from './slide/slide-two-column/slide-two-column.component'
+import { SlideTwoColumnComponent } from './slide/slide-two-column/slide-two-column.component';
+import { SlideTopicComponent } from './slide/layouts/slide-topic/slide-topic.component'
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -70,12 +71,14 @@ const appRoutes: Routes = [
     SlideElementComponent,
     SlideParagraphComponent,
     SlideTwoColumnComponent,
+    SlideTopicComponent,
   ],
   entryComponents: [
     SlideCoverComponent,
     SlideCodingComponent,
     SlideOneColumnComponent,
     SlideTwoColumnComponent,
+    SlideTopicComponent,
     SlideParagraphComponent,
   ],
   imports: [

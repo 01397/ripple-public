@@ -40,6 +40,15 @@ export class LessonComponent implements OnInit {
         right: [{ type: 'paragraph', content: 'two-column test\n右！！！' }],
       },
     },
+    {
+      title: '〇〇について',
+      type: 'Topic',
+      data: {
+        title: '〇〇',
+        left: [{ type: 'paragraph', content: 'topic test\n左！！！' }],
+        right: [{ type: 'paragraph', content: 'topic test\n右！！！' }],
+      },
+    },
   ]
   slideIndex: number = 0
 
