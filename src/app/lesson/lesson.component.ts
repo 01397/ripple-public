@@ -28,7 +28,10 @@ export class LessonComponent implements OnInit {
       type: 'OneColumn',
       data: {
         title: '〇〇について',
-        body: [{ type: 'paragraph', content: 'one-column test' }],
+        body: [
+          { type: 'Paragraph', content: 'one-column test' },
+          { type: 'Image', src: '/assets/images/sample.png' },
+        ],
       },
     },
     {
@@ -36,8 +39,8 @@ export class LessonComponent implements OnInit {
       type: 'TwoColumn',
       data: {
         title: '〇〇について',
-        left: [{ type: 'paragraph', content: 'two-column test\n左！！！' }],
-        right: [{ type: 'paragraph', content: 'two-column test\n右！！！' }],
+        left: [{ type: 'Paragraph', content: 'two-column test\n左！！！' }],
+        right: [{ type: 'Paragraph', content: 'two-column test\n右！！！' }],
       },
     },
     {
@@ -45,8 +48,8 @@ export class LessonComponent implements OnInit {
       type: 'Topic',
       data: {
         title: '〇〇',
-        left: [{ type: 'paragraph', content: 'topic test\n左！！！' }],
-        right: [{ type: 'paragraph', content: 'topic test\n右！！！' }],
+        left: [{ type: 'Paragraph', content: 'topic test\n左！！！' }],
+        right: [{ type: 'Paragraph', content: 'topic test\n右！！！' }],
       },
     },
   ]

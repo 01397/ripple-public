@@ -8,6 +8,12 @@ import {
   Input,
 } from '@angular/core'
 import { SlideParagraphComponent } from './slide-paragraph/slide-paragraph.component'
+import { SlideElementType } from '../slide-item'
+import { SlideImageComponent } from './slide-image/slide-image.component'
+
+type SlideContent =
+  | { type: 'Paragraph'; content: any }
+  | { type: 'Image'; src: string; alt: string; width?: string; height?: string }
 
 @Component({
   selector: 'app-slide-element',
@@ -15,7 +21,7 @@ import { SlideParagraphComponent } from './slide-paragraph/slide-paragraph.compo
   styleUrls: ['./slide-element.component.scss'],
 })
 export class SlideElementComponent implements OnInit {
-  @Input() contents: { type: 'paragraph'; [key: string]: any }[]
+  @Input() contents: SlideContent[]
   @ViewChild('body', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef
 
   constructor(private resolver: ComponentFactoryResolver) {}
@@ -23,10 +29,25 @@ export class SlideElementComponent implements OnInit {
   ngOnInit() {
     for (const content of this.contents) {
       switch (content.type) {
-        case 'paragraph':
-          const factory = this.resolver.resolveComponentFactory(SlideParagraphComponent)
-          this.viewContainerRef.createComponent(factory).instance.content = content.content
+        case 'Paragraph':
+          this.addParagraph(content)
+          break
+        case 'Image':
+          this.addImage(content)
+          break
       }
     }
+  }
+
+  addParagraph(content: { content: any }) {
+    const factory = this.resolver.resolveComponentFactory(SlideParagraphComponent)
+    this.viewContainerRef.createComponent(factory).instance.content = content.content
+  }
+
+  addImage(content: { src: string; alt: string; width?: string; height?: string }) {
+    const factory = this.resolver.resolveComponentFactory(SlideImageComponent)
+    const instance = this.viewContainerRef.createComponent(factory).instance
+    instance.src = content.src
+    instance.alt = content.alt
   }
 }

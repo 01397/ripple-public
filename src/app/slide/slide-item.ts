@@ -3,10 +3,11 @@ import { SlideCodingComponent } from './layouts/slide-coding/slide-coding.compon
 import { SlideCoverComponent } from './layouts/slide-cover/slide-cover.component'
 import { SlideOneColumnComponent } from './layouts/slide-one-column/slide-one-column.component'
 import { SlideComponent } from './layouts/slide.component'
-import { SlideTwoColumnComponent } from './slide-two-column/slide-two-column.component'
+import { SlideTwoColumnComponent } from './layouts/slide-two-column/slide-two-column.component'
 import { SlideTopicComponent } from './layouts/slide-topic/slide-topic.component'
 
 export type SlideType = 'Cover' | 'OneColumn' | 'TwoColumn' | 'Topic'
+export type SlideElementType = 'Paragraph' | 'Image'
 
 export class SlideItem {
   constructor(public component: Type<any>, public data: any) {}
