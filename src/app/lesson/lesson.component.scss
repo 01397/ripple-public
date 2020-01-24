@@ -81,7 +81,6 @@
   bottom: 0;
   margin: auto;
   background-color: $mono-100;
-  border: 1px solid $mono-90;
   color: $mono-40;
   display: flex;
   justify-content: center;
@@ -94,4 +93,15 @@
 .next-button {
   right: 0;
   border-radius: 48px 0 0 48px;
+  animation: 0.4s ease 0s 2 alternate both anim-highlight;
+}
+@keyframes anim-highlight {
+  from {
+    background-color: $mono-100;
+    color: $mono-40;
+  }
+  to {
+    background-color: $slide-main;
+    color: white;
+  }
 }

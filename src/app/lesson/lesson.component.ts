@@ -11,11 +11,13 @@ import { SlideService } from 'app/slide/slide.service'
 })
 export class LessonComponent implements OnInit {
   @ViewChild('editor', { static: false }) editor: AceEditorComponent
-  text: string = ''
-  options = { maxLines: 1000, printMargin: false }
-  sampleText =
+  public text: string = ''
+  public options = { maxLines: 1000, printMargin: false }
+
+  private sampleText =
     '吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。吾輩はここで始めて人間というものを見た。しかもあとで聞くとそれは書生という人間中で一番獰悪な種族であったそうだ。この書生というのは時々我々を捕えて煮て食うという話である。'
-  slideIndex: number = 0
+  public navBack = false
+  public navForward = true
 
   constructor(private slideService: SlideService) {}
 
@@ -56,8 +58,18 @@ export class LessonComponent implements OnInit {
             },
           ],
           right: [
-            { type: 'paragraph', body: this.sampleText },
-            { type: 'image', src: '/assets/images/sample.png' },
+            {
+              type: 'quiz1',
+              title: '電通大について正しいものを選べ',
+              answer: 3,
+              options: [
+                '正式名称は電気不足通信障害大学である',
+                '株式会社電通が運営する大学である',
+                'オンラインで受講できる通信大学である',
+                '輪郭の断片がある',
+              ],
+              shuffle: true,
+            },
           ],
         },
       },
@@ -73,6 +85,13 @@ export class LessonComponent implements OnInit {
     ]
     this.slideService.setSlideData(slideData)
     ace.config.set('basePath', 'path')
+    this.slideService.nav.subscribe(nav => {
+      // ExpressionChangedAfterItHasBeenCheckedError を回避するために非同期関数を利用
+      setTimeout(() => {
+        this.navBack = nav.back
+        this.navForward = nav.forward
+      })
+    })
   }
   slidePrev() {
     this.slideService.back()

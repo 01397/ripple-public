@@ -1,0 +1,55 @@
+@import '~assets/styles/variables';
+@import '~assets/styles/mixin';
+
+.title-head {
+  font-weight: 300;
+  color: $slide-main;
+  margin-right: 0.25em;
+  font-size: 2em;
+}
+.option-symbol {
+  width: 1.5em;
+  text-align: center;
+  @include scale-in;
+  font-size: 1.5em;
+}
+.option {
+  margin-top: 8px;
+  -webkit-user-select: none;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.option-name {
+  flex: 1;
+  padding: 4px 8px;
+  border: 1px solid $mono-60;
+  border-radius: 8px;
+  font-weight: 500;
+  color: $mono-40;
+}
+.option-name:hover:not(.selected) {
+  background-color: $mono-100;
+  border-color: $slide-main;
+  color: $mono-10;
+}
+.selected {
+  .option-name {
+    color: hsl(328, 100%, 25%);
+    background-color: $mono-100;
+    @include shake;
+  }
+  .option-symbol {
+    color: #ff0088;
+  }
+}
+.selected.correct {
+  .option-name {
+    color: hsl(180, 100%, 25%);
+    background-color: $mono-100;
+    animation: none;
+  }
+  .option-symbol {
+    color: hsl(150, 82%, 43%);
+  }
+}

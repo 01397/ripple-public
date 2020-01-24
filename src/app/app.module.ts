@@ -89,6 +89,7 @@ const appRoutes: Routes = [
     SlideParagraphComponent,
     SlideImageComponent,
     SlideCodeComponent,
+    SlideQuiz1Component,
   ],
   imports: [
     RouterModule.forRoot(

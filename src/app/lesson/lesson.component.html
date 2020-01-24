@@ -14,10 +14,10 @@
     <i class="material-icons">subtitles</i>
   </div>
 </div>
-<div class="prev-button" (click)="slidePrev()">
+<div class="prev-button" (click)="slidePrev()" *ngIf="navBack">
   <i class="material-icons">arrow_back</i>
 </div>
-<div class="next-button" (click)="slideNext()">
+<div class="next-button" (click)="slideNext()" *ngIf="navForward">
   <i class="material-icons">arrow_forward</i>
 </div>
 <div class="footer">

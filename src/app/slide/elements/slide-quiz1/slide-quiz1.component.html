@@ -1,0 +1,14 @@
+<div class="title"><span class="title-head">Q</span>{{ content.title }}</div>
+<div
+  *ngFor="let option of options; let i = index"
+  class="option"
+  (click)="select(i)"
+  [ngClass]="{ selected: selected[i], correct: order[i] === content.answer }"
+>
+  <div class="option-symbol" *ngIf="!selected[i]"></div>
+  <i class="option-symbol material-icons" *ngIf="selected[i] && order[i] !== content.answer">clear</i>
+  <i class="option-symbol material-icons" *ngIf="selected[i] && order[i] === content.answer">done</i>
+  <div class="option-name">
+    {{ option }}
+  </div>
+</div>

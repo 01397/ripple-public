@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { SlideData } from './slide-item'
-import { BehaviorSubject } from 'rxjs'
+import { BehaviorSubject, Subject } from 'rxjs'
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +25,7 @@ export class SlideService {
    * スライド番号の上限。
    */
   private limit: number
+  public nav = new Subject<{ back: boolean; forward: boolean }>()
 
   constructor() {}
 
@@ -32,6 +33,7 @@ export class SlideService {
    * 画面更新が必要なタイミングで呼び出す
    */
   updateSlide() {
+    this.updateNav()
     this.slideSubject.next(this.slideData[this.index])
   }
 
@@ -42,7 +44,7 @@ export class SlideService {
    */
   setSlideData(slideData: SlideData[], index: number = 0) {
     this.slideData = slideData
-    this.limit = Number.MAX_SAFE_INTEGER
+    this.limit = this.slideData.length
     this.index = index
     this.updateSlide()
   }
@@ -87,5 +89,21 @@ export class SlideService {
     }
     this.limit = limit
     return true
+  }
+
+  updateNav() {
+    this.nav.next({
+      back: this.index > 0,
+      forward: this.index < this.slideData.length - 1 && this.index < this.limit,
+    })
+  }
+
+  lock() {
+    this.limit = this.index
+    this.updateNav()
+  }
+  unlock() {
+    this.limit = this.slideData.length
+    this.updateNav()
   }
 }
