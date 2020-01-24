@@ -10,8 +10,16 @@ export class SlideService {
   private index: number
   public slideSubject = new BehaviorSubject<SlideData>({
     title: 'エラー',
-    type: 'OneColumn',
-    data: { title: 'エラーが発生しました', body: 'もう一度お試しください' },
+    slide: {
+      type: 'oneColumn',
+      title: 'エラーが発生しました',
+      body: [
+        {
+          type: 'paragraph',
+          body: 'やほ',
+        },
+      ],
+    },
   })
   /**
    * スライド番号の上限。
@@ -33,7 +41,6 @@ export class SlideService {
    * @param index スライド番号
    */
   setSlideData(slideData: SlideData[], index: number = 0) {
-    console.log(slideData)
     this.slideData = slideData
     this.limit = Number.MAX_SAFE_INTEGER
     this.index = index

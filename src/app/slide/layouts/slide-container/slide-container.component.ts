@@ -37,7 +37,6 @@ export class SlideContainerComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.adjustScale()
-    console.log(20)
     this.slideService.slideSubject.subscribe(slide => this.setSlide(slide))
   }
   ngOnDestroy() {
@@ -45,11 +44,13 @@ export class SlideContainerComponent implements OnInit, OnDestroy {
   }
 
   setSlide(slide: SlideData) {
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(SlideItem.getComponent(slide.type))
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
+      SlideItem.getComponent(slide.slide.type)
+    )
     const viewContainerRef = this.slideHost.viewContainerRef
     viewContainerRef.clear()
     const componentRef = viewContainerRef.createComponent(componentFactory)
-    ;(componentRef.instance as SlideComponent).data = slide.data
+    ;(componentRef.instance as SlideComponent).data = slide.slide
   }
 
   /**

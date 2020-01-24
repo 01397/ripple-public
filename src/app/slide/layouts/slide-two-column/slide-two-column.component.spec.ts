@@ -1,25 +1,24 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { SlideTwoColumnComponent } from './slide-two-column.component';
+import { SlideTwoColumnComponent } from './slide-two-column.component'
 
 describe('SlideTwoColumnComponent', () => {
-  let component: SlideTwoColumnComponent;
-  let fixture: ComponentFixture<SlideTwoColumnComponent>;
+  let component: SlideTwoColumnComponent
+  let fixture: ComponentFixture<SlideTwoColumnComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SlideTwoColumnComponent ]
-    })
-    .compileComponents();
-  }));
+      declarations: [SlideTwoColumnComponent],
+    }).compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SlideTwoColumnComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(SlideTwoColumnComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { SlideParagraphComponent } from './slide-paragraph.component'
+import { SlideQuiz1Component } from './slide-quiz1.component'
 
-describe('SlideParagraphComponent', () => {
-  let component: SlideParagraphComponent
-  let fixture: ComponentFixture<SlideParagraphComponent>
+describe('SlideQuiz1Component', () => {
+  let component: SlideQuiz1Component
+  let fixture: ComponentFixture<SlideQuiz1Component>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SlideParagraphComponent],
+      declarations: [SlideQuiz1Component],
     }).compileComponents()
   }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SlideParagraphComponent)
+    fixture = TestBed.createComponent(SlideQuiz1Component)
     component = fixture.componentInstance
     fixture.detectChanges()
   })

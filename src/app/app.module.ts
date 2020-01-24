@@ -25,8 +25,10 @@ import { SlideElementComponent } from './slide/elements/slide-element.component'
 import { SlideParagraphComponent } from './slide/elements/slide-paragraph/slide-paragraph.component'
 import { SlideTwoColumnComponent } from './slide/layouts/slide-two-column/slide-two-column.component'
 import { SlideTopicComponent } from './slide/layouts/slide-topic/slide-topic.component'
-import { SlideImageComponent } from './slide/elements/slide-image/slide-image.component';
+import { SlideImageComponent } from './slide/elements/slide-image/slide-image.component'
 import { SlideCodeComponent } from './slide/elements/slide-code/slide-code.component'
+import { SlideQuiz1Component } from './slide/elements/slide-quiz1/slide-quiz1.component'
+import { SlideAbstractComponent } from './slide/elements/slide-abstract-element.component'
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -76,6 +78,7 @@ const appRoutes: Routes = [
     SlideTopicComponent,
     SlideImageComponent,
     SlideCodeComponent,
+    SlideQuiz1Component,
   ],
   entryComponents: [
     SlideCoverComponent,

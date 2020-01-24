@@ -6,16 +6,19 @@ import {
   ComponentFactory,
   ComponentFactoryResolver,
   Input,
+  Type,
 } from '@angular/core'
 import { SlideParagraphComponent } from './slide-paragraph/slide-paragraph.component'
 import { SlideElementType } from '../slide-item'
 import { SlideImageComponent } from './slide-image/slide-image.component'
 import { SlideCodeComponent } from './slide-code/slide-code.component'
+import { SlideQuiz1Component } from './slide-quiz1/slide-quiz1.component'
+import { SlideAbstractComponent } from './slide-abstract-element.component'
 
-type SlideContent =
-  | { type: 'Paragraph'; content: any }
-  | { type: 'Image'; src: string; alt: string; width?: string; height?: string }
-  | { type: 'Code'; lang: string; code: string; }
+export enum QuizType {
+  selection,
+  multiSelection,
+}
 
 @Component({
   selector: 'app-slide-element',
@@ -23,43 +26,23 @@ type SlideContent =
   styleUrls: ['./slide-element.component.scss'],
 })
 export class SlideElementComponent implements OnInit {
-  @Input() contents: SlideContent[]
+  @Input() contents: SlideElementType[]
   @ViewChild('body', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef
 
   constructor(private resolver: ComponentFactoryResolver) {}
 
   ngOnInit() {
-    for (const content of this.contents) {
-      switch (content.type) {
-        case 'Paragraph':
-          this.addParagraph(content)
-          break
-        case 'Image':
-          this.addImage(content)
-          break
-        case 'Code':
-          this.addCode(content)
-          break
-      }
+    const components: { [key in SlideElementType['type']]: Type<SlideAbstractComponent> } = {
+      paragraph: SlideParagraphComponent,
+      image: SlideImageComponent,
+      code: SlideCodeComponent,
+      quiz1: SlideQuiz1Component,
     }
-  }
 
-  addParagraph(content: { content: any }) {
-    const factory = this.resolver.resolveComponentFactory(SlideParagraphComponent)
-    this.viewContainerRef.createComponent(factory).instance.content = content.content
-  }
-
-  addImage(content: { src: string; alt: string; width?: string; height?: string }) {
-    const factory = this.resolver.resolveComponentFactory(SlideImageComponent)
-    const instance = this.viewContainerRef.createComponent(factory).instance
-    instance.src = content.src
-    instance.alt = content.alt
-  }
-
-  addCode(content: { lang: string; code: string }) {
-    const factory = this.resolver.resolveComponentFactory(SlideCodeComponent)
-    const instance = this.viewContainerRef.createComponent(factory).instance
-    instance.lang = content.lang
-    instance.code = content.code
+    for (const content of this.contents) {
+      const factory = this.resolver.resolveComponentFactory(components[content.type])
+      const instance = this.viewContainerRef.createComponent(factory).instance
+      instance.content = content
+    }
   }
 }

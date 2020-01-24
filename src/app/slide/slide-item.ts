@@ -1,44 +1,35 @@
 import { Type } from '@angular/core'
 import { SlideCodingComponent } from './layouts/slide-coding/slide-coding.component'
-import { SlideCoverComponent } from './layouts/slide-cover/slide-cover.component'
-import { SlideOneColumnComponent } from './layouts/slide-one-column/slide-one-column.component'
+import { SlideCoverComponent, CoverSlideType } from './layouts/slide-cover/slide-cover.component'
+import { SlideOneColumnComponent, OneColumnSlideType } from './layouts/slide-one-column/slide-one-column.component'
 import { SlideComponent } from './layouts/slide.component'
-import { SlideTwoColumnComponent } from './layouts/slide-two-column/slide-two-column.component'
-import { SlideTopicComponent } from './layouts/slide-topic/slide-topic.component'
+import { SlideTwoColumnComponent, TwoColumnSlideType } from './layouts/slide-two-column/slide-two-column.component'
+import { SlideTopicComponent, TopicSlideType } from './layouts/slide-topic/slide-topic.component'
+import { CodeElementType } from './elements/slide-code/slide-code.component'
+import { ParagraphElementType } from './elements/slide-paragraph/slide-paragraph.component'
+import { ImageElementType } from './elements/slide-image/slide-image.component'
+import { QuizElementType } from './elements/slide-quiz1/slide-quiz1.component'
 
-export type SlideType = 'Cover' | 'OneColumn' | 'TwoColumn' | 'Topic'
-export type SlideElementType = 'Paragraph' | 'Image'
+export interface SlideData {
+  title: string
+  slide: SlideType
+}
+export type SlideType = CoverSlideType | TopicSlideType | OneColumnSlideType | TwoColumnSlideType
+export type SlideElementType = ParagraphElementType | ImageElementType | CodeElementType | QuizElementType
 
 export class SlideItem {
   constructor(public component: Type<any>, public data: any) {}
 
-  static getComponent(type: SlideType): Type<SlideComponent> {
+  static getComponent(type: SlideType['type']): Type<SlideComponent> {
     switch (type) {
-      case 'Cover':
+      case 'cover':
         return SlideCoverComponent
-      case 'OneColumn':
+      case 'oneColumn':
         return SlideOneColumnComponent
-      case 'TwoColumn':
+      case 'twoColumn':
         return SlideTwoColumnComponent
-      case 'Topic':
+      case 'topic':
         return SlideTopicComponent
     }
   }
-}
-
-export class CoverSlideItem extends SlideItem {
-  constructor(public data: { author: string; organization: string; course: string; lesson: string }) {
-    super(SlideCodingComponent, data)
-  }
-}
-export class OneColumnSlideItem extends SlideItem {
-  constructor(public data: { author: string; organization: string; course: string; lesson: string }) {
-    super(SlideCodingComponent, data)
-  }
-}
-
-export interface SlideData {
-  title: string
-  type: SlideType
-  data: any
 }

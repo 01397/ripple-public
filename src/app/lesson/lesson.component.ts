@@ -23,8 +23,8 @@ export class LessonComponent implements OnInit {
     const slideData: SlideData[] = [
       {
         title: 'title-slide test',
-        type: 'Cover',
-        data: {
+        slide: {
+          type: 'cover',
           author: '〇〇 太郎',
           organization: '〇〇教室',
           course: '〇〇 Step 1',
@@ -33,37 +33,41 @@ export class LessonComponent implements OnInit {
       },
       {
         title: '1col-slide test',
-        type: 'OneColumn',
-        data: {
+        slide: {
+          type: 'oneColumn',
           title: '1カラムのスライド',
           body: [
-            { type: 'Paragraph', content: this.sampleText },
-            { type: 'Image', src: '/assets/images/sample.png' },
+            { type: 'paragraph', body: this.sampleText },
+            { type: 'image', src: '/assets/images/sample.png' },
           ],
         },
       },
       {
         title: '2col-slide test',
-        type: 'TwoColumn',
-        data: {
+        slide: {
+          type: 'twoColumn',
           title: '2カラムのスライド',
           left: [
-            { type: 'Paragraph', content: this.sampleText },
-            { type: 'Code', lang: 'python', code: 'sum = 0\nfor i in range(100):\n   sum = sum + i\nprint(sum)' },
+            { type: 'paragraph', body: this.sampleText },
+            {
+              type: 'code',
+              lang: 'python',
+              code: 'sum = 0\nfor i in range(100):\n   sum = sum + i\nprint(sum)',
+            },
           ],
           right: [
-            { type: 'Paragraph', content: this.sampleText },
-            { type: 'Image', src: '/assets/images/sample.png' },
+            { type: 'paragraph', body: this.sampleText },
+            { type: 'image', src: '/assets/images/sample.png' },
           ],
         },
       },
       {
         title: 'topic-slide test',
-        type: 'Topic',
-        data: {
+        slide: {
+          type: 'topic',
           title: '用語概念スライド',
-          left: [{ type: 'Paragraph', content: this.sampleText }],
-          right: [{ type: 'Paragraph', content: this.sampleText }],
+          left: [{ type: 'paragraph', body: this.sampleText }],
+          right: [{ type: 'paragraph', body: this.sampleText }],
         },
       },
     ]
