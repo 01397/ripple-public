@@ -39,8 +39,14 @@ export class LessonComponent implements OnInit {
       type: 'TwoColumn',
       data: {
         title: '〇〇について',
-        left: [{ type: 'Paragraph', content: 'two-column test\n左！！！' }],
-        right: [{ type: 'Paragraph', content: 'two-column test\n右！！！' }],
+        left: [
+          { type: 'Paragraph', content: 'two-column test\n左！！！' },
+          { type: 'Code', lang: 'python', code: 'sum = 0\nfor i in range(100):\n   sum = sum + i\nprint(sum)' },
+        ],
+        right: [
+          { type: 'Paragraph', content: 'two-column test\n右！！！' },
+          { type: 'Image', src: '/assets/images/sample.png' },
+        ],
       },
     },
     {

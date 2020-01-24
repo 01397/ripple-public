@@ -10,10 +10,12 @@ import {
 import { SlideParagraphComponent } from './slide-paragraph/slide-paragraph.component'
 import { SlideElementType } from '../slide-item'
 import { SlideImageComponent } from './slide-image/slide-image.component'
+import { SlideCodeComponent } from './slide-code/slide-code.component'
 
 type SlideContent =
   | { type: 'Paragraph'; content: any }
   | { type: 'Image'; src: string; alt: string; width?: string; height?: string }
+  | { type: 'Code'; lang: string; code: string; }
 
 @Component({
   selector: 'app-slide-element',
@@ -35,6 +37,9 @@ export class SlideElementComponent implements OnInit {
         case 'Image':
           this.addImage(content)
           break
+        case 'Code':
+          this.addCode(content)
+          break
       }
     }
   }
@@ -49,5 +54,12 @@ export class SlideElementComponent implements OnInit {
     const instance = this.viewContainerRef.createComponent(factory).instance
     instance.src = content.src
     instance.alt = content.alt
+  }
+
+  addCode(content: { lang: string; code: string }) {
+    const factory = this.resolver.resolveComponentFactory(SlideCodeComponent)
+    const instance = this.viewContainerRef.createComponent(factory).instance
+    instance.lang = content.lang
+    instance.code = content.code
   }
 }
