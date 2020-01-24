@@ -12,6 +12,7 @@ import { SlideDirective } from './slide.directive'
 import { SlideItem, SlideData } from '../../slide-item'
 import { SlideComponent } from '../slide.component'
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser'
+import { SlideService } from '../../slide.service'
 
 @Component({
   selector: 'app-slide-container',
@@ -19,12 +20,6 @@ import { DomSanitizer, SafeStyle } from '@angular/platform-browser'
   styleUrls: ['./slide-container.component.scss'],
 })
 export class SlideContainerComponent implements OnInit, OnDestroy {
-  @Input() slides: SlideData[]
-  private _slideIndex: number = 0
-  @Input() set slideIndex(value: number) {
-    this._slideIndex = value
-    this.setSlide(this._slideIndex)
-  }
   @ViewChild(SlideDirective, { static: true }) slideHost: SlideDirective
   private transform: string
   public safeTransform: SafeStyle
@@ -34,27 +29,32 @@ export class SlideContainerComponent implements OnInit, OnDestroy {
   constructor(
     private el: ElementRef,
     private componentFactoryResolver: ComponentFactoryResolver,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private slideService: SlideService
   ) {
     this.hostElement = this.el.nativeElement
   }
 
   ngOnInit() {
-    this.setSlide(this._slideIndex)
     this.adjustScale()
+    console.log(20)
+    this.slideService.slideSubject.subscribe(slide => this.setSlide(slide))
   }
   ngOnDestroy() {
     clearInterval(this.interval)
   }
-  setSlide(index) {
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
-      SlideItem.getComponent(this.slides[index].type)
-    )
+
+  setSlide(slide: SlideData) {
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(SlideItem.getComponent(slide.type))
     const viewContainerRef = this.slideHost.viewContainerRef
     viewContainerRef.clear()
     const componentRef = viewContainerRef.createComponent(componentFactory)
-    ;(componentRef.instance as SlideComponent).data = this.slides[index].data
+    ;(componentRef.instance as SlideComponent).data = slide.data
   }
+
+  /**
+   * 画面サイズに応じて表示倍率を変更
+   */
   @HostListener('window:resize')
   adjustScale() {
     const clientWidth = this.hostElement.clientWidth
