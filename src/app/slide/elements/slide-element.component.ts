@@ -14,6 +14,7 @@ import { SlideImageComponent } from './slide-image/slide-image.component'
 import { SlideCodeComponent } from './slide-code/slide-code.component'
 import { SlideQuiz1Component } from './slide-quiz1/slide-quiz1.component'
 import { SlideAbstractComponent } from './slide-abstract-element.component'
+import { SlideFillingCodeComponent } from './slide-filling-code/slide-filling-code.component'
 
 export enum QuizType {
   selection,
@@ -37,6 +38,7 @@ export class SlideElementComponent implements OnInit {
       image: SlideImageComponent,
       code: SlideCodeComponent,
       quiz1: SlideQuiz1Component,
+      fillingCode: SlideFillingCodeComponent,
     }
 
     for (const content of this.contents) {

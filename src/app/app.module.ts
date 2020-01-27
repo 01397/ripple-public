@@ -28,7 +28,8 @@ import { SlideTopicComponent } from './slide/layouts/slide-topic/slide-topic.com
 import { SlideImageComponent } from './slide/elements/slide-image/slide-image.component'
 import { SlideCodeComponent } from './slide/elements/slide-code/slide-code.component'
 import { SlideQuiz1Component } from './slide/elements/slide-quiz1/slide-quiz1.component'
-import { SlideAbstractComponent } from './slide/elements/slide-abstract-element.component'
+import { SlideAbstractComponent } from './slide/elements/slide-abstract-element.component';
+import { SlideFillingCodeComponent } from './slide/elements/slide-filling-code/slide-filling-code.component'
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -79,6 +80,7 @@ const appRoutes: Routes = [
     SlideImageComponent,
     SlideCodeComponent,
     SlideQuiz1Component,
+    SlideFillingCodeComponent,
   ],
   entryComponents: [
     SlideCoverComponent,
@@ -90,6 +92,7 @@ const appRoutes: Routes = [
     SlideImageComponent,
     SlideCodeComponent,
     SlideQuiz1Component,
+    SlideFillingCodeComponent,
   ],
   imports: [
     RouterModule.forRoot(

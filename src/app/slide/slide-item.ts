@@ -9,13 +9,19 @@ import { CodeElementType } from './elements/slide-code/slide-code.component'
 import { ParagraphElementType } from './elements/slide-paragraph/slide-paragraph.component'
 import { ImageElementType } from './elements/slide-image/slide-image.component'
 import { QuizElementType } from './elements/slide-quiz1/slide-quiz1.component'
+import { FillingCodeElementType } from './elements/slide-filling-code/slide-filling-code.component'
 
 export interface SlideData {
   title: string
   slide: SlideType
 }
 export type SlideType = CoverSlideType | TopicSlideType | OneColumnSlideType | TwoColumnSlideType
-export type SlideElementType = ParagraphElementType | ImageElementType | CodeElementType | QuizElementType
+export type SlideElementType =
+  | ParagraphElementType
+  | ImageElementType
+  | CodeElementType
+  | QuizElementType
+  | FillingCodeElementType
 
 export class SlideItem {
   constructor(public component: Type<any>, public data: any) {}

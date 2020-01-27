@@ -24,3 +24,25 @@ h5,
 h6 {
   font-weight: 500;
 }
+
+.hljs {
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
+  border-radius: 6px;
+}
+.hljs input[type='text'] {
+  color: #222;
+  font-family: 'M Plus 1p';
+  font-size: 18px;
+  font-weight: normal;
+  font-style: normal;
+  padding: 0 0.5em;
+  border: none;
+  border-radius: 6px;
+  background-color: rgba(255, 255, 255, 0.75);
+  transition: background-color 0.3s;
+  width: 5em;
+}
+.hljs input[type='text']:focus {
+  background-color: rgba(255, 255, 255, 1);
+  outline: none;
+}

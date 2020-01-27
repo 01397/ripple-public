@@ -40,7 +40,27 @@ export class LessonComponent implements OnInit {
           title: '1カラムのスライド',
           body: [
             { type: 'paragraph', body: this.sampleText },
-            { type: 'image', src: '/assets/images/sample.png' },
+            {
+              type: 'fillingCode',
+              code: `@requires_authorization
+def BLANK(param1='', param2=0):
+    r'''A docstring'''
+    if BLANK > param2: # BLANK
+        print 'Gre\\\'ater'
+    BLANK (param2 - BLANK + 1 + 0b10l) or None
+
+class SomeClass:
+    pass
+
+>>> message = '''interpreter
+... prompt'''`,
+              blanks: [
+                {
+                  size: 3,
+                  check: ['equalTo', '3'],
+                },
+              ],
+            },
           ],
         },
       },
@@ -79,7 +99,7 @@ export class LessonComponent implements OnInit {
           type: 'topic',
           title: '用語概念スライド',
           left: [{ type: 'paragraph', body: this.sampleText }],
-          right: [{ type: 'paragraph', body: this.sampleText }],
+          right: [{ type: 'image', src: '/assets/images/sample.png' }],
         },
       },
     ]
