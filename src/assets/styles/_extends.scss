@@ -43,3 +43,23 @@
   width: max-content;
   display: block;
 }
+
+.slide-rounded-button {
+  background-color: $slide-main;
+  transition: background-color 0.3s ease;
+  color: $mono-100;
+  padding: 0 1em;
+  font-weight: bold;
+  letter-spacing: 0.5em;
+  text-indent: 0.5em;
+  font-size: 24px;
+  border-radius: 24px;
+  box-shadow: $card-shadow;
+  appearance: none;
+  outline: none;
+  margin-top: 8px;
+}
+
+.slide-rounded-button:hover {
+  background-color: lighten($slide-main, 10%);
+}

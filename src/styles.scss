@@ -28,6 +28,7 @@ h6 {
 .hljs {
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
   border-radius: 6px;
+  overflow: auto;
 }
 .hljs input[type='text'] {
   color: #222;
@@ -45,4 +46,7 @@ h6 {
 .hljs input[type='text']:focus {
   background-color: rgba(255, 255, 255, 1);
   outline: none;
+}
+.hljs input.wrong[type='text'] {
+  background-color: hsl(328, 100%, 80%);
 }

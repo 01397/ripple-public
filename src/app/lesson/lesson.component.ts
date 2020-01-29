@@ -42,22 +42,27 @@ export class LessonComponent implements OnInit {
             { type: 'paragraph', body: this.sampleText },
             {
               type: 'fillingCode',
-              code: `@requires_authorization
-def BLANK(param1='', param2=0):
-    r'''A docstring'''
-    if BLANK > param2: # BLANK
-        print 'Gre\\\'ater'
-    BLANK (param2 - BLANK + 1 + 0b10l) or None
-
-class SomeClass:
-    pass
-
->>> message = '''interpreter
-... prompt'''`,
+              code: `age = 25
+print(/"私は/" + str(BLANK) + /'歳です/')
+BLANK age < 20 :
+    print(/'未成年なのでお酒は飲めません。/')
+BLANK :
+    print(/'成人しているのでお酒を飲めます。/')`,
               blanks: [
                 {
                   size: 3,
-                  check: ['equalTo', '3'],
+                  type: 'equalTo',
+                  values: ['age'],
+                },
+                {
+                  size: 3,
+                  type: 'equalTo',
+                  values: ['if'],
+                },
+                {
+                  size: 3,
+                  type: 'equalTo',
+                  values: ['else'],
                 },
               ],
             },

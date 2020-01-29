@@ -1,1 +1,3 @@
-<pre class="hljs"><code [innerHTML]="code"></code></pre>
+<pre class="hljs" #codeElement><code [innerHTML]="code"></code></pre>
+<input type="button" class="button" value="確認" (click)="check()" *ngIf="!compleated; else cleared" />
+<ng-template #cleared>Clear!</ng-template>
