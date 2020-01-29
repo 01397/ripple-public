@@ -43,11 +43,11 @@ export class LessonComponent implements OnInit {
             {
               type: 'fillingCode',
               code: `age = 25
-print(/"私は/" + str(BLANK) + /'歳です/')
+print("私は" + str(BLANK) + "歳です")
 BLANK age < 20 :
-    print(/'未成年なのでお酒は飲めません。/')
+    print("未成年なのでお酒は飲めません。")
 BLANK :
-    print(/'成人しているのでお酒を飲めます。/')`,
+    print("成人しているのでお酒を飲めます。")`,
               blanks: [
                 {
                   size: 3,
