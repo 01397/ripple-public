@@ -31,7 +31,6 @@ export class SlideQuiz1Component extends SlideAbstractComponent {
     this.options = new Array(len).fill(null).map((v, i) => this.content.options[this.order[i]])
     this.selected = new Array(len).fill(false)
     this.slideService.lock()
-    console.log(this)
   }
 
   shuffle(a: number[]) {
