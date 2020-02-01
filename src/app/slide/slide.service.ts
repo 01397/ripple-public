@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core'
 import { SlideData } from './slide-item'
-import { BehaviorSubject, Subject } from 'rxjs'
+import { BehaviorSubject, Subject, Observable } from 'rxjs'
+import { HttpClient } from '@angular/common/http'
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,7 @@ export class SlideService {
       body: [
         {
           type: 'paragraph',
-          body: 'やほ',
+          body: 'もう一度お試しください',
         },
       ],
     },
@@ -27,7 +28,7 @@ export class SlideService {
   private limit: number
   public nav = new Subject<{ back: boolean; forward: boolean }>()
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   /**
    * 画面更新が必要なタイミングで呼び出す
@@ -47,6 +48,10 @@ export class SlideService {
     this.limit = this.slideData.length
     this.index = index
     this.updateSlide()
+  }
+
+  fetchSlideData(slideID: string): Observable<{ id: number; body: SlideData[] }> {
+    return this.http.get('api/lessons/' + slideID) as any
   }
 
   /**

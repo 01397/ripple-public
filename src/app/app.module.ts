@@ -15,7 +15,6 @@ import { NotFoundComponent } from './not-found/not-found.component'
 import { SettingsComponent } from './settings/settings.component'
 import { LessonComponent } from './lesson/lesson.component'
 import { EditorComponent } from './editor/editor.component'
-import { SlideComponent } from './slide/layouts/slide.component'
 import { SlideCoverComponent } from './slide/layouts/slide-cover/slide-cover.component'
 import { SlideCodingComponent } from './slide/layouts/slide-coding/slide-coding.component'
 import { SlideDirective } from './slide/layouts/slide-container/slide.directive'
@@ -28,8 +27,24 @@ import { SlideTopicComponent } from './slide/layouts/slide-topic/slide-topic.com
 import { SlideImageComponent } from './slide/elements/slide-image/slide-image.component'
 import { SlideCodeComponent } from './slide/elements/slide-code/slide-code.component'
 import { SlideQuiz1Component } from './slide/elements/slide-quiz1/slide-quiz1.component'
-import { SlideAbstractComponent } from './slide/elements/slide-abstract-element.component';
+import { SlideAbstractComponent } from './slide/elements/slide-abstract-element.component'
 import { SlideFillingCodeComponent } from './slide/elements/slide-filling-code/slide-filling-code.component'
+import { SlideEditorComponent } from './slide-editor/slide-editor.component'
+import { SlideEditorElementComponent } from './slide-editor/element/element.component'
+import { InMemoryApiService } from './in-memoryw-api.service'
+import { FormsModule } from '@angular/forms'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import {
+  MatInputModule,
+  MatExpansionModule,
+  MatFormFieldModule,
+  MatSelectModule,
+  MatRadioModule,
+  MatCardModule,
+  MatMenuModule,
+  MatButtonModule,
+} from '@angular/material'
+import { HttpClientInMemoryWebApiModule, InMemoryDbService } from 'angular-in-memory-web-api'
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -44,6 +59,10 @@ const appRoutes: Routes = [
   {
     path: 'lesson',
     component: LessonComponent,
+  },
+  {
+    path: 'slide-editor',
+    component: SlideEditorComponent,
   },
   {
     path: 'notifications',
@@ -81,6 +100,8 @@ const appRoutes: Routes = [
     SlideCodeComponent,
     SlideQuiz1Component,
     SlideFillingCodeComponent,
+    SlideEditorComponent,
+    SlideEditorElementComponent,
   ],
   entryComponents: [
     SlideCoverComponent,
@@ -103,9 +124,20 @@ const appRoutes: Routes = [
     AppRoutingModule,
     AceEditorModule,
     HttpClientModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    HttpClientInMemoryWebApiModule.forRoot(InMemoryApiService),
+    MatInputModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatExpansionModule,
+    MatRadioModule,
+    MatCardModule,
+    MatMenuModule,
+    MatButtonModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [],
+  providers: [InMemoryApiService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
