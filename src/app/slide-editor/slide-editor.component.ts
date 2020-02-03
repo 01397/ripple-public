@@ -8,13 +8,15 @@ import { SlideService } from 'app/slide/slide.service'
   styleUrls: ['./slide-editor.component.scss'],
 })
 export class SlideEditorComponent implements OnInit {
-  public type: SlideType['type']
   public slideTypes: { type: SlideType['type']; label: string }[] = [
     { type: 'cover', label: '表紙' },
     { type: 'oneColumn', label: '1カラム' },
     { type: 'twoColumn', label: '2カラム' },
     { type: 'topic', label: '用語,概念' },
   ]
+  public titleList: string[]
+  public current: SlideData
+  public currentIndex: number
 
   constructor(private slideService: SlideService) {}
 
@@ -22,5 +24,16 @@ export class SlideEditorComponent implements OnInit {
     this.slideService.fetchSlideData('1').subscribe(data => {
       this.slideService.setSlideData(data.body)
     })
+    this.slideService.titleListSubject.subscribe(list => {
+      this.titleList = list
+    })
+    this.slideService.slideSubject.subscribe(slide => {
+      this.current = slide
+      this.currentIndex = this.slideService.index
+    })
+  }
+
+  changeSlide(index: number) {
+    this.slideService.go(index, true)
   }
 }

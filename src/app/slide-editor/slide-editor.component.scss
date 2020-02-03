@@ -6,7 +6,7 @@
   height: 100%;
 }
 .slide-container {
-  background-color: #222;
+  background-color: $mono-10;
   grid-column: 1;
   grid-row: 1;
   min-width: 0;
@@ -21,6 +21,7 @@
   overflow-y: auto;
   grid-column: 1;
   grid-row: 2;
+  border-top: 4px solid$mono-10;
 }
 .property-container {
   border-left: 1px solid $mono-60;

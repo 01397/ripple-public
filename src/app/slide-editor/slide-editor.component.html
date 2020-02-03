@@ -1,23 +1,23 @@
 <div class="slide-container">
   <app-slide-container class="slide"></app-slide-container>
 </div>
-<div id="index"></div>
+<div id="index">
+  <div
+    *ngFor="let title of titleList; let i = index"
+    (click)="changeSlide(i)"
+    [ngClass]="{ active: i == currentIndex }"
+  >
+    {{ i + 1 }} {{ title }}
+  </div>
+</div>
 <div class="property-container">
   <div class="property-group property-meta">
     <mat-form-field>
       <mat-label>スライド名</mat-label>
       <input matInput placeholder="(名前無し)" />
     </mat-form-field>
-    <mat-form-field>
-      <mat-label>スライドの種類</mat-label>
-      <mat-select [(ngModel)]="type" name="slide-select">
-        <mat-option *ngFor="let t of slideTypes" [value]="t.type">
-          {{ t.label }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
   </div>
-  <ng-container [ngSwitch]="type">
+  <ng-container [ngSwitch]="current.slide.type">
     <ng-container *ngSwitchCase="'cover'">
       <div class="property-group">
         <div class="property-title">表紙</div>
@@ -25,25 +25,25 @@
           <div class="property-row">
             <mat-form-field>
               <mat-label>コース名</mat-label>
-              <input matInput />
+              <input matInput [(ngModel)]="current.slide.course" />
             </mat-form-field>
           </div>
           <div class="property-row">
             <mat-form-field>
               <mat-label>タイトル</mat-label>
-              <input matInput />
+              <input matInput [(ngModel)]="current.slide.lesson" />
             </mat-form-field>
           </div>
           <div class="property-row">
             <mat-form-field>
               <mat-label>教室名</mat-label>
-              <input matInput />
+              <input matInput [(ngModel)]="current.slide.organization" />
             </mat-form-field>
           </div>
           <div class="property-row">
             <mat-form-field>
               <mat-label>作成者名</mat-label>
-              <input matInput />
+              <input matInput [(ngModel)]="current.slide.author" />
             </mat-form-field>
           </div>
         </div>
@@ -55,15 +55,67 @@
         <div class="property-title">タイトル</div>
         <div class="property-body">
           <div class="property-row">
-            <mat-form-field appearance="standard">
+            <mat-form-field>
               <mat-label>タイトルテキスト</mat-label>
-              <input matInput />
+              <input matInput [(ngModel)]="current.slide.title" />
             </mat-form-field>
           </div>
         </div>
       </div>
       <div class="property-group">
         <div class="property-title">本文</div>
+        <div class="property-body">
+          <app-slide-editor-element></app-slide-editor-element>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'twoColumn'">
+      <div class="property-group">
+        <div class="property-title">タイトル</div>
+        <div class="property-body">
+          <div class="property-row">
+            <mat-form-field>
+              <mat-label>タイトルテキスト</mat-label>
+              <input matInput [(ngModel)]="current.slide.title" />
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="property-group">
+        <div class="property-title">左側</div>
+        <div class="property-body">
+          <app-slide-editor-element></app-slide-editor-element>
+        </div>
+      </div>
+      <div class="property-group">
+        <div class="property-title">右側</div>
+        <div class="property-body">
+          <app-slide-editor-element></app-slide-editor-element>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'topic'">
+      <div class="property-group">
+        <div class="property-title">タイトル</div>
+        <div class="property-body">
+          <div class="property-row">
+            <mat-form-field>
+              <mat-label>タイトルテキスト</mat-label>
+              <input matInput [(ngModel)]="current.slide.title" />
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="property-group">
+        <div class="property-title">左側</div>
+        <div class="property-body">
+          <app-slide-editor-element></app-slide-editor-element>
+        </div>
+      </div>
+      <div class="property-group">
+        <div class="property-title">右側</div>
         <div class="property-body">
           <app-slide-editor-element></app-slide-editor-element>
         </div>

@@ -8,20 +8,21 @@ import { HttpClient } from '@angular/common/http'
 })
 export class SlideService {
   private slideData: SlideData[] = []
-  private index: number
+  public index: number
   public slideSubject = new BehaviorSubject<SlideData>({
-    title: 'エラー',
+    title: '読み込み中',
     slide: {
       type: 'oneColumn',
-      title: 'エラーが発生しました',
+      title: '読み込み中',
       body: [
         {
           type: 'paragraph',
-          body: 'もう一度お試しください',
+          body: 'しばらく経っても画面が切り替わらない場合は、もう一度お試しください',
         },
       ],
     },
   })
+  public titleListSubject = new BehaviorSubject<string[]>(['読み込み中'])
   /**
    * スライド番号の上限。
    */
@@ -47,6 +48,7 @@ export class SlideService {
     this.slideData = slideData
     this.limit = this.slideData.length
     this.index = index
+    this.titleListSubject.next(slideData.map(data => data.title))
     this.updateSlide()
   }
 
@@ -75,8 +77,8 @@ export class SlideService {
    * @param index スライド番号
    * @returns 移動できたか?
    */
-  go(index: number) {
-    if (this.limit < index || index < 0 || this.slideData.length - 1 < index) {
+  go(index: number, force = false) {
+    if ((this.limit < index && !force) || index < 0 || this.slideData.length - 1 < index) {
       return false
     }
     this.index = index
