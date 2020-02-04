@@ -1,22 +1,27 @@
 <div class="slide-container">
   <app-slide-container class="slide"></app-slide-container>
 </div>
+<div class="slide-footer-container">
+  <input type="text" id="slide-footer-field" [(ngModel)]="current.title">
+</div>
 <div id="index">
-  <div
-    *ngFor="let title of titleList; let i = index"
-    (click)="changeSlide(i)"
-    [ngClass]="{ active: i == currentIndex }"
-  >
-    {{ i + 1 }} {{ title }}
-  </div>
+  <div class="index-title">目次</div>
+  <mat-action-list>
+    <button
+      mat-list-item
+      *ngFor="let title of titleList; let i = index"
+      (click)="changeSlide(i)"
+      class="index-list-item"
+      [ngClass]="{ active: i == currentIndex }"
+    >
+      {{ i + 1 }}. {{ title }}
+    </button>
+  </mat-action-list>
+</div>
+<div class="tts-container">
+  <div class="tts-header"></div>
 </div>
 <div class="property-container">
-  <div class="property-group property-meta">
-    <mat-form-field>
-      <mat-label>スライド名</mat-label>
-      <input matInput placeholder="(名前無し)" />
-    </mat-form-field>
-  </div>
   <ng-container [ngSwitch]="current.slide.type">
     <ng-container *ngSwitchCase="'cover'">
       <div class="property-group">
@@ -30,7 +35,7 @@
           </div>
           <div class="property-row">
             <mat-form-field>
-              <mat-label>タイトル</mat-label>
+              <mat-label>見出し</mat-label>
               <input matInput [(ngModel)]="current.slide.lesson" />
             </mat-form-field>
           </div>
@@ -52,11 +57,11 @@
 
     <ng-container *ngSwitchCase="'oneColumn'">
       <div class="property-group">
-        <div class="property-title">タイトル</div>
+        <div class="property-title">見出し</div>
         <div class="property-body">
           <div class="property-row">
             <mat-form-field>
-              <mat-label>タイトルテキスト</mat-label>
+              <mat-label>見出しテキスト</mat-label>
               <input matInput [(ngModel)]="current.slide.title" />
             </mat-form-field>
           </div>
@@ -72,11 +77,11 @@
 
     <ng-container *ngSwitchCase="'twoColumn'">
       <div class="property-group">
-        <div class="property-title">タイトル</div>
+        <div class="property-title">見出し</div>
         <div class="property-body">
           <div class="property-row">
             <mat-form-field>
-              <mat-label>タイトルテキスト</mat-label>
+              <mat-label>見出しテキスト</mat-label>
               <input matInput [(ngModel)]="current.slide.title" />
             </mat-form-field>
           </div>
@@ -98,11 +103,11 @@
 
     <ng-container *ngSwitchCase="'topic'">
       <div class="property-group">
-        <div class="property-title">タイトル</div>
+        <div class="property-title">見出し</div>
         <div class="property-body">
           <div class="property-row">
             <mat-form-field>
-              <mat-label>タイトルテキスト</mat-label>
+              <mat-label>見出しテキスト</mat-label>
               <input matInput [(ngModel)]="current.slide.title" />
             </mat-form-field>
           </div>
@@ -123,3 +128,4 @@
     </ng-container>
   </ng-container>
 </div>
+

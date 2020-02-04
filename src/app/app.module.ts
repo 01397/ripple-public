@@ -44,6 +44,7 @@ import {
   MatMenuModule,
   MatButtonModule,
   MatCheckboxModule,
+  MatListModule,
 } from '@angular/material'
 import { HttpClientInMemoryWebApiModule, InMemoryDbService } from 'angular-in-memory-web-api'
 
@@ -137,6 +138,7 @@ const appRoutes: Routes = [
     MatMenuModule,
     MatButtonModule,
     MatCheckboxModule,
+    MatListModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [InMemoryApiService],

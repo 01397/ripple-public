@@ -1,67 +1,81 @@
 @import '~assets/styles/variables';
 :host {
   display: grid;
-  grid-template-columns: 1fr 500px;
-  grid-template-rows: 0.5fr 0.5fr;
+  grid-template-columns: 200px 1fr 400px;
+  grid-template-rows: 64px 3fr 64px 2fr;
   height: 100%;
 }
 .slide-container {
   background-color: $mono-10;
-  grid-column: 1;
-  grid-row: 1;
+  grid-column: 2;
+  grid-row: 2;
   min-width: 0;
   min-height: 0;
+  padding: 8px;
 }
 .slide {
   width: 100%;
   height: 100%;
   display: block;
 }
+.slide-footer-container {
+  background-color: $mono-10;
+  grid-column: 2;
+  grid-row: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#slide-footer-field {
+  appearance: none;
+  color: $mono-60;
+  font-weight: 500;
+  border: none;
+  background-color: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  text-align: center;
+  border-bottom: 1px solid transparent;
+  transition: color .2s, border-bottom-color .2s;
+  &:hover {
+    border-bottom-color: $primary-500;
+    color: $mono-90;
+  }
+  &:focus {
+    outline: none;
+    color: $mono-90;
+    border-bottom-color: $primary-200;
+  }
+}
 #index {
   overflow-y: auto;
   grid-column: 1;
-  grid-row: 2;
-  border-top: 4px solid$mono-10;
+  grid-row: 2/5;
+  border-right: 1px solid $mono-20;
+  color: $mono-10;
+}
+.index-list-item.active {
+  background-color: rgba(0, 0, 0, 0.15);
 }
 .property-container {
-  border-left: 1px solid $mono-60;
-  grid-column: 2;
-  grid-row: 1/3;
-  background-color: $mono-95;
+  border-left: 1px solid $mono-20;
+  grid-column: 3;
+  grid-row: 2/5;
+  color: $mono-10;
   overflow-y: scroll;
 }
 .property-group {
-  padding: 8px 0;
+  margin-bottom: 16px;
 }
-.property-meta {
-  display: flex;
-  justify-content: space-around;
-}
-.property-meta-input {
-  font-size: 20px;
-  flex: 1;
-}
-.property-title {
-  @include font-size(14);
+.property-title,
+.index-title {
+  @include font-size(18);
   font-weight: 700;
-  color: $mono-30;
+  color: $mono-20;
   display: flex;
   align-items: center;
-  margin-bottom: 8px;
-}
-.property-title::after,
-.property-title::before {
-  display: block;
-  content: '';
-  border-bottom: 1px solid $mono-70;
-}
-.property-title::after {
-  flex: 1;
-  margin-left: 0.3rem;
-}
-.property-title::before {
-  width: 0.7rem;
-  margin-right: 0.3rem;
+  margin: 8px 0;
+  padding-left: 8px;
 }
 .property-body {
   padding: 0 1rem;
