@@ -3,11 +3,11 @@
   *ngFor="let i of order"
   class="option"
   (click)="select(i)"
-  [ngClass]="{ selected: selected[i], correct: order[i] === content.answer }"
+  [ngClass]="{ selected: selected[i], correct: i === content.answer }"
 >
   <div class="option-symbol" *ngIf="!selected[i]"></div>
-  <i class="option-symbol material-icons" *ngIf="selected[i] && order[i] !== content.answer">clear</i>
-  <i class="option-symbol material-icons" *ngIf="selected[i] && order[i] === content.answer">done</i>
+  <i class="option-symbol material-icons" *ngIf="selected[i] && i !== content.answer">clear</i>
+  <i class="option-symbol material-icons" *ngIf="selected[i] && i === content.answer">done</i>
   <div class="option-name">
     {{ content.options[i] }}
   </div>

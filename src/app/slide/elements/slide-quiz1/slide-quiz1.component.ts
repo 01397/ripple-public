@@ -17,7 +17,13 @@ export interface QuizElementType {
 })
 export class SlideQuiz1Component extends SlideAbstractComponent {
   @Input() content: QuizElementType
+  /**
+   * 問題の並び順 order[表示順] = データid
+   */
   public order: number[]
+  /**
+   * selected[データid] == 選択済?
+   */
   public selected: boolean[]
 
   constructor(private slideService: SlideService) {
@@ -41,9 +47,8 @@ export class SlideQuiz1Component extends SlideAbstractComponent {
   }
 
   select(i: number) {
-    const id = this.order[i]
     this.selected[i] = true
-    if (id === this.content.answer) {
+    if (i === this.content.answer) {
       this.slideService.unlock()
     }
   }
