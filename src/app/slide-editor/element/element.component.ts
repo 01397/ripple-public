@@ -7,14 +7,15 @@ import { SlideElementType } from 'app/slide/slide-item'
   styleUrls: ['./element.component.scss'],
 })
 export class SlideEditorElementComponent implements OnInit {
-  public elementTypeList: { [key in SlideElementType['type']]: string } = {
-    paragraph: '段落',
-    image: '画像',
-    code: 'コード',
-    fillingCode: 'コード(穴埋め)',
-    quiz1: '4択',
-  }
-  public elements: SlideElementType[] = [
+  public elementTypeList: [SlideElementType['type'], string][] = [
+    ['paragraph', '段落'],
+    ['image', '画像'],
+    ['code', 'コード'],
+    ['fillingCode', 'コード(穴埋め)'],
+    ['quiz1', '4択'],
+  ]
+  @Input() public elements: SlideElementType[] = []
+  /*[
     { type: 'paragraph', body: '生麦生米生卵' },
     {
       type: 'fillingCode',
@@ -54,7 +55,7 @@ BLANK :
       ],
       shuffle: true,
     },
-  ]
+  ]*/
 
   constructor() {}
 
@@ -62,5 +63,10 @@ BLANK :
 
   addElement(type: SlideElementType['type']) {
     console.log(type)
+  }
+
+  // https://qiita.com/sassy_watson/items/9bd1cef78bfc110f0ba0
+  myTrackBy(index: number, obj: any): any {
+    return index
   }
 }

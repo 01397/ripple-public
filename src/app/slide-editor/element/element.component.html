@@ -9,8 +9,8 @@
   <mat-card-content>
     <ng-container [ngSwitch]="el.type">
       <ng-container *ngSwitchCase="'paragraph'">
-        <mat-form-field>
-          <textarea matInput placeholder="表示テキスト"></textarea>
+        <mat-form-field class="full-width">
+          <textarea matInput placeholder="表示テキスト" [(ngModel)]="el.body"></textarea>
         </mat-form-field>
       </ng-container>
 
@@ -21,38 +21,42 @@
       </ng-container>
 
       <ng-container *ngSwitchCase="'code'">
-        <mat-select name="lang-select" required>
+        <mat-select name="lang-select" required [(ngModel)]="el.lang">
           <mat-option value="python">Python</mat-option>
           <mat-option value="plain">プレーンテキスト</mat-option>
         </mat-select>
-        <mat-form-field>
-          <textarea matInput placeholder="コード"></textarea>
+        <mat-form-field class="full-width">
+          <textarea matInput placeholder="コード" [(ngModel)]="el.code"></textarea>
         </mat-form-field>
       </ng-container>
 
-      <ng-container *ngSwitchCase="'filling-code'">
-        <mat-select name="lang-select" required>
+      <ng-container *ngSwitchCase="'fillingCode'">
+        <mat-select name="lang-select" required [(ngModel)]="el.lang">
           <mat-option value="python">Python</mat-option>
           <mat-option value="plain">プレーンテキスト</mat-option>
         </mat-select>
-        <mat-form-field>
-          <textarea matInput placeholder="コード"></textarea>
+        <mat-form-field class="full-width">
+          <textarea matInput placeholder="コード" [(ngModel)]="el.code"></textarea>
         </mat-form-field>
       </ng-container>
 
       <ng-container *ngSwitchCase="'quiz1'">
-        <mat-radio-group aria-label="正答" required class="radio-block">
+        <mat-form-field class="full-width">
+          <input type="text" matInput placeholder="問題文" [(ngModel)]="el.title" />
+        </mat-form-field>
+        <mat-radio-group aria-label="正答" required class="radio-block" [(ngModel)]="el.answer">
           <mat-radio-button
             [value]="i"
-            *ngFor="let option of el.options; let i = index"
+            *ngFor="let option of el.options; let i = index; trackBy: myTrackBy"
             class="full-width-radio-button"
           >
-            <mat-form-field appearance="standard" class="radio-block-field" required>
+            <mat-form-field class="radio-block-field" required>
               <mat-label>選択肢{{ i + 1 }}</mat-label>
-              <input matInput [(ngModel)]="option" />
+              <input matInput [(ngModel)]="el.options[i]" />
             </mat-form-field>
           </mat-radio-button>
         </mat-radio-group>
+        <mat-checkbox [(ngModel)]="el.shuffle" checked>順序を入れ替える</mat-checkbox>
       </ng-container>
     </ng-container>
   </mat-card-content>

@@ -17,7 +17,6 @@ export interface QuizElementType {
 })
 export class SlideQuiz1Component extends SlideAbstractComponent {
   @Input() content: QuizElementType
-  public options: string[]
   public order: number[]
   public selected: boolean[]
 
@@ -27,8 +26,8 @@ export class SlideQuiz1Component extends SlideAbstractComponent {
 
   ngOnInit() {
     const len = this.content.options.length
-    this.order = this.shuffle(new Array(len).fill(null).map((v, i) => i))
-    this.options = new Array(len).fill(null).map((v, i) => this.content.options[this.order[i]])
+    const order = new Array(len).fill(null).map((v, i) => i)
+    this.order = this.content.shuffle ? this.shuffle(order) : order
     this.selected = new Array(len).fill(false)
     this.slideService.lock()
   }

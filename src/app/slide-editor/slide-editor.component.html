@@ -65,7 +65,7 @@
       <div class="property-group">
         <div class="property-title">本文</div>
         <div class="property-body">
-          <app-slide-editor-element></app-slide-editor-element>
+          <app-slide-editor-element [elements]="current.slide.body"></app-slide-editor-element>
         </div>
       </div>
     </ng-container>
@@ -85,13 +85,13 @@
       <div class="property-group">
         <div class="property-title">左側</div>
         <div class="property-body">
-          <app-slide-editor-element></app-slide-editor-element>
+          <app-slide-editor-element [elements]="current.slide.left"></app-slide-editor-element>
         </div>
       </div>
       <div class="property-group">
         <div class="property-title">右側</div>
         <div class="property-body">
-          <app-slide-editor-element></app-slide-editor-element>
+          <app-slide-editor-element [elements]="current.slide.right"></app-slide-editor-element>
         </div>
       </div>
     </ng-container>
@@ -111,13 +111,13 @@
       <div class="property-group">
         <div class="property-title">左側</div>
         <div class="property-body">
-          <app-slide-editor-element></app-slide-editor-element>
+          <app-slide-editor-element [elements]="current.slide.left"></app-slide-editor-element>
         </div>
       </div>
       <div class="property-group">
         <div class="property-title">右側</div>
         <div class="property-body">
-          <app-slide-editor-element></app-slide-editor-element>
+          <app-slide-editor-element [elements]="current.slide.right"></app-slide-editor-element>
         </div>
       </div>
     </ng-container>
