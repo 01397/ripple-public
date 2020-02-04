@@ -22,7 +22,6 @@ export class SlideService {
       ],
     },
   })
-  public titleListSubject = new BehaviorSubject<string[]>(['読み込み中'])
   /**
    * スライド番号の上限。
    */
@@ -48,12 +47,14 @@ export class SlideService {
     this.slideData = slideData
     this.limit = this.slideData.length
     this.index = index
-    this.titleListSubject.next(slideData.map(data => data.title))
     this.updateSlide()
   }
 
   fetchSlideData(slideID: string): Observable<{ id: number; body: SlideData[] }> {
     return this.http.get('api/lessons/' + slideID) as any
+  }
+  getSlide() {
+    return this.slideData
   }
 
   /**

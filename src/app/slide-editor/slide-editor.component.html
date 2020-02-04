@@ -2,19 +2,19 @@
   <app-slide-container class="slide"></app-slide-container>
 </div>
 <div class="slide-footer-container">
-  <input type="text" id="slide-footer-field" [(ngModel)]="current.title">
+  <input type="text" id="slide-footer-field" [(ngModel)]="current.title" />
 </div>
 <div id="index">
   <div class="index-title">目次</div>
   <mat-action-list>
     <button
       mat-list-item
-      *ngFor="let title of titleList; let i = index"
+      *ngFor="let slide of slideService.getSlide(); let i = index"
       (click)="changeSlide(i)"
       class="index-list-item"
       [ngClass]="{ active: i == currentIndex }"
     >
-      {{ i + 1 }}. {{ title }}
+      {{ i + 1 }}. {{ slide.title }}
     </button>
   </mat-action-list>
 </div>
@@ -128,4 +128,3 @@
     </ng-container>
   </ng-container>
 </div>
-

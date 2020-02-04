@@ -14,18 +14,14 @@ export class SlideEditorComponent implements OnInit {
     { type: 'twoColumn', label: '2カラム' },
     { type: 'topic', label: '用語,概念' },
   ]
-  public titleList: string[]
   public current: SlideData
   public currentIndex: number
 
-  constructor(private slideService: SlideService) {}
+  constructor(public slideService: SlideService) {}
 
   ngOnInit() {
     this.slideService.fetchSlideData('1').subscribe(data => {
       this.slideService.setSlideData(data.body)
-    })
-    this.slideService.titleListSubject.subscribe(list => {
-      this.titleList = list
     })
     this.slideService.slideSubject.subscribe(slide => {
       this.current = slide
