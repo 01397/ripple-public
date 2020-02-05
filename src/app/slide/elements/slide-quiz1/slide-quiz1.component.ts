@@ -52,4 +52,14 @@ export class SlideQuiz1Component extends SlideAbstractComponent {
       this.slideService.unlock()
     }
   }
+
+  static generateData(): QuizElementType {
+    return {
+      type: 'quiz1',
+      answer: 0,
+      options: ['', '', '', ''],
+      shuffle: true,
+      title: '',
+    }
+  }
 }

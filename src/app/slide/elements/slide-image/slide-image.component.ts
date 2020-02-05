@@ -18,4 +18,10 @@ export class SlideImageComponent extends SlideAbstractComponent {
   @Input() content: ImageElementType
 
   ngOnInit() {}
+  static generateData(): ImageElementType {
+    return {
+      type: 'image',
+      src: '',
+    }
+  }
 }

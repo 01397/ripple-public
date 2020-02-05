@@ -5,11 +5,14 @@ import { SlideOneColumnComponent, OneColumnSlideType } from './layouts/slide-one
 import { SlideComponent } from './layouts/slide.component'
 import { SlideTwoColumnComponent, TwoColumnSlideType } from './layouts/slide-two-column/slide-two-column.component'
 import { SlideTopicComponent, TopicSlideType } from './layouts/slide-topic/slide-topic.component'
-import { CodeElementType } from './elements/slide-code/slide-code.component'
-import { ParagraphElementType } from './elements/slide-paragraph/slide-paragraph.component'
-import { ImageElementType } from './elements/slide-image/slide-image.component'
-import { QuizElementType } from './elements/slide-quiz1/slide-quiz1.component'
-import { FillingCodeElementType } from './elements/slide-filling-code/slide-filling-code.component'
+import { CodeElementType, SlideCodeComponent } from './elements/slide-code/slide-code.component'
+import { ParagraphElementType, SlideParagraphComponent } from './elements/slide-paragraph/slide-paragraph.component'
+import { ImageElementType, SlideImageComponent } from './elements/slide-image/slide-image.component'
+import { QuizElementType, SlideQuiz1Component } from './elements/slide-quiz1/slide-quiz1.component'
+import {
+  FillingCodeElementType,
+  SlideFillingCodeComponent,
+} from './elements/slide-filling-code/slide-filling-code.component'
 
 export interface SlideData {
   title: string
@@ -36,6 +39,20 @@ export class SlideItem {
         return SlideTwoColumnComponent
       case 'topic':
         return SlideTopicComponent
+    }
+  }
+  static generateElement(type: SlideElementType['type']): SlideElementType {
+    switch (type) {
+      case 'code':
+        return SlideCodeComponent.generateData()
+      case 'fillingCode':
+        return SlideFillingCodeComponent.generateData()
+      case 'image':
+        return SlideImageComponent.generateData()
+      case 'paragraph':
+        return SlideParagraphComponent.generateData()
+      case 'quiz1':
+        return SlideQuiz1Component.generateData()
     }
   }
 }

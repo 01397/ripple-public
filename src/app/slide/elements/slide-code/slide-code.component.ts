@@ -25,4 +25,11 @@ export class SlideCodeComponent extends SlideAbstractComponent {
       this.options.fontSize = this.content.fontSize
     }
   }
+  static generateData(): CodeElementType {
+    return {
+      type: 'code',
+      code: '',
+      lang: 'plain',
+    }
+  }
 }

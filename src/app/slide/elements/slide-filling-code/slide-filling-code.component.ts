@@ -7,6 +7,7 @@ import { SlideService } from 'app/slide/slide.service'
 export interface FillingCodeElementType {
   type: 'fillingCode'
   code: string
+  lang: string
   blanks: BlankType[]
 }
 type BlankType = {
@@ -32,7 +33,7 @@ export class SlideFillingCodeComponent extends SlideAbstractComponent {
 
   ngOnInit() {
     const code = this.content.code
-    const hlResult = hljs.highlight('python', code)
+    const hlResult = hljs.highlight(this.content.lang, code)
     const text = hlResult.value.replace(/BLANK/gm, '<input type="text">')
     const html = this.sanitizer.bypassSecurityTrustHtml(text)
     this.code = html
@@ -61,5 +62,13 @@ export class SlideFillingCodeComponent extends SlideAbstractComponent {
         return blank.values.includes(value2)
     }
     return false
+  }
+  static generateData(): FillingCodeElementType {
+    return {
+      type: 'fillingCode',
+      code: '',
+      lang: 'python',
+      blanks: [],
+    }
   }
 }

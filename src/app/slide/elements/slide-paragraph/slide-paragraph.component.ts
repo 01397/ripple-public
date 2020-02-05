@@ -14,4 +14,11 @@ export class SlideParagraphComponent implements SlideAbstractComponent {
   @Input() content: ParagraphElementType
 
   ngOnInit() {}
+
+  static generateData(): ParagraphElementType {
+    return {
+      type: 'paragraph',
+      body: '',
+    }
+  }
 }

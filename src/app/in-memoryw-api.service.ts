@@ -33,6 +33,7 @@ export class InMemoryApiService implements InMemoryDbService {
                 },
                 {
                   type: 'fillingCode',
+                  lang: 'python',
                   code:
                     'age = 25\nprint("私は" + str(BLANK) + "歳です")\nBLANK age < 20 :\n    print("未成年なのでお酒は飲めません。")\nBLANK :\n    print("成人しているのでお酒を飲めます。")',
                   blanks: [
