@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core'
 
 import { InMemoryDbService } from 'angular-in-memory-web-api'
+import { SlideType, SlideData } from './slide/slide-item'
 
 @Injectable()
 export class InMemoryApiService implements InMemoryDbService {
-  private api: any = {
+  private api: { lessons: { id: number; body: SlideData[] }[] } = {
     // ユーザ情報とか
     lessons: [
       {
@@ -18,6 +19,9 @@ export class InMemoryApiService implements InMemoryDbService {
               organization: '〇〇教室',
               course: '〇〇 Step 1',
               lesson: 'タイトルスライド',
+            },
+            speech: {
+              text: '',
             },
           },
           {
@@ -56,6 +60,9 @@ export class InMemoryApiService implements InMemoryDbService {
                 },
               ],
             },
+            speech: {
+              text: '',
+            },
           },
           {
             title: '2col-slide test',
@@ -89,6 +96,9 @@ export class InMemoryApiService implements InMemoryDbService {
                 },
               ],
             },
+            speech: {
+              text: '',
+            },
           },
           {
             title: 'topic-slide test',
@@ -103,6 +113,9 @@ export class InMemoryApiService implements InMemoryDbService {
                 },
               ],
               right: [{ type: 'image', src: '/assets/images/sample.png' }],
+            },
+            speech: {
+              text: '',
             },
           },
         ],

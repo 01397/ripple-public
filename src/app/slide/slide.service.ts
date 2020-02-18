@@ -21,12 +21,17 @@ export class SlideService {
         },
       ],
     },
+    speech: {
+      text: '',
+    },
   })
   /**
    * スライド番号の上限。
    */
   private limit: number
   public nav = new Subject<{ back: boolean; forward: boolean }>()
+
+  public speechAudio = new Audio()
 
   constructor(private http: HttpClient) {}
 
@@ -113,5 +118,17 @@ export class SlideService {
   unlock() {
     this.limit = this.slideData.length
     this.updateNav()
+  }
+
+  speech() {
+    this.speechAudio.pause()
+    const ssml =
+      '<speak>' +
+      this.slideData[this.index].speech.text
+        .replace(/<(.+?s)>/g, '<break time="$1"/>')
+        .replace(/\[(.+?)\|(.+?)\]/g, '<sub alias="$2">$1</sub>') +
+      '</speak>'
+    this.speechAudio.src = 'api/tts?ssml=' + ssml
+    this.speechAudio.play()
   }
 }

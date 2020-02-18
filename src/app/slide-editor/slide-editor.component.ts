@@ -32,4 +32,8 @@ export class SlideEditorComponent implements OnInit {
   changeSlide(index: number) {
     this.slideService.go(index, true)
   }
+
+  public speech() {
+    this.slideService.speech()
+  }
 }

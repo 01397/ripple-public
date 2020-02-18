@@ -36,7 +36,7 @@
   font-size: inherit;
   text-align: center;
   border-bottom: 1px solid transparent;
-  transition: color .2s, border-bottom-color .2s;
+  transition: color 0.2s, border-bottom-color 0.2s;
   &:hover {
     border-bottom-color: $primary-500;
     color: $mono-90;
@@ -82,4 +82,27 @@
 }
 .property-row > * {
   width: 100%;
+}
+.tts-container {
+  grid-column: 2;
+  grid-row: 4;
+  padding: 8px;
+}
+.tts-field {
+  width: 100%;
+}
+.tts-card-footer {
+  display: flex;
+  align-items: center;
+}
+.tts-description {
+  flex: 1;
+  color: $mono-40;
+}
+.tts-description-code {
+  background-color: $mono-90;
+  border-radius: 4px;
+  padding: 2px;
+  margin: 0 4px;
+  font-family: 'Courier New', Courier, monospace;
 }

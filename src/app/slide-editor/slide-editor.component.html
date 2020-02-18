@@ -19,7 +19,29 @@
   </mat-action-list>
 </div>
 <div class="tts-container">
-  <div class="tts-header"></div>
+  <mat-card>
+    <mat-form-field class="tts-field">
+      <textarea
+        matInput
+        matTextareaAutosize
+        type="text"
+        placeholder="読み上げ文章"
+        [(ngModel)]="current.speech.text"
+      ></textarea>
+    </mat-form-field>
+    <div class="tts-card-footer">
+      <div class="tts-description">読み方:<code class="tts-description-code">[日本橋|にっぽんばし]</code></div>
+      <div class="tts-description">
+        間隔:<code class="tts-description-code">&lt;2s&gt;</code><code class="tts-description-code">&lt;100ms&gt;</code>
+      </div>
+      <button mat-stroked-button color="primary" (click)="speech()">
+        <ng-container *ngIf="this.slideService.speechAudio.paused; else pauseBtn">
+          <i class="material-icons">play_arrow</i>再生
+        </ng-container>
+        <ng-template #pauseBtn> <i class="material-icons">stop</i>停止 </ng-template>
+      </button>
+    </div>
+  </mat-card>
 </div>
 <div class="property-container">
   <ng-container [ngSwitch]="current.slide.type">

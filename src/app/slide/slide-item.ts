@@ -17,6 +17,9 @@ import {
 export interface SlideData {
   title: string
   slide: SlideType
+  speech: {
+    text: string
+  }
 }
 export type SlideType = CoverSlideType | TopicSlideType | OneColumnSlideType | TwoColumnSlideType
 export type SlideElementType =

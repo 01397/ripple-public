@@ -5,10 +5,10 @@ const client = new textToSpeech.TextToSpeechClient()
 
 router.get('/', (req, res, next) => {
   const asyncFunc = async () => {
-    const text = req.query.text
+    const ssml = req.query.ssml
     console.log(req.params)
     const request = {
-      input: { text: text },
+      input: { ssml: ssml },
       voice: { languageCode: 'ja-JP', name: 'ja-JP-Wavenet-D' },
       audioConfig: { audioEncoding: 'MP3' },
     }
