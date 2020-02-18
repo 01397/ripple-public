@@ -1,2 +1,4 @@
 runtime: nodejs12
 
+env_variables:
+  GOOGLE_APPLICATION_CREDENTIALS: '/Ripple-Public-1c25c707ebf8.json'
