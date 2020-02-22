@@ -25,12 +25,15 @@ export class SlideService {
       text: '',
     },
   })
+  public slideTitle = ''
+  public subtitlesSubject = new BehaviorSubject<string>('')
   /**
    * スライド番号の上限。
    */
   private limit: number
   public nav = new Subject<{ back: boolean; forward: boolean }>()
 
+  public muted = false
   public speechAudio = new Audio()
 
   constructor(private http: HttpClient) {}
@@ -41,6 +44,7 @@ export class SlideService {
   updateSlide() {
     this.updateNav()
     this.slideSubject.next(this.slideData[this.index])
+    this.subtitlesSubject.next(this.slideData[this.index].speech.text)
   }
 
   /**
@@ -48,14 +52,15 @@ export class SlideService {
    * @param slideData 新しいスライドデータ
    * @param index スライド番号
    */
-  setSlideData(slideData: SlideData[], index: number = 0) {
-    this.slideData = slideData
+  setSlideData({ id, title, body }: { id: number; title: string; body: SlideData[] }, index: number = 0) {
+    this.slideTitle = title
+    this.slideData = body
     this.limit = this.slideData.length
     this.index = index
     this.updateSlide()
   }
 
-  fetchSlideData(slideID: string): Observable<{ id: number; body: SlideData[] }> {
+  fetchSlideData(slideID: string): Observable<{ id: number; body: SlideData[]; title: string }> {
     return this.http.get('api/lessons/' + slideID) as any
   }
   getSlide() {

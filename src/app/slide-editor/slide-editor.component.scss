@@ -5,6 +5,10 @@
   grid-template-rows: 64px 3fr 64px 2fr;
   height: 100%;
 }
+.header {
+  display: flex;
+  align-items: center;
+}
 .slide-container {
   background-color: $mono-10;
   grid-column: 2;

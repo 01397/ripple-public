@@ -21,7 +21,7 @@ export class SlideEditorComponent implements OnInit {
 
   ngOnInit() {
     this.slideService.fetchSlideData('1').subscribe(data => {
-      this.slideService.setSlideData(data.body)
+      this.slideService.setSlideData(data)
     })
     this.slideService.slideSubject.subscribe(slide => {
       this.current = slide

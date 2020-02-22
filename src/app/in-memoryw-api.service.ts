@@ -5,7 +5,7 @@ import { SlideType, SlideData } from './slide/slide-item'
 
 @Injectable()
 export class InMemoryApiService implements InMemoryDbService {
-  private api: { lessons: { id: number; body: SlideData[] }[] } = {
+  private api: { lessons: { id: number; body: SlideData[], title: string }[] } = {
     // ユーザ情報とか
     lessons: [
       {
@@ -61,7 +61,7 @@ export class InMemoryApiService implements InMemoryDbService {
               ],
             },
             speech: {
-              text: '',
+              text: 'これは、1カラムのスライドです。ここでは、本文とコードの空欄補充問題の2つを含めています。',
             },
           },
           {
@@ -97,7 +97,7 @@ export class InMemoryApiService implements InMemoryDbService {
               ],
             },
             speech: {
-              text: '',
+              text: 'こちらは2カラムのテストです。電通大について正しいものを1つ選びましょう。',
             },
           },
           {
@@ -115,10 +115,12 @@ export class InMemoryApiService implements InMemoryDbService {
               right: [{ type: 'image', src: '/assets/images/sample.png' }],
             },
             speech: {
-              text: '',
+              text:
+                'これは概念スライドです。例えば、本気と書いて[本気|まじ]と読むとか、正解は、<1.5s>3番でした！のように[間|ま]を持たせることもできます。',
             },
           },
         ],
+        title: 'レッスンDEMO',
       },
     ],
   }

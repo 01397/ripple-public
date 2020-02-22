@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "node ./bin/www",
+    "start": "export GOOGLE_APPLICATION_CREDENTIALS=\"/Users/naoki/Documents/web/ripple-public/secrets/Ripple-Public-1c25c707ebf8.json\" | node ./bin/www",
     "build:gae": "ng build",
     "build": "ng build",
     "test": "ng test",

@@ -1,13 +1,26 @@
 @import '~assets/styles/variables';
 :host {
   overflow: hidden;
+  position: relative;
 }
 
 .slide-host {
-  background-color: $primary-50;
+  background-color: $mono-100;
   width: 1280px;
   height: 720px;
   overflow-y: auto;
   transform: scale(1);
   transform-origin: left top;
+}
+.subtitles {
+  background-color: $mono-30;
+  color: $mono-100;
+  font-weight: bold;
+  position: absolute;
+  bottom: 32px;
+  left: 0;
+  right: 0;
+  min-height: 64px;
+  padding: 8px 16px;
+  @include font-size(18);
 }

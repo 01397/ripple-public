@@ -25,6 +25,8 @@ export class SlideContainerComponent implements OnInit, OnDestroy {
   public safeTransform: SafeStyle
   private hostElement: HTMLElement
   interval: any
+  public subtitleEnabled = false
+  public subtitles = '字幕テスト。今回扱う内容はあれやこれですが、どういうわけかそうなんですよ。'
 
   constructor(
     private el: ElementRef,
@@ -38,6 +40,11 @@ export class SlideContainerComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.adjustScale()
     this.slideService.slideSubject.subscribe(slide => this.setSlide(slide))
+    this.slideService.subtitlesSubject.subscribe(subtitle => {
+      // const text = subtitle.replace(/\[(.+?)\|(.+?)\]/g, '<ruby>$1<rp>(</rp><rt>$2</rt><rp>)</rp>')
+      const text = subtitle.replace(/\[(.+?)\|(.+?)\]/gm, '$1').replace(/<.+?s>/g, '')
+      this.subtitles = text
+    })
   }
   ngOnDestroy() {
     clearInterval(this.interval)

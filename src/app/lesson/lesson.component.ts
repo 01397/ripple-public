@@ -14,8 +14,6 @@ export class LessonComponent implements OnInit {
   public text: string = ''
   public options = { maxLines: 1000, printMargin: false }
 
-  private sampleText =
-    '吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。吾輩はここで始めて人間というものを見た。しかもあとで聞くとそれは書生という人間中で一番獰悪な種族であったそうだ。この書生というのは時々我々を捕えて煮て食うという話である。'
   public navBack = false
   public navForward = true
 
@@ -23,7 +21,7 @@ export class LessonComponent implements OnInit {
 
   ngOnInit() {
     this.slideService.fetchSlideData('1').subscribe(data => {
-      this.slideService.setSlideData(data.body)
+      this.slideService.setSlideData(data)
     })
     ace.config.set('basePath', 'path')
     this.slideService.nav.subscribe(nav => {
