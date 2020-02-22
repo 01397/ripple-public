@@ -1,18 +1,9 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  ViewChild,
-  ComponentFactoryResolver,
-  ElementRef,
-  OnDestroy,
-  HostListener,
-} from '@angular/core'
-import { SlideDirective } from './slide.directive'
-import { SlideItem, SlideData } from '../../slide-item'
-import { SlideComponent } from '../slide.component'
+import { Component, ComponentFactoryResolver, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core'
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser'
+import { SlideData, SlideItem } from '../../slide-item'
 import { SlideService } from '../../slide.service'
+import { SlideComponent } from '../slide.component'
+import { SlideDirective } from './slide.directive'
 
 @Component({
   selector: 'app-slide-container',
@@ -25,14 +16,14 @@ export class SlideContainerComponent implements OnInit, OnDestroy {
   public safeTransform: SafeStyle
   private hostElement: HTMLElement
   interval: any
-  public subtitleEnabled = false
   public subtitles = '字幕テスト。今回扱う内容はあれやこれですが、どういうわけかそうなんですよ。'
+  private SUBTITLE_HEIGHT = 80
 
   constructor(
     private el: ElementRef,
     private componentFactoryResolver: ComponentFactoryResolver,
     private sanitizer: DomSanitizer,
-    private slideService: SlideService
+    public slideService: SlideService
   ) {
     this.hostElement = this.el.nativeElement
   }
@@ -44,6 +35,7 @@ export class SlideContainerComponent implements OnInit, OnDestroy {
       // const text = subtitle.replace(/\[(.+?)\|(.+?)\]/g, '<ruby>$1<rp>(</rp><rt>$2</rt><rp>)</rp>')
       const text = subtitle.replace(/\[(.+?)\|(.+?)\]/gm, '$1').replace(/<.+?s>/g, '')
       this.subtitles = text
+      this.adjustScale()
     })
   }
   ngOnDestroy() {
@@ -66,7 +58,10 @@ export class SlideContainerComponent implements OnInit, OnDestroy {
   @HostListener('window:resize')
   adjustScale() {
     const clientWidth = this.hostElement.clientWidth
-    const clientHeight = this.hostElement.clientHeight
+    let clientHeight = this.hostElement.clientHeight
+    if (this.slideService.subtitleEnabled) {
+      clientHeight -= this.SUBTITLE_HEIGHT
+    }
     const scale = Math.min(clientWidth / 1280, clientHeight / 720)
     const dx = (clientWidth - 1280 * scale) / 2
     const dy = (clientHeight - 720 * scale) / 2

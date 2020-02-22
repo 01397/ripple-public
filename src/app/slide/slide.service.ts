@@ -33,6 +33,7 @@ export class SlideService {
   private limit: number
   public nav = new Subject<{ back: boolean; forward: boolean }>()
 
+  public subtitleEnabled = true
   public muted = false
   public speechAudio = new Audio()
 
@@ -135,5 +136,14 @@ export class SlideService {
       '</speak>'
     this.speechAudio.src = 'api/tts?ssml=' + ssml
     this.speechAudio.play()
+  }
+  toggleSubtitles() {
+    this.subtitleEnabled = !this.subtitleEnabled
+    // 字幕を更新させると、slide-containerのadjustScaleが呼ばれる
+    if (!this.subtitleEnabled) {
+      this.subtitlesSubject.next('(字幕はオフになっています)')
+    } else {
+      this.subtitlesSubject.next(this.slideData[this.index].speech.text)
+    }
   }
 }

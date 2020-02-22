@@ -1,4 +1,4 @@
 <div class="slide-host" [style.transform]="safeTransform">
   <ng-template slide-host></ng-template>
 </div>
-<div class="subtitles" *ngIf="subtitleEnabled">{{ subtitles }}</div>
+<div class="subtitles" *ngIf="slideService.subtitleEnabled">{{ subtitles }}</div>

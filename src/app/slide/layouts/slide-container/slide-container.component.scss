@@ -13,14 +13,15 @@
   transform-origin: left top;
 }
 .subtitles {
-  background-color: $mono-30;
+  background-color: $mono-10;
   color: $mono-100;
   font-weight: bold;
   position: absolute;
-  bottom: 32px;
+  bottom: 0;
   left: 0;
   right: 0;
   min-height: 64px;
   padding: 8px 16px;
+  line-height: 1.2;
   @include font-size(18);
 }

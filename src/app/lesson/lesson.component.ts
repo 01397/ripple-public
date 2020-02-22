@@ -38,4 +38,7 @@ export class LessonComponent implements OnInit {
   slideNext() {
     this.slideService.forward()
   }
+  toggleSubtitles() {
+    this.slideService.toggleSubtitles()
+  }
 }
