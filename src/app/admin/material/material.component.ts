@@ -4,33 +4,9 @@ import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { MatSnackBar, MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material'
 import { firestore } from 'firebase'
-import { SlideData } from 'app/slide/slide-item'
 import { Router } from '@angular/router'
+import { CourseItemId, LessonItemId, CourseItem, LessonItem } from 'firestore-item'
 
-interface CourseItem {
-  title: string
-  description: string
-  private: boolean
-  lesson?: AngularFirestoreCollection
-  created: firestore.Timestamp
-  modified: firestore.Timestamp
-}
-interface CourseItemId extends CourseItem {
-  id: string
-}
-interface LessonItem {
-  title: string
-  description: string
-  private: boolean
-  slide?: SlideData[]
-  exercise?: AngularFirestoreCollection
-  created: firestore.Timestamp
-  modified: firestore.Timestamp
-}
-interface LessonItemId extends LessonItem {
-  id: string
-  courseId: string
-}
 export interface DialogData {
   name: string
 }
@@ -230,6 +206,7 @@ export class MaterialComponent implements OnInit {
       title: '',
       description: '',
       private: true,
+      slide: { data: [] },
       modified: now,
       created: now,
     }

@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core'
 import { SlideData } from './slide-item'
 import { BehaviorSubject, Subject, Observable } from 'rxjs'
 import { HttpClient } from '@angular/common/http'
+import { firestore } from 'firebase'
+import { AngularFirestore } from '@angular/fire/firestore'
+import { LessonItem } from 'firestore-item'
 
 @Injectable({
   providedIn: 'root',
@@ -37,7 +40,7 @@ export class SlideService {
   public muted = false
   public speechAudio = new Audio()
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private db: AngularFirestore) {}
 
   /**
    * 画面更新が必要なタイミングで呼び出す
@@ -53,17 +56,40 @@ export class SlideService {
    * @param slideData 新しいスライドデータ
    * @param index スライド番号
    */
-  setSlideData({ id, title, body }: { id: number; title: string; body: SlideData[] }, index: number = 0) {
-    this.slideTitle = title
-    this.slideData = body
-    this.limit = this.slideData.length
-    this.index = index
-    this.updateSlide()
+  setSlideData(path: string, index = 0) {
+    if (path === 'dev') {
+      return this.http.get('api/lessons/1') as any
+    }
+    this.db
+      .doc<LessonItem>(path)
+      .valueChanges()
+      .subscribe(result => {
+        console.log(result)
+        this.slideTitle = result.title
+        this.slideData = result.slide.data
+        if (this.slideData.length === 0) {
+          this.slideData = [
+            {
+              title: 'title-slide test',
+              slide: {
+                type: 'cover',
+                author: '〇〇 太郎',
+                organization: '〇〇教室',
+                course: '〇〇 Step 1',
+                lesson: 'タイトルスライド',
+              },
+              speech: {
+                text: '',
+              },
+            },
+          ]
+        }
+        this.limit = this.slideData.length
+        this.index = index
+        this.updateSlide()
+      })
   }
 
-  fetchSlideData(slideID: string): Observable<{ id: number; body: SlideData[]; title: string }> {
-    return this.http.get('api/lessons/' + slideID) as any
-  }
   getSlide() {
     return this.slideData
   }

@@ -20,9 +20,7 @@ export class LessonComponent implements OnInit {
   constructor(private slideService: SlideService) {}
 
   ngOnInit() {
-    this.slideService.fetchSlideData('1').subscribe(data => {
-      this.slideService.setSlideData(data)
-    })
+    this.slideService.setSlideData('dev')
     ace.config.set('basePath', 'path')
     this.slideService.nav.subscribe(nav => {
       // ExpressionChangedAfterItHasBeenCheckedError を回避するために非同期関数を利用

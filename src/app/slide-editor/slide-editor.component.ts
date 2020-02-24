@@ -1,6 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
 import { SlideType, SlideData } from 'app/slide/slide-item'
 import { SlideService } from 'app/slide/slide.service'
+import { Route } from '@angular/compiler/src/core'
+import { ActivatedRoute, ParamMap } from '@angular/router'
+import { switchMap } from 'rxjs/operators'
 
 @Component({
   selector: 'app-slide-editor',
@@ -17,12 +20,14 @@ export class SlideEditorComponent implements OnInit {
   public current: SlideData
   public currentIndex: number
 
-  constructor(public slideService: SlideService) {}
+  constructor(public slideService: SlideService, private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.slideService.fetchSlideData('1').subscribe(data => {
-      this.slideService.setSlideData(data)
-    })
+    const courseId = this.route.snapshot.paramMap.get('course')
+    const lessonId = this.route.snapshot.paramMap.get('lesson')
+    const path = `course/${courseId}/lesson/${lessonId}`
+    console.log(path)
+    this.slideService.setSlideData(path)
     this.slideService.slideSubject.subscribe(slide => {
       this.current = slide
       this.currentIndex = this.slideService.index
