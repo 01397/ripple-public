@@ -1,0 +1,71 @@
+@import '~assets/styles/variables';
+
+:host {
+  display: flex;
+  min-height: 100%;
+}
+.list {
+  flex: 1;
+}
+.list h3 {
+  font-size: $mono-30;
+}
+.list-header {
+  border-bottom: 1px solid $mono-80;
+  display: flex;
+}
+.list-back {
+  width: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $black-a75;
+  cursor: pointer;
+}
+.list-back:hover {
+  background-color: $primary-200;
+  color: $mono-0;
+}
+.list-header h3 {
+  padding: 8px;
+}
+.list-item {
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  cursor: default;
+}
+.list-item.selected {
+  background-color: $primary-100;
+}
+.list-add {
+  margin-top: 16px;
+  text-align: center;
+}
+.detail {
+  flex: 0.8;
+  border-left: 1px solid $mono-20;
+  display: flex;
+  flex-direction: column;
+  padding: 0 16px;
+}
+.detail h3 {
+  display: flex;
+  align-items: center;
+  color: $mono-30;
+  padding: 16px 0;
+}
+.detail-button {
+  margin-top: 16px;
+}
+.detail-created,
+.detail-modified,
+.detail-id {
+  margin-top: 16px;
+  color: $black-a50;
+  font-weight: bold;
+  @include font-size(12);
+}
+.detail-modified {
+  margin-top: 0;
+}

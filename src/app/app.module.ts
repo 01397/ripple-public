@@ -32,6 +32,8 @@ import { SlideFillingCodeComponent } from './slide/elements/slide-filling-code/s
 import { SlideEditorComponent } from './slide-editor/slide-editor.component'
 import { SlideEditorElementComponent } from './slide-editor/element/element.component'
 import { InMemoryApiService } from './in-memoryw-api.service'
+import { environment } from '../environments/environment'
+import { AngularFireModule } from '@angular/fire'
 import { FormsModule } from '@angular/forms'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import {
@@ -46,8 +48,11 @@ import {
   MatCheckboxModule,
   MatListModule,
   MatSnackBarModule,
+  MatIconModule,
 } from '@angular/material'
 import { HttpClientInMemoryWebApiModule, InMemoryDbService } from 'angular-in-memory-web-api'
+import { MaterialComponent } from './admin/material/material.component'
+import { AngularFirestoreModule } from '@angular/fire/firestore'
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -74,6 +79,10 @@ const appRoutes: Routes = [
   {
     path: 'settings',
     component: SettingsComponent,
+  },
+  {
+    path: 'admin/material',
+    component: MaterialComponent,
   },
   { path: '**', component: NotFoundComponent },
 ]
@@ -105,6 +114,7 @@ const appRoutes: Routes = [
     SlideFillingCodeComponent,
     SlideEditorComponent,
     SlideEditorElementComponent,
+    MaterialComponent,
   ],
   entryComponents: [
     SlideCoverComponent,
@@ -119,6 +129,7 @@ const appRoutes: Routes = [
     SlideFillingCodeComponent,
   ],
   imports: [
+    AngularFireModule.initializeApp(environment.firebase),
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only
@@ -141,6 +152,8 @@ const appRoutes: Routes = [
     MatCheckboxModule,
     MatListModule,
     MatSnackBarModule,
+    MatIconModule,
+    AngularFirestoreModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [InMemoryApiService],
