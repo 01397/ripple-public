@@ -35,6 +35,9 @@
   align-items: center;
   cursor: default;
 }
+.list-lock {
+  color:$primary-400;
+}
 .list-item.selected {
   background-color: $primary-100;
 }

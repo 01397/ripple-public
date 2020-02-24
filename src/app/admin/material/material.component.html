@@ -12,9 +12,10 @@
     >
       <mat-icon>folder</mat-icon>
       {{ course.title }}
+      <mat-icon *ngIf="course.private" class="list-lock">lock</mat-icon>
     </div>
     <div class="list-add">
-      <button mat-raised-button color="primary"><mat-icon>add</mat-icon>コースを追加</button>
+      <button mat-raised-button color="primary" (click)="addCourse()"><mat-icon>add</mat-icon>コースを追加</button>
     </div>
   </ng-container>
   <ng-container *ngIf="type === 'lesson'">
@@ -31,9 +32,10 @@
     >
       <mat-icon>insert_drive_file</mat-icon>
       {{ lesson.title }}
+      <mat-icon *ngIf="lesson.private" class="list-lock">lock</mat-icon>
     </div>
     <div class="list-add">
-      <button mat-raised-button color="primary"><mat-icon>add</mat-icon>レッスンを追加</button>
+      <button mat-raised-button color="primary" (click)="addLesson()()"><mat-icon>add</mat-icon>レッスンを追加</button>
     </div>
   </ng-container>
 </div>
@@ -62,9 +64,10 @@
     <mat-checkbox color="primary" [(ngModel)]="selectedCourse.private" (change)="updateCourse(selectedCourse)">
       非公開
     </mat-checkbox>
-    <div class="detail-created">作成日: {{ selectedCourse.created.toDate() | date:"yyyy/MM/dd HH:mm" }}</div>
-    <div class="detail-modified">更新日: {{ selectedCourse.modified.toDate() | date:"yyyy/MM/dd HH:mm"}}</div>
+    <div class="detail-created">作成日: {{ selectedCourse.created.toDate() | date: 'yyyy/MM/dd HH:mm' }}</div>
+    <div class="detail-modified">更新日: {{ selectedCourse.modified.toDate() | date: 'yyyy/MM/dd HH:mm' }}</div>
     <div class="detail-id">ID: {{ selectedCourse.id }}</div>
+    <button mat-raised-button color="warn" class="detail-remove" (click)="removeCourse()"><mat-icon>delete</mat-icon>削除</button>
   </ng-container>
   <ng-container *ngIf="selectedLesson !== null">
     <mat-form-field>
@@ -89,10 +92,11 @@
     <mat-checkbox color="primary" [(ngModel)]="selectedLesson.private" (change)="updateLesson(selectedLesson)">
       非公開
     </mat-checkbox>
-    <button mat-stroked-button color="primary" class="detail-button">スライドを編集</button>
+    <button mat-stroked-button color="primary" class="detail-button" (click)="editSlide()">スライドを編集</button>
     <button mat-stroked-button color="primary" class="detail-button">演習問題を編集</button>
-    <div class="detail-created">作成日: {{ selectedLesson.created.toDate() | date:"yyyy/MM/dd HH:mm" }}</div>
-    <div class="detail-modified">更新日: {{ selectedLesson.modified.toDate() | date:"yyyy/MM/dd HH:mm"}}</div>
+    <div class="detail-created">作成日: {{ selectedLesson.created.toDate() | date: 'yyyy/MM/dd HH:mm' }}</div>
+    <div class="detail-modified">更新日: {{ selectedLesson.modified.toDate() | date: 'yyyy/MM/dd HH:mm' }}</div>
     <div class="detail-id">ID: {{ selectedLesson.id }}</div>
+    <button mat-raised-button color="warn" class="detail-remove" (click)="removeLesson(selectedLesson.courseId, selectedLesson.id)"><mat-icon>delete</mat-icon>削除</button>
   </ng-container>
 </div>
