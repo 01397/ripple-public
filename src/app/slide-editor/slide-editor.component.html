@@ -15,25 +15,33 @@
   <input type="text" id="slide-footer-field" [(ngModel)]="current.title" />
 </div>
 <div id="index">
-  <div class="index-title">目次</div>
-  <mat-action-list cdkDropList (cdkDropListDropped)="drop($event)">
-    <button
-      mat-list-item
+  <mat-list cdkDropList (cdkDropListDropped)="slideDrop($event)">
+    <h3 mat-subheader>目次</h3>
+    <mat-list-item
       *ngFor="let slide of slideService.getSlide(); let i = index"
       (click)="changeSlide(i)"
       class="index-list-item"
       [ngClass]="{ active: i == currentIndex }"
       cdkDrag
     >
-      {{ i + 1 }}. {{ slide.title }}
-    </button>
-    <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">追加</button>
+      <div class="index-list-label">{{ slide.title }}</div>
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="メニュー">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="removeSlide(i)">
+          <mat-icon>delete</mat-icon>
+          <span>削除</span>
+        </button>
+      </mat-menu>
+    </mat-list-item>
+    <button mat-raised-button color="primary" [matMenuTriggerFor]="menu" class="index-list-add">追加</button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item *ngFor="let slide of slideTypes" (click)="addSlide(slide.type)">
         {{ slide.label }}
       </button>
     </mat-menu>
-  </mat-action-list>
+  </mat-list>
 </div>
 <div class="tts-container">
   <mat-card>

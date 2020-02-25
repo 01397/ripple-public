@@ -81,9 +81,20 @@
 }
 .index-list-item {
   cursor: move;
+  display: flex;
+  height: 3em;
 }
 .index-list-item.active {
   background-color: rgba(0, 0, 0, 0.15);
+}
+.index-list-label {
+  flex: 1;
+      white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.index-list-add {
+  margin-left: 16px;
 }
 .property-container {
   border-left: 1px solid $mono-20;

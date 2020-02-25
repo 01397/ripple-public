@@ -193,4 +193,8 @@ export class SlideService {
     this.slideData.push(data)
     this.updateSlide()
   }
+
+  removeSlide(index: number) {
+    this.slideData.splice(index, 1)
+  }
 }

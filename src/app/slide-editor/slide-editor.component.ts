@@ -45,11 +45,15 @@ export class SlideEditorComponent implements OnInit {
     this.slideService.save()
   }
 
-  drop(event: CdkDragDrop<string[]>) {
+  slideDrop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.slideService.getSlide(), event.previousIndex, event.currentIndex)
   }
 
   addSlide(typeIndex: SlideType['type']) {
     this.slideService.addSlide(typeIndex)
+  }
+
+  removeSlide(index: number) {
+    this.slideService.removeSlide(index)
   }
 }
