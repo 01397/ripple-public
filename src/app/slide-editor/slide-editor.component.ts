@@ -4,6 +4,7 @@ import { SlideService } from 'app/slide/slide.service'
 import { Route } from '@angular/compiler/src/core'
 import { ActivatedRoute, ParamMap } from '@angular/router'
 import { switchMap } from 'rxjs/operators'
+import { firestore } from 'firebase'
 
 @Component({
   selector: 'app-slide-editor',
@@ -19,15 +20,15 @@ export class SlideEditorComponent implements OnInit {
   ]
   public current: SlideData
   public currentIndex: number
+  private path: string
 
   constructor(public slideService: SlideService, private route: ActivatedRoute) {}
 
   ngOnInit() {
     const courseId = this.route.snapshot.paramMap.get('course')
     const lessonId = this.route.snapshot.paramMap.get('lesson')
-    const path = `course/${courseId}/lesson/${lessonId}`
-    console.log(path)
-    this.slideService.setSlideData(path)
+    this.path = `course/${courseId}/lesson/${lessonId}`
+    this.slideService.setSlideData(this.path)
     this.slideService.slideSubject.subscribe(slide => {
       this.current = slide
       this.currentIndex = this.slideService.index
@@ -40,5 +41,9 @@ export class SlideEditorComponent implements OnInit {
 
   public speech() {
     this.slideService.speech()
+  }
+
+  save() {
+    this.slideService.save()
   }
 }

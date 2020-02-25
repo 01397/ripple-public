@@ -39,6 +39,7 @@ export class SlideService {
   public subtitleEnabled = true
   public muted = false
   public speechAudio = new Audio()
+  path: string
 
   constructor(private http: HttpClient, private db: AngularFirestore) {}
 
@@ -60,6 +61,7 @@ export class SlideService {
     if (path === 'dev') {
       return this.http.get('api/lessons/1') as any
     }
+    this.path = path
     this.db
       .doc<LessonItem>(path)
       .valueChanges()
@@ -171,5 +173,9 @@ export class SlideService {
     } else {
       this.subtitlesSubject.next(this.slideData[this.index].speech.text)
     }
+  }
+
+  save() {
+    this.db.doc(this.path).update({ slide: { data: this.slideData } })
   }
 }

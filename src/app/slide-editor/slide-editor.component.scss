@@ -5,9 +5,29 @@
   grid-template-rows: 64px 3fr 64px 2fr;
   height: 100%;
 }
+.header, .header-logo{
+  background-color: $mono-100;
+  border-bottom: 1px solid $mono-80;
+}
 .header {
   display: flex;
   align-items: center;
+  grid-row: 1;
+  grid-column: 2/4;
+}
+.header-logo {
+  background-image: url(/assets/images/logo-p1.svg);
+  background-position: 16px center;
+  background-repeat: no-repeat;
+  background-size: 96px 32px;
+  grid-column: 1;
+  grid-row: 1;
+}
+.header-title {
+  flex: 1;
+}
+.header-button {
+  margin: 0 8px;
 }
 .slide-container {
   background-color: $mono-10;

@@ -1,12 +1,12 @@
+<div class="header-logo">
+  <a routerLink="/home" class="header-logo"></a>
+</div>
 <div class="header">
-  <div>RIPPLE</div>
-  <div>
-    <mat-form-field floatLabel="never">
-      <input matInput [(ngModel)]="slideService.slideTitle" placeholder="レッスン名" />
-    </mat-form-field>
+  <div class="header-title">
+    {{ slideService.slideTitle }}
   </div>
-  <button mat-stroked-button>設定</button>
-  <button mat-stroked-button>保存</button>
+  <button class="header-button" mat-stroked-button (click)="save()">保存</button>
+  <button class="header-button" mat-stroked-button>終了</button>
 </div>
 <div class="slide-container">
   <app-slide-container class="slide"></app-slide-container>
