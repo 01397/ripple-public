@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core'
-import { SlideData } from './slide-item'
+import { SlideData, SlideType, SlideItem } from './slide-item'
 import { BehaviorSubject, Subject, Observable } from 'rxjs'
 import { HttpClient } from '@angular/common/http'
-import { firestore } from 'firebase'
 import { AngularFirestore } from '@angular/fire/firestore'
 import { LessonItem } from 'firestore-item'
 
@@ -138,6 +137,9 @@ export class SlideService {
     return true
   }
 
+  /**
+   * 前後ボタンの行き先を更新
+   */
   updateNav() {
     this.nav.next({
       back: this.index > 0,
@@ -177,5 +179,18 @@ export class SlideService {
 
   save() {
     this.db.doc(this.path).update({ slide: { data: this.slideData } })
+  }
+
+  addSlide(type: SlideType['type']) {
+    const slide = SlideItem.generateSlide(type)
+    const data: SlideData = {
+      title: '新規スライド',
+      slide,
+      speech: {
+        text: '',
+      },
+    }
+    this.slideData.push(data)
+    this.updateSlide()
   }
 }

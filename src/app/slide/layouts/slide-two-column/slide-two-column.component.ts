@@ -20,4 +20,13 @@ export class SlideTwoColumnComponent implements SlideComponent {
   constructor() {}
 
   ngOnInit() {}
+
+  static generateData(): TwoColumnSlideType {
+    return {
+      type: 'twoColumn',
+      title: '',
+      left: [],
+      right: [],
+    }
+  }
 }

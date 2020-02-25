@@ -1,10 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { SlideType, SlideData } from 'app/slide/slide-item'
 import { SlideService } from 'app/slide/slide.service'
-import { Route } from '@angular/compiler/src/core'
-import { ActivatedRoute, ParamMap } from '@angular/router'
-import { switchMap } from 'rxjs/operators'
-import { firestore } from 'firebase'
+import { ActivatedRoute } from '@angular/router'
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop'
 
 @Component({
   selector: 'app-slide-editor',
@@ -45,5 +43,13 @@ export class SlideEditorComponent implements OnInit {
 
   save() {
     this.slideService.save()
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.slideService.getSlide(), event.previousIndex, event.currentIndex)
+  }
+
+  addSlide(typeIndex: SlideType['type']) {
+    this.slideService.addSlide(typeIndex)
   }
 }

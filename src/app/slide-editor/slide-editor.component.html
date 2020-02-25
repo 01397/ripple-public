@@ -16,16 +16,23 @@
 </div>
 <div id="index">
   <div class="index-title">目次</div>
-  <mat-action-list>
+  <mat-action-list cdkDropList (cdkDropListDropped)="drop($event)">
     <button
       mat-list-item
       *ngFor="let slide of slideService.getSlide(); let i = index"
       (click)="changeSlide(i)"
       class="index-list-item"
       [ngClass]="{ active: i == currentIndex }"
+      cdkDrag
     >
       {{ i + 1 }}. {{ slide.title }}
     </button>
+    <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">追加</button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item *ngFor="let slide of slideTypes" (click)="addSlide(slide.type)">
+        {{ slide.label }}
+      </button>
+    </mat-menu>
   </mat-action-list>
 </div>
 <div class="tts-container">

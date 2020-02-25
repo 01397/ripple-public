@@ -53,6 +53,7 @@ import {
 import { HttpClientInMemoryWebApiModule, InMemoryDbService } from 'angular-in-memory-web-api'
 import { MaterialComponent, MaterialDialog } from './admin/material/material.component'
 import { AngularFirestoreModule } from '@angular/fire/firestore'
+import { DragDropModule } from '@angular/cdk/drag-drop'
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -157,6 +158,7 @@ const appRoutes: Routes = [
     MatIconModule,
     MatDialogModule,
     AngularFirestoreModule,
+    DragDropModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [InMemoryApiService],

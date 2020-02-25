@@ -19,4 +19,14 @@ export class SlideCoverComponent implements SlideComponent {
   constructor() {}
 
   ngOnInit() {}
+
+  static generateData(): CoverSlideType {
+    return {
+      type: 'cover',
+      course: '',
+      lesson: '',
+      organization: '',
+      author: '',
+    }
+  }
 }

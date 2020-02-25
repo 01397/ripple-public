@@ -5,7 +5,8 @@
   grid-template-rows: 64px 3fr 64px 2fr;
   height: 100%;
 }
-.header, .header-logo{
+.header,
+.header-logo {
   background-color: $mono-100;
   border-bottom: 1px solid $mono-80;
 }
@@ -77,6 +78,9 @@
   grid-row: 2/5;
   border-right: 1px solid $mono-20;
   color: $mono-10;
+}
+.index-list-item {
+  cursor: move;
 }
 .index-list-item.active {
   background-color: rgba(0, 0, 0, 0.15);

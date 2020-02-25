@@ -20,4 +20,13 @@ export class SlideTopicComponent implements SlideComponent {
   constructor() {}
 
   ngOnInit() {}
+
+  static generateData(): TopicSlideType {
+    return {
+      type: 'topic',
+      title: '',
+      left: [],
+      right: [],
+    }
+  }
 }

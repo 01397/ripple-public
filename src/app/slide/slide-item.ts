@@ -44,6 +44,18 @@ export class SlideItem {
         return SlideTopicComponent
     }
   }
+  static generateSlide(type: SlideType['type']): SlideType {
+    switch (type) {
+      case 'cover':
+        return SlideCoverComponent.generateData()
+      case 'oneColumn':
+        return SlideOneColumnComponent.generateData()
+      case 'twoColumn':
+        return SlideTwoColumnComponent.generateData()
+      case 'topic':
+        return SlideTopicComponent.generateData()
+    }
+  }
   static generateElement(type: SlideElementType['type']): SlideElementType {
     switch (type) {
       case 'code':

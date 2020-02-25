@@ -19,4 +19,12 @@ export class SlideOneColumnComponent implements SlideComponent {
   constructor() {}
 
   ngOnInit() {}
+
+  static generateData(): OneColumnSlideType {
+    return {
+      type: 'oneColumn',
+      title: '',
+      body: [],
+    }
+  }
 }
