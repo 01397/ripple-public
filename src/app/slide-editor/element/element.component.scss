@@ -1,5 +1,24 @@
-.mat-card {
+@import '~assets/styles/variables';
+.card {
+  padding: 0;
   margin-bottom: 16px;
+  overflow: hidden;
+}
+.card-header {
+  padding: 0 16px;
+  cursor: move;
+  background-color: $mono-80;
+  color: $mono-20;
+  display: flex;
+  align-items: center;
+}
+.card-title {
+  flex: 1;
+  @include font-size(16);
+  font-weight: bold;
+}
+.card-content {
+  padding: 16px;
 }
 .full-width {
   width: 100%;
@@ -10,4 +29,15 @@
 }
 .radio-block-field {
   width: 300px;
+}
+/* Animate items as they're being sorted. */
+.cdk-drop-list-dragging .cdk-drag {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+/* Animate an item that has been dropped. */
+.cdk-drag-animating {
+  transition: transform 300ms cubic-bezier(0, 0, 0.2, 1);
 }

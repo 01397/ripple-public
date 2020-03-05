@@ -1,71 +1,77 @@
-<mat-card *ngFor="let el of elements;let elIndex = index">
-  <mat-card-header>
-    <mat-card-title>{{ elementTypeList[el.type] }}</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <ng-container [ngSwitch]="el.type">
-      <ng-container *ngSwitchCase="'paragraph'">
-        <mat-form-field class="full-width">
-          <textarea matTextareaAutosize matInput placeholder="表示テキスト" [(ngModel)]="el.body"></textarea>
-        </mat-form-field>
-      </ng-container>
+<div cdkDropList cdkDropListOrientation="vertical" (cdkDropListDropped)="elementDrop($event)" class="dnd-container">
+  <mat-card *ngFor="let el of elements; let elIndex = index" cdkDrag class="card">
+    <div class="card-header" cdkDragHandle>
+      <div class="card-title">{{ elementTypeList[el.type] }}</div>
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="メニュー">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="remove(elIndex)">
+          <mat-icon>delete</mat-icon>
+          <span>削除</span>
+        </button>
+      </mat-menu>
+    </div>
+    <mat-card-content class="card-content">
+      <ng-container [ngSwitch]="el.type">
+        <ng-container *ngSwitchCase="'paragraph'">
+          <mat-form-field class="full-width">
+            <textarea matTextareaAutosize matInput placeholder="表示テキスト" [(ngModel)]="el.body"></textarea>
+          </mat-form-field>
+        </ng-container>
 
-      <ng-container *ngSwitchCase="'image'">
-        <mat-form-field>
-          <input type="text" matInput placeholder="画像パス" />
-        </mat-form-field>
-      </ng-container>
+        <ng-container *ngSwitchCase="'image'">
+          <mat-form-field>
+            <input type="text" matInput placeholder="画像パス" />
+          </mat-form-field>
+        </ng-container>
 
-      <ng-container *ngSwitchCase="'code'">
-        <mat-select name="lang-select" required [(ngModel)]="el.lang">
-          <mat-option value="python">Python</mat-option>
-          <mat-option value="plain">プレーンテキスト</mat-option>
-        </mat-select>
-        <mat-form-field class="full-width">
-          <textarea matTextareaAutosize matInput placeholder="コード" [(ngModel)]="el.code"></textarea>
-        </mat-form-field>
-      </ng-container>
+        <ng-container *ngSwitchCase="'code'">
+          <mat-select name="lang-select" required [(ngModel)]="el.lang">
+            <mat-option value="python">Python</mat-option>
+            <mat-option value="plain">プレーンテキスト</mat-option>
+          </mat-select>
+          <mat-form-field class="full-width">
+            <textarea matTextareaAutosize matInput placeholder="コード" [(ngModel)]="el.code"></textarea>
+          </mat-form-field>
+        </ng-container>
 
-      <ng-container *ngSwitchCase="'fillingCode'">
-        <mat-select name="lang-select" required [(ngModel)]="el.lang">
-          <mat-option value="python">Python</mat-option>
-          <mat-option value="plain">プレーンテキスト</mat-option>
-        </mat-select>
-        <mat-form-field class="full-width">
-          <textarea matTextareaAutosize matInput placeholder="コード" [(ngModel)]="el.code"></textarea>
-        </mat-form-field>
-      </ng-container>
+        <ng-container *ngSwitchCase="'fillingCode'">
+          <mat-select name="lang-select" required [(ngModel)]="el.lang">
+            <mat-option value="python">Python</mat-option>
+            <mat-option value="plain">プレーンテキスト</mat-option>
+          </mat-select>
+          <mat-form-field class="full-width">
+            <textarea matTextareaAutosize matInput placeholder="コード" [(ngModel)]="el.code"></textarea>
+          </mat-form-field>
+        </ng-container>
 
-      <ng-container *ngSwitchCase="'quiz1'">
-        <mat-form-field class="full-width">
-          <input type="text" matInput placeholder="問題文" [(ngModel)]="el.title" />
-        </mat-form-field>
-        <mat-radio-group aria-label="正答" required class="radio-block" [(ngModel)]="el.answer">
-          <mat-radio-button
-            [value]="i"
-            *ngFor="let option of el.options; let i = index; trackBy: myTrackBy"
-            class="full-width-radio-button"
-            color="primary"
-          >
-            <mat-form-field class="radio-block-field" required>
-              <mat-label>選択肢{{ i + 1 }}</mat-label>
-              <input matInput [(ngModel)]="el.options[i]" />
-            </mat-form-field>
-          </mat-radio-button>
-        </mat-radio-group>
-        <mat-checkbox color="primary" [(ngModel)]="el.shuffle" checked>順序を入れ替える</mat-checkbox>
+        <ng-container *ngSwitchCase="'quiz1'">
+          <mat-form-field class="full-width">
+            <input type="text" matInput placeholder="問題文" [(ngModel)]="el.title" />
+          </mat-form-field>
+          <mat-radio-group aria-label="正答" required class="radio-block" [(ngModel)]="el.answer">
+            <mat-radio-button
+              [value]="i"
+              *ngFor="let option of el.options; let i = index; trackBy: myTrackBy"
+              class="full-width-radio-button"
+              color="primary"
+            >
+              <mat-form-field class="radio-block-field" required>
+                <mat-label>選択肢{{ i + 1 }}</mat-label>
+                <input matInput [(ngModel)]="el.options[i]" />
+              </mat-form-field>
+            </mat-radio-button>
+          </mat-radio-group>
+          <mat-checkbox color="primary" [(ngModel)]="el.shuffle" checked>順序を入れ替える</mat-checkbox>
+        </ng-container>
       </ng-container>
-    </ng-container>
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-button color="primary">上へ</button>
-    <button mat-button color="primary">下へ</button>
-    <button mat-button color="warn" (click)="remove(elIndex)">削除</button>
-  </mat-card-actions>
-</mat-card>
-<button mat-raised-button color="primary" [matMenuTriggerFor]="menu">追加</button>
-<mat-menu #menu="matMenu">
-  <button mat-menu-item *ngFor="let t of elementTypeList" (click)="addElement(t[0])">
-    {{ t[1] }}
-  </button>
-</mat-menu>
+    </mat-card-content>
+  </mat-card>
+  <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">追加</button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item *ngFor="let t of elementTypeList | keyvalue" (click)="addElement(t.key)">
+      {{ t.value }}
+    </button>
+  </mat-menu>
+</div>

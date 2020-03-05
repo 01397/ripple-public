@@ -4,6 +4,7 @@ import { BehaviorSubject, Subject, Observable } from 'rxjs'
 import { HttpClient } from '@angular/common/http'
 import { AngularFirestore } from '@angular/fire/firestore'
 import { LessonItem } from 'firestore-item'
+import { MatSnackBar } from '@angular/material'
 
 @Injectable({
   providedIn: 'root',
@@ -40,7 +41,7 @@ export class SlideService {
   public speechAudio = new Audio()
   path: string
 
-  constructor(private http: HttpClient, private db: AngularFirestore) {}
+  constructor(private http: HttpClient, private db: AngularFirestore, private snackBar: MatSnackBar) {}
 
   /**
    * 画面更新が必要なタイミングで呼び出す
@@ -178,7 +179,21 @@ export class SlideService {
   }
 
   save() {
-    this.db.doc(this.path).update({ slide: { data: this.slideData } })
+    return this.db
+      .doc(this.path)
+      .update({ slide: { data: this.slideData } })
+      .then(() =>
+        this.snackBar.open('保存しました', null, {
+          duration: 1500,
+          horizontalPosition: 'right',
+        })
+      )
+      .catch(e => {
+        this.snackBar.open('保存できませんでした。', null, {
+          duration: 3000,
+          horizontalPosition: 'right',
+        })
+      })
   }
 
   addSlide(type: SlideType['type']) {

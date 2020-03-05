@@ -1,13 +1,4 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  ViewContainerRef,
-  ComponentFactory,
-  ComponentFactoryResolver,
-  Input,
-  Type,
-} from '@angular/core'
+import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver, Input, Type } from '@angular/core'
 import { SlideParagraphComponent } from './slide-paragraph/slide-paragraph.component'
 import { SlideElementType } from '../slide-item'
 import { SlideImageComponent } from './slide-image/slide-image.component'

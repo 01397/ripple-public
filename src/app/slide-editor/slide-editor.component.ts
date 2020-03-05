@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { SlideType, SlideData } from 'app/slide/slide-item'
 import { SlideService } from 'app/slide/slide.service'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop'
 
 @Component({
@@ -20,7 +20,7 @@ export class SlideEditorComponent implements OnInit {
   public currentIndex: number
   private path: string
 
-  constructor(public slideService: SlideService, private route: ActivatedRoute) {}
+  constructor(public slideService: SlideService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
     const courseId = this.route.snapshot.paramMap.get('course')
@@ -37,23 +37,35 @@ export class SlideEditorComponent implements OnInit {
     this.slideService.go(index, true)
   }
 
+  updateSlide() {
+    this.changeSlide(this.slideService.index)
+  }
+
   public speech() {
     this.slideService.speech()
   }
 
   save() {
-    this.slideService.save()
+    return this.slideService.save()
+  }
+  finish() {
+    this.save().then(() => {
+      this.router.navigate(['/admin/material'])
+    })
   }
 
   slideDrop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.slideService.getSlide(), event.previousIndex, event.currentIndex)
+    this.updateSlide()
   }
 
   addSlide(typeIndex: SlideType['type']) {
     this.slideService.addSlide(typeIndex)
+    this.updateSlide()
   }
 
   removeSlide(index: number) {
     this.slideService.removeSlide(index)
+    this.updateSlide()
   }
 }

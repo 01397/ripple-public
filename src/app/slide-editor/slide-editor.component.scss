@@ -89,9 +89,9 @@
 }
 .index-list-label {
   flex: 1;
-      white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 .index-list-add {
   margin-left: 16px;
@@ -144,4 +144,15 @@
   padding: 2px;
   margin: 0 4px;
   font-family: 'Courier New', Courier, monospace;
+}
+/* Animate items as they're being sorted. */
+.cdk-drop-list-dragging .cdk-drag {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+/* Animate an item that has been dropped. */
+.cdk-drag-animating {
+  transition: transform 300ms cubic-bezier(0, 0, 0.2, 1);
 }

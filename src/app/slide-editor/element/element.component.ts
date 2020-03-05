@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy } from '@angular/core'
 import { SlideElementType, SlideItem } from 'app/slide/slide-item'
 import { MatSnackBar } from '@angular/material'
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop'
 
 @Component({
   selector: 'app-slide-editor-element',
@@ -8,13 +9,13 @@ import { MatSnackBar } from '@angular/material'
   styleUrls: ['./element.component.scss'],
 })
 export class SlideEditorElementComponent implements OnDestroy {
-  public elementTypeList: [SlideElementType['type'], string][] = [
-    ['paragraph', '段落'],
-    ['image', '画像'],
-    ['code', 'コード'],
-    ['fillingCode', 'コード(穴埋め)'],
-    ['quiz1', '4択'],
-  ]
+  public elementTypeList: { [key in SlideElementType['type']]: string } = {
+    paragraph: '段落',
+    image: '画像',
+    code: 'コード',
+    fillingCode: 'コード(穴埋め)',
+    quiz1: '4択',
+  }
   @Input() public elements: SlideElementType[] = []
   private tmpGb: { index: number; content: SlideElementType[] } = { index: 0, content: [] }
 
@@ -56,4 +57,13 @@ export class SlideEditorElementComponent implements OnDestroy {
   myTrackBy(index: number, obj: any): any {
     return index
   }
+  /**
+   * DnDによる順序変更
+   * @param event
+   */
+  elementDrop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.elements, event.previousIndex, event.currentIndex)
+  }
+
+  getElementName() {}
 }

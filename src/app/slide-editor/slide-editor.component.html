@@ -6,7 +6,7 @@
     {{ slideService.slideTitle }}
   </div>
   <button class="header-button" mat-stroked-button (click)="save()">保存</button>
-  <button class="header-button" mat-stroked-button>終了</button>
+  <button class="header-button" mat-stroked-button (click)="finish()">終了</button>
 </div>
 <div class="slide-container">
   <app-slide-container class="slide"></app-slide-container>
