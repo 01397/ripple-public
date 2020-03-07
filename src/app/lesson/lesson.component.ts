@@ -3,6 +3,7 @@ import { AceEditorComponent } from 'ng2-ace-editor'
 import * as ace from 'ace-builds'
 import { SlideData } from '../slide/slide-item'
 import { SlideService } from 'app/slide/slide.service'
+import { ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'app-lesson',
@@ -17,10 +18,14 @@ export class LessonComponent implements OnInit {
   public navBack = false
   public navForward = true
 
-  constructor(private slideService: SlideService) {}
+  constructor(private slideService: SlideService, private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.slideService.setSlideData('dev')
+    const courseId = this.route.snapshot.paramMap.get('course')
+    const lessonId = this.route.snapshot.paramMap.get('lesson')
+    const path = `course/${courseId}/lesson/${lessonId}`
+    this.slideService.setSlideData(path)
+
     ace.config.set('basePath', 'path')
     this.slideService.nav.subscribe(nav => {
       // ExpressionChangedAfterItHasBeenCheckedError を回避するために非同期関数を利用

@@ -7,6 +7,7 @@ var logger = require('morgan')
 var indexRouter = require('./routes/index')
 var usersRouter = require('./routes/users')
 var ttsRouter = require('./routes/tts')
+var judgeRouter = require('./routes/judge')
 
 var app = express()
 
