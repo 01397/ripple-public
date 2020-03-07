@@ -99,3 +99,19 @@
     color: white;
   }
 }
+
+.ex {
+  flex: 1;
+  display: flex;
+}
+.ex-left {
+  width: 400px;
+  height: 100%;
+  overflow-y: auto;
+}
+.ex-right {
+  flex: 1;
+}
+.ex-left-slide {
+  height: 600px;
+}

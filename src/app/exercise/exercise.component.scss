@@ -1,0 +1,78 @@
+@import '../../assets/styles/variables';
+
+:host {
+  display: flex;
+  flex-direction: column;
+}
+.steps {
+  display: flex;
+  height: 48px;
+  padding: 8px 0;
+}
+.steps-bar {
+  flex: 1;
+  height: 2px;
+  background-color: $mono-50;
+  align-self: center;
+}
+.steps-bar.colored {
+  height: 4px;
+  background-color: $primary-500;
+}
+.steps-arrow {
+  flex: 1;
+  position: relative;
+}
+.steps-arrow::before {
+  position: absolute;
+  content: '';
+  display: block;
+  right: calc(30% - 2px);
+  top: 50%;
+  bottom: 0;
+  margin: 0;
+  width: 20px;
+  height: 20px;
+  border-right: 2px solid gray;
+  border-top: 2px solid gray;
+  transform: rotate(45deg);
+  transform-origin: right top;
+}
+.steps-arrow::after {
+  position: absolute;
+  content: '';
+  display: block;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  height: 2px;
+  width: 70%;
+  margin: auto;
+  background-color: $mono-50;
+}
+.steps-arrow.colored::after {
+  background-color: $primary-500;
+}
+.steps-circle {
+  border-radius: 100px;
+  background-color: transparent;
+  border: 2px solid $mono-50;
+  color: $mono-50;
+  width: 48px;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  font-weight: 700;
+}
+.steps-circle.colored {
+  border: 4px solid $primary-500;
+  color: $primary-500;
+}
+.steps-circle.selected {
+  color: $mono-100;
+  background-color: $primary-500;
+}
+.elements {
+  flex: 1;
+  overflow-y: auto;
+}

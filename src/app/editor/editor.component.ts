@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core'
-import { AceEditorComponent } from 'ng2-ace-editor'
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core'
 import * as ace from 'ace-builds'
+import { AceEditorComponent } from 'ng2-ace-editor'
 import { WebsocketService } from '../websocket.service'
 
 @Component({
@@ -18,11 +18,11 @@ export class EditorComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     ace.config.set('basePath', 'path')
-    this.websocketService.connect()
-    this.websocketService.judgeSubject.subscribe((result: string) => {
-      console.log(result)
-      // this.consoleText = result
-    })
+    // this.websoc∏ketService.connect()
+    // this.websocketService.judgeSubject.subscribe((result: string) => {
+    //   console.log(result)
+    //   // this.consoleText = result
+    // })
   }
 
   onClick() {

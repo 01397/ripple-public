@@ -1,4 +1,12 @@
-import { Component, ComponentFactoryResolver, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core'
+import {
+  Component,
+  ComponentFactoryResolver,
+  ElementRef,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core'
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser'
 import { SlideData, SlideItem } from '../../slide-item'
 import { SlideService } from '../../slide.service'
@@ -43,6 +51,7 @@ export class SlideContainerComponent implements OnInit, OnDestroy {
   }
 
   setSlide(slide: SlideData) {
+    console.log(slide)
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
       SlideItem.getComponent(slide.slide.type)
     )
