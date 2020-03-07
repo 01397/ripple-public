@@ -8,7 +8,7 @@ const db = admin.firestore()
 
 const judge = async (msg, io) => {
   const json = JSON.parse(msg)
-  console.log(body)
+  console.log(msg)
   const { course, lesson, exercise, sourceCode } = json
   const doc = await db
     .collection('course')
@@ -19,23 +19,37 @@ const judge = async (msg, io) => {
     .doc(exercise)
     .get()
   if (!doc.exists) {
-    io.emit('judge result', JSON.stringify({ status: 'error', body: 'テストケースが存在しません' }))
+    io.emit('judge result', { status: 'error', body: 'テストケースが存在しません' })
     return
   }
+  let postResult
   try {
-    const postResult = await postJudge(doc)
+    postResult = await postJudge(doc, sourceCode)
   } catch (err) {
-    io.emit('judge result', JSON.stringify({ status: 'error', body: err }))
+    io.emit('judge result', { status: 'error', body: err })
     return
   }
   if (postResult.statusCode !== 201) {
-    io.emit('judge result', JSON.stringify({ status: 'error', body: '判定システムでエラーが発生しました' }))
+    io.emit('judge result', { status: 'error', body: '判定システムでエラーが発生しました' })
     return
   }
-  io.emit('judge result', JSON.stringify({ status: 'post', body: '判定中' }))
+  io.emit('judge result', { status: 'post', body: { length: 1, result: [0] } })
+  console.log(postResult.chunk)
+  const token = JSON.parse(postResult.chunk).token
+  for (let count = 0; count < 10; count++) {
+    await sleep(1000)
+    const getResult: any = await getJudge(token)
+    const result = JSON.parse(getResult.chunk)
+    const status = Number(result.status.id)
+    io.emit('judge result', { status: 'get', body: { length: 1, result: [status] } })
+    if (status > 2) {
+      break
+    }
+  }
+  io.emit('judge result', { status: 'finish' })
 }
 
-function postJudge(doc) {
+function postJudge(doc, sourceCode) {
   return new Promise(resolve => {
     const { language_id, stdin, expected_output } = doc.data()
     const postData = {
@@ -86,7 +100,7 @@ function getJudge(token) {
       path: `/submissions/${token}?base64_encoded=true&wait=false`,
       method: 'GET',
     }
-    let req = https.request(options, res => {
+    const req = https.request(options, res => {
       console.log('STATUS: ' + res.statusCode)
       console.log('HEADERS: ' + JSON.stringify(res.headers))
       const statusCode = res.statusCode
@@ -95,15 +109,21 @@ function getJudge(token) {
         resolve({ statusCode, chunk })
       })
     })
-    req.on('error', e => {
-      console.log('problem with request: ' + e.message)
+    req.on('error', err => {
+      console.log('problem with request: ' + err.message)
     })
-    req.write(postDataStr)
     req.end()
   })
 }
 function base64Encode(str) {
   return Buffer.from(str).toString('base64')
 }
+function sleep(time) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve()
+    }, time)
+  })
+}
 
-module.exports = router
+module.exports = judge

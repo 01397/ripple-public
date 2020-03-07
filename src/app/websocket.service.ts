@@ -6,8 +6,8 @@ import { Subject } from 'rxjs'
   providedIn: 'root',
 })
 export class WebsocketService {
-  private socket
-  public testSubject = new Subject<string>()
+  private socket: SocketIOClient.Socket
+  public judgeSubject = new Subject<string>()
 
   constructor() {}
 
@@ -42,10 +42,14 @@ export class WebsocketService {
     this.socket.on('pong', (ms: number) => {
       this.log(`pong (${ms}ms)`)
     })
-    this.socket.on('test message', msg => {
+    this.socket.on('judge result', (msg: string) => {
       this.log('test ' + msg)
-      this.testSubject.next(msg)
+      this.judgeSubject.next(msg)
     })
+  }
+
+  close() {
+    this.socket.close()
   }
   emit(name: string, msg: string) {
     this.log(name + ' ' + msg)
