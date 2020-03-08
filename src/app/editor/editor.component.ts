@@ -18,7 +18,7 @@ export class EditorComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     ace.config.set('basePath', 'path')
-    // this.websoc∏ketService.connect()
+    // this.websocketService.connect()
     // this.websocketService.judgeSubject.subscribe((result: string) => {
     //   console.log(result)
     //   // this.consoleText = result

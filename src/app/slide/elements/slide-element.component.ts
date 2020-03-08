@@ -18,12 +18,19 @@ export enum QuizType {
   styleUrls: ['./slide-element.component.scss'],
 })
 export class SlideElementComponent implements OnInit {
-  @Input() contents: SlideElementType[]
+  private _contents: SlideElementType[]
+  @Input() set contents(value: SlideElementType[]) {
+    this._contents = value
+    this.update()
+  }
   @ViewChild('body', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef
 
   constructor(private resolver: ComponentFactoryResolver) {}
 
   ngOnInit() {
+    this.update()
+  }
+  update() {
     const components: { [key in SlideElementType['type']]: Type<SlideAbstractComponent> } = {
       paragraph: SlideParagraphComponent,
       image: SlideImageComponent,
@@ -31,8 +38,8 @@ export class SlideElementComponent implements OnInit {
       quiz1: SlideQuiz1Component,
       fillingCode: SlideFillingCodeComponent,
     }
-
-    for (const content of this.contents) {
+    this.viewContainerRef.clear()
+    for (const content of this._contents) {
       const factory = this.resolver.resolveComponentFactory(components[content.type])
       const instance = this.viewContainerRef.createComponent(factory).instance
       instance.content = content

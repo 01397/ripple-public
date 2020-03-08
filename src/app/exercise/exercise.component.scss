@@ -1,4 +1,5 @@
 @import '../../assets/styles/variables';
+@import '../../assets/styles/mixin';
 
 :host {
   display: flex;
@@ -67,12 +68,19 @@
 .steps-circle.colored {
   border: 4px solid $primary-500;
   color: $primary-500;
+  cursor: pointer;
 }
 .steps-circle.selected {
   color: $mono-100;
   background-color: $primary-500;
 }
-.elements {
+.ex {
   flex: 1;
   overflow-y: auto;
+  padding: 8px;
+}
+.ex-title {
+  margin: 0 0 8px;
+  @include font-size(18);
+  font-weight: 700;
 }

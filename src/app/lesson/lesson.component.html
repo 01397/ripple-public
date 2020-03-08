@@ -1,7 +1,7 @@
 <div class="header">
   <a class="logo" routerLink="/home"></a>
   <div class="header-spacer"></div>
-  <a class="close"></a>
+  <a class="close" (click)="toggle()"></a>
 </div>
 <ng-container *ngIf="displayMode === 'slide'">
   <div class="tools">

@@ -44,4 +44,11 @@ export class LessonComponent implements OnInit {
   toggleSubtitles() {
     this.slideService.toggleSubtitles()
   }
+  toggle() {
+    if (this.displayMode === 'slide') {
+      this.displayMode = 'exercise'
+    } else if (this.displayMode === 'exercise') {
+      this.displayMode = 'slide'
+    }
+  }
 }

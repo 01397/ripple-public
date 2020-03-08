@@ -1,8 +1,18 @@
 <div class="steps">
   <ng-container *ngFor="let item of exData; let i = index">
-    <div class="steps-bar"></div>
-    <div class="steps-circle">{{ i + 1 }}</div>
+    <div [class.colored]="i <= unlockedIndex" class="steps-bar"></div>
+    <div
+      [class.colored]="i <= unlockedIndex"
+      [class.selected]="i === exIndex"
+      class="steps-circle"
+      (click)="changeExIndex(i)"
+    >
+      {{ i + 1 }}
+    </div>
   </ng-container>
   <div class="steps-arrow"></div>
 </div>
-<div class="elements"></div>
+<div class="ex">
+  <h2 class="ex-title">演習{{ exIndex + 1 }}: {{ exData[exIndex].title }}</h2>
+  <app-slide-element class="ex-body" [contents]="exData[exIndex].description"></app-slide-element>
+</div>
