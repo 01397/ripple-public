@@ -1,1 +1,8 @@
-<img class="img" [src]="content.src" [alt]="content.alt" [style.width]="content.width" [style.width]="content.height" />
+<img
+  class="img"
+  [src]="src"
+  [class.loading]="!loaded"
+  [alt]="content.alt"
+  [style.width]="content.width + 'px'"
+  [style.height]="content.height + 'px'"
+/>

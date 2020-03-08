@@ -53,8 +53,9 @@ import {
 import { HttpClientInMemoryWebApiModule, InMemoryDbService } from 'angular-in-memory-web-api'
 import { MaterialComponent, MaterialDialog } from './admin/material/material.component'
 import { AngularFirestoreModule } from '@angular/fire/firestore'
-import { DragDropModule } from '@angular/cdk/drag-drop';
+import { DragDropModule } from '@angular/cdk/drag-drop'
 import { ExerciseComponent } from './exercise/exercise.component'
+import { AngularFireStorageModule, BUCKET } from '@angular/fire/storage'
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -164,10 +165,11 @@ const appRoutes: Routes = [
     MatIconModule,
     MatDialogModule,
     AngularFirestoreModule,
+    AngularFireStorageModule,
     DragDropModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [InMemoryApiService],
+  providers: [InMemoryApiService, { provide: BUCKET, useValue: 'ripple-public.appspot.com' }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

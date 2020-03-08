@@ -21,8 +21,15 @@
         </ng-container>
 
         <ng-container *ngSwitchCase="'image'">
+          <input type="file" (change)="upload($event, el)" />
           <mat-form-field>
-            <input type="text" matInput placeholder="画像パス" />
+            <input type="number" matInput placeholder="幅(任意)" [(ngModel)]="el.width" />
+          </mat-form-field>
+          <mat-form-field>
+            <input type="number" matInput placeholder="高さ(任意)" [(ngModel)]="el.height" />
+          </mat-form-field>
+          <mat-form-field>
+            <input type="text" matInput placeholder="代替テキスト(任意)" [(ngModel)]="el.alt" />
           </mat-form-field>
         </ng-container>
 
