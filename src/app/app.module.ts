@@ -56,6 +56,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore'
 import { DragDropModule } from '@angular/cdk/drag-drop'
 import { ExerciseComponent } from './exercise/exercise.component'
 import { AngularFireStorageModule, BUCKET } from '@angular/fire/storage'
+import { ExerciseEditorComponent } from './exercise-editor/exercise-editor.component'
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -78,6 +79,10 @@ const appRoutes: Routes = [
   {
     path: 'admin/slide-editor',
     component: SlideEditorComponent,
+  },
+  {
+    path: 'admin/exercise-editor',
+    component: ExerciseEditorComponent,
   },
   {
     path: 'notifications',
@@ -124,6 +129,7 @@ const appRoutes: Routes = [
     MaterialComponent,
     MaterialDialog,
     ExerciseComponent,
+    ExerciseEditorComponent,
   ],
   entryComponents: [
     SlideCoverComponent,

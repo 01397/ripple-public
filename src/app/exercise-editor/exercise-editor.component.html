@@ -1,0 +1,64 @@
+<header>
+  <button mat-stroked-button (click)="save()">保存</button>
+  <button mat-stroked-button (click)="finish()">終了</button>
+</header>
+<main>
+  <div class="left">
+    <div class="left-top" cdkDropList cdkDropListOrientation="vertical" (cdkDropListDropped)="exDrop($event)">
+      <div
+        class="ex-title"
+        *ngFor="let item of exList; let i = index"
+        (click)="select(i)"
+        [class.selected]="i == exIndex"
+        cdkDrag
+      >
+        {{ item.title }}
+      </div>
+    </div>
+    <button mat-raised-button color="primary" (click)="add()">追加</button>
+  </div>
+  <div class="right">
+    <ng-container *ngIf="exList.length > 0; else noEx">
+      <div class="right-content">
+        <h3>タイトル</h3>
+        <mat-form-field>
+          <input type="text" matInput [(ngModel)]="exList[exIndex].title" />
+        </mat-form-field>
+      </div>
+      <div class="right-content">
+        <h3>説明</h3>
+        <app-slide-editor-element [elements]="exList[exIndex].description"></app-slide-editor-element>
+      </div>
+      <div class="right-content">
+        <h3>テストケース</h3>
+        <ng-container *ngFor="let item of caseList; let i = index">
+          <div *ngIf="item.exercise == currentExerciseId" class="case-item">
+            <div>{{ item.index }}</div>
+            <div>
+              <div>標準入力</div>
+              <mat-form-field>
+                <textarea matInput matTextareaAutosize [(ngModel)]="item.stdin"></textarea>
+              </mat-form-field>
+            </div>
+            <div>
+              <div>想定する出力</div>
+              <mat-form-field>
+                <textarea matInput matTextareaAutosize [(ngModel)]="item.expected_output"></textarea>
+              </mat-form-field>
+            </div>
+            <div>
+              <button mat-raised-button color="warn" (click)="removeCase(i)">削除</button>
+            </div>
+          </div>
+        </ng-container>
+        <button mat-raised-button color="primary" (click)="addCase()">追加</button>
+      </div>
+      <div class="right-content">
+        <button mat-raised-button color="warn" (click)="remove()">削除</button>
+      </div>
+    </ng-container>
+    <ng-template #noEx>
+      演習問題なし
+    </ng-template>
+  </div>
+</main>

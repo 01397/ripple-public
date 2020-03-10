@@ -105,12 +105,12 @@
   display: flex;
 }
 .ex-left {
-  width: 400px;
+  flex: 2;
   height: 100%;
   overflow-y: auto;
 }
 .ex-right {
-  flex: 1;
+  flex: 3;
 }
 .ex-left-slide {
   height: 600px;

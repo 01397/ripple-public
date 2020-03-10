@@ -1,0 +1,44 @@
+@import '../../assets/styles/variables';
+:host {
+  display: flex;
+  flex-direction: column;
+}
+header {
+  padding: 8px;
+  text-align: right;
+  background-color: $mono-100;
+}
+main {
+  flex: 1;
+  display: flex;
+  height: 100%;
+}
+.left {
+  width: 300px;
+  border-right: 1px solid $mono-40;
+}
+.ex-title {
+  margin: 4px;
+  border: 1px solid $black-a50;
+  min-height: 1em;
+  border-radius: 8px;
+  padding: 8px;
+  cursor: move;
+}
+.selected {
+  background-color: $primary-300;
+  color: $mono-100;
+}
+.right {
+  flex: 1;
+}
+h3 {
+  color: $mono-50;
+}
+.right-content {
+  padding: 8px;
+  border-bottom: 1px solid $mono-80;
+}
+.case-item {
+  display: flex;
+}

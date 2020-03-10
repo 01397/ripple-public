@@ -214,11 +214,20 @@ export class MaterialComponent implements OnInit {
   }
 
   /**
-   * スライド作成へ
+   * スライド編集へ
    */
   editSlide() {
     this.router.navigate([
       '/admin/slide-editor',
+      { course: this.selectedLesson.courseId, lesson: this.selectedLesson.id },
+    ])
+  }
+  /**
+   * 演習問題編集へ
+   */
+  editExercise() {
+    this.router.navigate([
+      '/admin/exercise-editor',
       { course: this.selectedLesson.courseId, lesson: this.selectedLesson.id },
     ])
   }
