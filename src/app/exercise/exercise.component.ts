@@ -1,5 +1,13 @@
 import { Component, OnInit } from '@angular/core'
 import { SlideElementType } from 'app/slide/slide-item'
+import { ActivatedRoute } from '@angular/router'
+import { AngularFirestore } from '@angular/fire/firestore'
+
+export interface ExerciseData {
+  index: number
+  title: string
+  description: SlideElementType[]
+}
 
 @Component({
   selector: 'app-exercise',
@@ -7,56 +15,31 @@ import { SlideElementType } from 'app/slide/slide-item'
   styleUrls: ['./exercise.component.scss'],
 })
 export class ExerciseComponent implements OnInit {
-  public exData: { index: number; title: string; description: SlideElementType[]; testcase: string[] }[] = [
+  public exList: ExerciseData[] = [
     {
       index: 0,
-      title: '練習だよ',
-      description: [
-        {
-          type: 'paragraph',
-          body: 'print文を使って、画面に自己紹介文を出力しましょう',
-        },
-        {
-          type: 'paragraph',
-          body: 'まずは自分の名前を出力しましょう',
-        },
-        {
-          type: 'code',
-          lang: 'python',
-          code: 'print("Hello,my name is Ripple")',
-          fontSize: 14,
-        },
-      ],
-      testcase: [],
+      title: '読み込み中',
+      description: [],
     },
-    {
-      index: 0,
-      title: '練習だよ',
-      description: [
-        {
-          type: 'paragraph',
-          body: 'print文を使った！',
-        },
-        {
-          type: 'paragraph',
-          body: '自分の学年を出力しましょう',
-        },
-        {
-          type: 'code',
-          lang: 'python',
-          code: 'print("Hello, my name is 3")',
-          fontSize: 14,
-        },
-      ],
-      testcase: [],
-    },
-    { index: 0, title: '練習だよ', description: [], testcase: [] },
   ]
   public exIndex: number = 0
   public unlockedIndex: number = 1
-  constructor() {}
+  constructor(private route: ActivatedRoute, private firestore: AngularFirestore) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    const courseId = this.route.snapshot.paramMap.get('course')
+    const lessonId = this.route.snapshot.paramMap.get('lesson')
+    this.firestore
+      .collection('course')
+      .doc(courseId)
+      .collection('lesson')
+      .doc(lessonId)
+      .collection<ExerciseData>('exercise')
+      .valueChanges()
+      .subscribe(docs => {
+        this.exList = docs.sort((a, b) => a.index - b.index)
+      })
+  }
 
   changeExIndex(i: number) {
     if (i > this.unlockedIndex) {

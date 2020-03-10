@@ -5,13 +5,8 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop'
 import { map } from 'rxjs/operators'
 import { Observable } from 'rxjs'
+import { ExerciseData } from '../exercise/exercise.component'
 
-interface ExerciseData {
-  index: number
-  title: string
-  description: SlideElementType[]
-  testcase: string[]
-}
 interface ExerciseDataId extends ExerciseData {
   id: string
 }
@@ -89,7 +84,6 @@ export class ExerciseEditorComponent implements OnInit {
       title: '',
       index: this.exList.length,
       description: [],
-      testcase: [],
     })
     console.log(this.exList)
   }
