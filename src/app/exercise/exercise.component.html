@@ -1,20 +1,22 @@
-<div class="steps">
-  <ng-container *ngFor="let item of exList; let i = index">
-    <div [class.colored]="i <= unlockedIndex" class="steps-bar"></div>
-    <div
-      [class.colored]="i <= unlockedIndex"
-      [class.selected]="i === exIndex"
-      class="steps-circle"
-      (click)="changeExIndex(i)"
-    >
-      {{ i + 1 }}
-    </div>
-  </ng-container>
-  <div class="steps-arrow"></div>
-</div>
-<div class="ex">
-  <div class="ex-content">
-    <h2 class="ex-title">演習{{ exIndex + 1 }}: {{ exList[exIndex].title }}</h2>
-    <app-slide-element class="ex-body" [contents]="exList[exIndex].description"></app-slide-element>
+<ng-container *ngIf="exList.length > 0">
+  <div class="steps">
+    <ng-container *ngFor="let item of exList; let i = index">
+      <div [class.colored]="i <= unlockedIndex" class="steps-bar"></div>
+      <div
+        [class.colored]="i <= unlockedIndex"
+        [class.selected]="i === exIndex"
+        class="steps-circle"
+        (click)="changeExIndex(i)"
+      >
+        {{ i + 1 }}
+      </div>
+    </ng-container>
+    <div class="steps-arrow"></div>
   </div>
-</div>
+  <div class="ex">
+    <div class="ex-content">
+      <h2 class="ex-title">演習{{ exIndex + 1 }}: {{ exList[exIndex].title }}</h2>
+      <app-slide-element class="ex-body" [contents]="exList[exIndex].description"></app-slide-element>
+    </div>
+  </div>
+</ng-container>

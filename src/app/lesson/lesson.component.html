@@ -25,5 +25,5 @@
 </ng-container>
 <div class="ex" *ngIf="displayMode === 'exercise'">
   <app-exercise class="ex-left"></app-exercise>
-  <app-editor class="ex-right"></app-editor>
+  <app-editor class="ex-right" [exercise]="exerciseId"></app-editor>
 </div>

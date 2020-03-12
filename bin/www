@@ -5,7 +5,7 @@
  */
 
 var app = require('../app')
-var judge = require('../routes/judge')
+var { judge, execute } = require('../routes/judge')
 var debug = require('debug')('ripple-tmp:server')
 var http = require('http')
 var PythonShell = require('python-shell').PythonShell
@@ -31,6 +31,7 @@ var io = require('socket.io')(server)
 io.on('connection', function(socket) {
   console.log('connected')
   socket.on('judge', msg => judge(msg, io))
+  socket.on('execute', msg => execute(msg, io))
   socket.on('test message', msg => {
     console.log(msg)
     PythonShell.runString(msg, null, function(err, result) {

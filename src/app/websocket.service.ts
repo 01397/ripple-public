@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core'
 import * as io from 'socket.io-client'
 import { Subject } from 'rxjs'
+import { JudgeResult } from '../../routes/judge'
 
 @Injectable({
   providedIn: 'root',
 })
 export class WebsocketService {
   private socket: SocketIOClient.Socket
-  public judgeSubject = new Subject<string>()
+  public judgeSubject = new Subject<JudgeResult>()
+  public execSubject = new Subject<JudgeResult>()
 
   constructor() {}
 
@@ -42,9 +44,13 @@ export class WebsocketService {
     this.socket.on('pong', (ms: number) => {
       this.log(`pong (${ms}ms)`)
     })
-    this.socket.on('judge result', (msg: string) => {
-      this.log('test ' + msg)
+    this.socket.on('judge', (msg: JudgeResult) => {
+      this.log('judge ' + msg)
       this.judgeSubject.next(msg)
+    })
+    this.socket.on('execute', (msg: JudgeResult) => {
+      this.log('execute ' + msg)
+      this.execSubject.next(msg)
     })
   }
 

@@ -1,3 +1,15 @@
+"use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,101 +46,122 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var _this = this;
-var https = require('https');
-var admin = require('firebase-admin');
-var serviceAccount = require('../secrets/Ripple-Public-1c25c707ebf8.json');
+Object.defineProperty(exports, "__esModule", { value: true });
+var https = require("https");
+var admin = require("firebase-admin");
+// const serviceAccount = require('../secrets/Ripple-Public-1c25c707ebf8.json')
 admin.initializeApp({
     credential: admin.credential.applicationDefault(),
 });
 var db = admin.firestore();
-var judge = function (msg, io) { return __awaiter(_this, void 0, void 0, function () {
-    var json, course, lesson, exercise, sourceCode, doc, postResult, err_1, token, count, getResult, result, status_1;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
+var execConfig = {
+    number_of_runs: '1',
+    cpu_time_limit: '2',
+    cpu_extra_time: '0.5',
+    wall_time_limit: '5',
+    memory_limit: '128000',
+    stack_limit: '64000',
+    max_processes_and_or_threads: '30',
+    enable_per_process_and_thread_time_limit: false,
+    enable_per_process_and_thread_memory_limit: true,
+    max_file_size: '1024',
+};
+var judge = function (msg, io) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, exercise, source_code, language_id, snapshot, result, docs, i, doc, postData, jResult;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
             case 0:
-                json = JSON.parse(msg);
-                console.log(msg);
-                course = json.course, lesson = json.lesson, exercise = json.exercise, sourceCode = json.sourceCode;
+                _a = JSON.parse(msg), exercise = _a.exercise, source_code = _a.source_code, language_id = _a.language_id;
                 return [4 /*yield*/, db
-                        .collection('course')
-                        .doc(course)
-                        .collection('lesson')
-                        .doc(lesson)
-                        .collection('exercise')
-                        .doc(exercise)
+                        .collection('testcase')
+                        .where('exercise', '==', exercise)
                         .get()];
             case 1:
-                doc = _a.sent();
-                if (!doc.exists) {
-                    io.emit('judge result', { status: 'error', body: 'テストケースが存在しません' });
+                snapshot = _b.sent();
+                if (snapshot.empty) {
+                    io.emit('judge', { error: true, done: true, result: [] });
                     return [2 /*return*/];
                 }
-                _a.label = 2;
+                result = new Array(snapshot.docs.length);
+                io.emit('judge', { error: false, done: false, result: result });
+                docs = snapshot.docs;
+                i = 0;
+                _b.label = 2;
             case 2:
-                _a.trys.push([2, 4, , 5]);
-                return [4 /*yield*/, postJudge(doc, sourceCode)];
+                if (!(i < docs.length)) return [3 /*break*/, 5];
+                doc = docs[i];
+                console.log(doc.data());
+                postData = __assign(__assign({}, doc.data()), { source_code: source_code, language_id: language_id });
+                postData.expected_output = base64Encode(postData.expected_output);
+                return [4 /*yield*/, callApi(postData)];
             case 3:
-                postResult = _a.sent();
-                return [3 /*break*/, 5];
+                jResult = _b.sent();
+                result[i] = jResult.status.id;
+                console.log(jResult);
+                io.emit('judge', { error: false, done: false, result: result });
+                _b.label = 4;
             case 4:
-                err_1 = _a.sent();
-                io.emit('judge result', { status: 'error', body: err_1 });
-                return [2 /*return*/];
+                i++;
+                return [3 /*break*/, 2];
             case 5:
-                if (postResult.statusCode !== 201) {
-                    io.emit('judge result', { status: 'error', body: '判定システムでエラーが発生しました' });
-                    return [2 /*return*/];
-                }
-                io.emit('judge result', { status: 'post', body: { length: 1, result: [0] } });
-                console.log(postResult.chunk);
-                token = JSON.parse(postResult.chunk).token;
-                count = 0;
-                _a.label = 6;
-            case 6:
-                if (!(count < 10)) return [3 /*break*/, 10];
-                return [4 /*yield*/, sleep(1000)];
-            case 7:
-                _a.sent();
-                return [4 /*yield*/, getJudge(token)];
-            case 8:
-                getResult = _a.sent();
-                result = JSON.parse(getResult.chunk);
-                status_1 = Number(result.status.id);
-                io.emit('judge result', { status: 'get', body: { length: 1, result: [status_1] } });
-                if (status_1 > 2) {
-                    return [3 /*break*/, 10];
-                }
-                _a.label = 9;
-            case 9:
-                count++;
-                return [3 /*break*/, 6];
-            case 10:
-                io.emit('judge result', { status: 'finish' });
+                io.emit('judge', { error: false, done: true, result: result });
                 return [2 /*return*/];
         }
     });
 }); };
-function postJudge(doc, sourceCode) {
-    return new Promise(function (resolve) {
-        var _a = doc.data(), language_id = _a.language_id, stdin = _a.stdin, expected_output = _a.expected_output;
-        var postData = {
-            source_code: base64Encode(sourceCode),
-            language_id: language_id,
-            number_of_runs: '1',
-            stdin: base64Encode(stdin[0]),
-            expected_output: base64Encode(expected_output[0]),
-            cpu_time_limit: '2',
-            cpu_extra_time: '0.5',
-            wall_time_limit: '5',
-            memory_limit: '128000',
-            stack_limit: '64000',
-            max_processes_and_or_threads: '30',
-            enable_per_process_and_thread_time_limit: false,
-            enable_per_process_and_thread_memory_limit: true,
-            max_file_size: '1024',
-        };
-        var postDataStr = JSON.stringify(postData);
+var execute = function (msg, io) { return __awaiter(void 0, void 0, void 0, function () {
+    var postData;
+    return __generator(this, function (_a) {
+        postData = JSON.parse(msg);
+        callApi(postData)
+            .then(function (result) {
+            io.emit('execute', result);
+        })
+            .catch(function (err) {
+            io.emit('execute', err);
+        });
+        return [2 /*return*/];
+    });
+}); };
+// Judge0 呼び出し
+// return value: https://api.judge0.com/statuses
+function callApi(postData) {
+    return __awaiter(this, void 0, void 0, function () {
+        var submission, token, max, count, result, data, status_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, postSubmission(postData)];
+                case 1:
+                    submission = _a.sent();
+                    token = JSON.parse(submission).token;
+                    max = 10;
+                    count = 0;
+                    _a.label = 2;
+                case 2:
+                    if (!(count < max)) return [3 /*break*/, 6];
+                    return [4 /*yield*/, sleep(1000)];
+                case 3:
+                    _a.sent();
+                    return [4 /*yield*/, getSubmission(token)];
+                case 4:
+                    result = _a.sent();
+                    data = JSON.parse(result.chunk);
+                    status_1 = data.status.id;
+                    if (status_1 >= 3) {
+                        return [2 /*return*/, data];
+                    }
+                    _a.label = 5;
+                case 5:
+                    count++;
+                    return [3 /*break*/, 2];
+                case 6: throw Error('too long time');
+            }
+        });
+    });
+}
+function postSubmission(postData) {
+    return new Promise(function (resolve, reject) {
+        var postDataStr = JSON.stringify(__assign(__assign({}, execConfig), postData));
         var options = {
             host: 'api.judge0.com',
             path: '/submissions/?base64_encoded=true&wait=false',
@@ -138,38 +171,48 @@ function postJudge(doc, sourceCode) {
                 'Content-Length': Buffer.byteLength(postDataStr),
             },
         };
-        var request = https.request(options, function (response) {
+        var req = https.request(options, function (response) {
             var statusCode = response.statusCode;
             response.setEncoding('utf8');
             response.on('data', function (chunk) {
-                resolve({ statusCode: statusCode, chunk: chunk });
+                if (statusCode !== 201) {
+                    console.log(chunk);
+                    reject('status code ' + statusCode);
+                    return;
+                }
+                resolve(chunk);
             });
         });
-        request.on('error', function (e) {
+        req.on('error', function (e) {
             console.log('problem with request: ' + e.message);
+            reject('request error');
         });
-        request.write(postDataStr);
-        request.end();
+        req.write(postDataStr);
+        req.end();
     });
 }
-function getJudge(token) {
-    return new Promise(function (resolve) {
+function getSubmission(token) {
+    return new Promise(function (resolve, reject) {
         var options = {
             host: 'api.judge0.com',
             path: "/submissions/" + token + "?base64_encoded=true&wait=false",
             method: 'GET',
         };
         var req = https.request(options, function (res) {
-            console.log('STATUS: ' + res.statusCode);
-            console.log('HEADERS: ' + JSON.stringify(res.headers));
             var statusCode = res.statusCode;
             res.setEncoding('utf8');
             res.on('data', function (chunk) {
+                if (statusCode !== 200) {
+                    console.log(chunk);
+                    reject('status code ' + statusCode);
+                    return;
+                }
                 resolve({ statusCode: statusCode, chunk: chunk });
             });
         });
         req.on('error', function (err) {
             console.log('problem with request: ' + err.message);
+            reject('request error');
         });
         req.end();
     });
@@ -184,4 +227,4 @@ function sleep(time) {
         }, time);
     });
 }
-module.exports = judge;
+module.exports = { judge: judge, execute: execute };

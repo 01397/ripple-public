@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { AceEditorComponent } from 'ng2-ace-editor'
 import * as ace from 'ace-builds'
-import { SlideService } from 'app/slide/slide.service'
+import { SlideService } from '../slide/slide.service'
 import { ActivatedRoute } from '@angular/router'
+import { ExerciseService } from '../exercise.service'
 
 @Component({
   selector: 'app-lesson',
@@ -18,13 +19,18 @@ export class LessonComponent implements OnInit {
   public navForward = true
   public displayMode: 'slide' | 'exercise' | 'wrapup' = 'exercise'
 
-  constructor(private slideService: SlideService, private route: ActivatedRoute) {}
+  constructor(
+    private slideService: SlideService,
+    private exerciseService: ExerciseService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     const courseId = this.route.snapshot.paramMap.get('course')
     const lessonId = this.route.snapshot.paramMap.get('lesson')
     const path = `course/${courseId}/lesson/${lessonId}`
     this.slideService.setSlideData(path)
+    this.exerciseService.init(courseId, lessonId)
 
     ace.config.set('basePath', 'path')
     this.slideService.nav.subscribe(nav => {

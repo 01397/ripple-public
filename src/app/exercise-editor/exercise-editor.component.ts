@@ -1,23 +1,12 @@
 import { Component, OnInit } from '@angular/core'
-import { SlideElementType } from 'app/slide/slide-item'
 import { ActivatedRoute, Router } from '@angular/router'
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore'
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop'
 import { map } from 'rxjs/operators'
 import { Observable } from 'rxjs'
-import { ExerciseData } from '../exercise/exercise.component'
+import { ExerciseData, ExerciseDataId } from '../exercise.service'
+import { Testcase } from '../../../routes/judge'
 
-interface ExerciseDataId extends ExerciseData {
-  id: string
-}
-interface Testcase {
-  language_id: number
-  stdin: string
-  expected_output: string
-  index: number
-  lesson: string
-  exercise: string
-}
 interface TestcaseId extends Testcase {
   id: string
 }

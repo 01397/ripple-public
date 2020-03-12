@@ -1,20 +1,23 @@
-<div id="editor-title">
+<div class="editor-title">
   script.py
 </div>
-<ace-editor
-  id="editor"
-  [(text)]="text"
-  [mode]="'python'"
-  [theme]="'dracula'"
-  [options]="options"
-  [readOnly]="false"
-  [autoUpdateContent]="true"
-  [durationBeforeCallback]="1000"
-></ace-editor>
-<div id="console-title">
-  <div>コンソール</div>
-  <div (click)="onClick()">実行</div>
+<div class="editor-wrapper">
+  <ace-editor
+    class="editor"
+    [(text)]="text"
+    [mode]="'python'"
+    [theme]="'dracula'"
+    [options]="options"
+    [readOnly]="false"
+    [autoUpdateContent]="true"
+    [durationBeforeCallback]="1000"
+  ></ace-editor>
+  <div class="button execute" (click)="execute()"><i class="material-icons">play_arrow</i>実行</div>
 </div>
-<div id="console">
+<div class="console-title">
+  <div>出力</div>
+</div>
+<div class="console">
   {{ consoleText }}
+  <div class="button judge" (click)="judge()"><i class="material-icons">check</i>採点</div>
 </div>
