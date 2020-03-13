@@ -9,6 +9,7 @@ export interface ExerciseData {
   index: number
   title: string
   description: SlideElementType[]
+  defaultCode: string
 }
 export interface ExerciseDataId extends ExerciseData {
   id: string
@@ -24,6 +25,7 @@ export class ExerciseService {
       index: 0,
       title: '読み込み中',
       description: [],
+      defaultCode: '',
     },
   ])
   public exIndex: BehaviorSubject<number> = new BehaviorSubject(0)
@@ -61,14 +63,13 @@ export class ExerciseService {
 
   goNext() {
     const nextIndex = this.exIndex.value + 1
-    if (this.unlockedIndex + 1 === nextIndex) {
-      this.unlockedIndex++
-      this.exIndex.next(nextIndex)
-    } else if (nextIndex < this.exList.value.length) {
-      this.exIndex.next(nextIndex)
-    } else {
+    if (nextIndex >= this.exList.value.length) {
       this.modeRequest.next('wrapup')
+      return
+    } else if (this.unlockedIndex + 1 === nextIndex) {
+      this.unlockedIndex++
     }
+    this.exIndex.next(nextIndex)
   }
 
   changeExIndex(i: number) {

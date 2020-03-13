@@ -27,6 +27,10 @@ export class ExerciseEditorComponent implements OnInit {
   private caseObservale: Observable<TestcaseId[]>
   private removedCaseId: string[] = []
   private lessonId: string = ''
+  public editorOptions = {
+    maxLines: 1000,
+    printMargin: false,
+  }
   constructor(private route: ActivatedRoute, private router: Router, private firestore: AngularFirestore) {}
 
   ngOnInit() {
@@ -73,10 +77,11 @@ export class ExerciseEditorComponent implements OnInit {
       title: '',
       index: this.exList.length,
       description: [],
+      defaultCode: '# ここにコードを記入します\n',
     })
     console.log(this.exList)
   }
-  save() {
+  async save() {
     const batch = this.firestore.firestore.batch()
     this.exList.map((v, i) => {
       const value: ExerciseDataId = { ...v }
@@ -100,14 +105,12 @@ export class ExerciseEditorComponent implements OnInit {
     this.removedCaseId.map(id => {
       batch.delete(this.caseRef.doc(id).ref)
     })
-    return batch
-      .commit()
-      .then(() => {
-        window.alert('更新完了')
-      })
-      .catch(e => {
-        window.alert('更新失敗' + e)
-      })
+    try {
+      await batch.commit()
+      window.alert('更新完了')
+    } catch (e) {
+      window.alert('更新失敗' + e)
+    }
   }
   exDrop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.exList, event.previousIndex, event.currentIndex)
@@ -117,7 +120,9 @@ export class ExerciseEditorComponent implements OnInit {
     this.exIndex = index
   }
   remove() {
-    this.removedId.push(this.currentExerciseId)
+    if (this.currentExerciseId !== null) {
+      this.removedId.push(this.currentExerciseId)
+    }
     this.exList.splice(this.exIndex, 1)
     if (this.exIndex > this.exList.length - 2) {
       this.exIndex = this.exList.length - 1
@@ -135,7 +140,9 @@ export class ExerciseEditorComponent implements OnInit {
     })
   }
   removeCase(i: number) {
-    this.removedCaseId.push(this.caseList[i].id)
+    if (this.caseList[i].id !== null) {
+      this.removedCaseId.push(this.caseList[i].id)
+    }
     this.caseList.splice(i, 1)
   }
   get currentExerciseId(): string {

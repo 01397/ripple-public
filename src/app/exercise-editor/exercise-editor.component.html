@@ -30,7 +30,21 @@
         <app-slide-editor-element [elements]="exList[exIndex].description"></app-slide-editor-element>
       </div>
       <div class="right-content">
+        <h3>初期コード</h3>
+        <ace-editor
+          class="editor"
+          [(text)]="exList[exIndex].defaultCode"
+          [mode]="'python'"
+          [theme]="'dracula'"
+          [options]="editorOptions"
+          [readOnly]="false"
+          [autoUpdateContent]="true"
+          [durationBeforeCallback]="1000"
+        ></ace-editor>
+      </div>
+      <div class="right-content">
         <h3>テストケース</h3>
+        <b>末尾に改行を入れること！</b>
         <ng-container *ngFor="let item of caseList; let i = index">
           <div *ngIf="item.exercise == currentExerciseId" class="case-item">
             <div>{{ item.index }}</div>

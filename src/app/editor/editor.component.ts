@@ -30,6 +30,13 @@ export class EditorComponent implements OnInit, OnDestroy {
       this.consoleText = window.atob(result.stdout)
       this.execEnabled = true
     })
+    this.exService.exIndex.subscribe(index => {
+      const defaultCode = this.exService.exList.value[index].defaultCode
+      if (!defaultCode) {
+        return
+      }
+      this.text = defaultCode
+    })
   }
   execute() {
     const data = {
