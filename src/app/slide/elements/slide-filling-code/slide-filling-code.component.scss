@@ -1,5 +1,8 @@
 @import '~assets/styles/extends';
 
+pre {
+  margin: 8px 0 0;
+}
 .button {
   @extend .slide-rounded-button;
 }
