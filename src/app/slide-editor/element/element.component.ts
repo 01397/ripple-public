@@ -5,6 +5,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop'
 import { AngularFireStorage } from '@angular/fire/storage'
 import { ImageElementType } from 'app/slide/elements/slide-image/slide-image.component'
 import { SlideService } from 'app/slide/slide.service'
+import { FillingCodeElementType } from 'app/slide/elements/slide-filling-code/slide-filling-code.component'
 
 @Component({
   selector: 'app-slide-editor-element',
@@ -107,4 +108,11 @@ export class SlideEditorElementComponent implements OnDestroy {
   }
 
   getElementName() {}
+
+  addBlank(el: FillingCodeElementType) {
+    el.blanks.push({ size: 3, type: 'equalTo', values: [] })
+  }
+  removeBlank(el: FillingCodeElementType) {
+    el.blanks.pop()
+  }
 }

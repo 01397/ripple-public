@@ -51,6 +51,19 @@
           <mat-form-field class="full-width">
             <textarea matTextareaAutosize matInput placeholder="コード" [(ngModel)]="el.code"></textarea>
           </mat-form-field>
+          <div>
+            ↑BLANKが空欄に置換されます。↓BLANKの数だけ判定を用意してください。
+          </div>
+          <div *ngFor="let blank of el.blanks" class="filling-blank">
+            <mat-form-field class="filling-blank-answer">
+              <input type="text" placeholder="解答" matInput [(ngModel)]="blank.values[0]" />
+            </mat-form-field>
+            <mat-form-field class="filling-blank-size">
+              <input type="number" placeholder="サイズ" matInput [(ngModel)]="blank.size" />
+            </mat-form-field>
+          </div>
+          <i class="material-icons" (click)="addBlank(el)">add_circle_outline</i>
+          <i class="material-icons" (click)="removeBlank(el)" *ngIf="el.blanks.length > 0">remove_circle_outline</i>
         </ng-container>
 
         <ng-container *ngSwitchCase="'quiz1'">
