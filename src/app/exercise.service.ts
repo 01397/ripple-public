@@ -1,8 +1,10 @@
-import { Injectable, Input } from '@angular/core'
+import { Injectable } from '@angular/core'
 import { AngularFirestore } from '@angular/fire/firestore'
 import { SlideElementType } from './slide/slide-item'
-import { Observable, Subject, BehaviorSubject } from 'rxjs'
+import { Subject, BehaviorSubject } from 'rxjs'
 import { map } from 'rxjs/operators'
+import { WebsocketService } from './websocket.service'
+import { LessonDisplay } from './lesson/lesson.component'
 export interface ExerciseData {
   index: number
   title: string
@@ -25,12 +27,14 @@ export class ExerciseService {
     },
   ])
   public exIndex: BehaviorSubject<number> = new BehaviorSubject(0)
-  public unlockedIndex: number = 1
+  public unlockedIndex: number = 0
+  public judging: boolean = false
   public get exId() {
     return this.exList.value[this.exIndex.value].id
   }
+  public modeRequest: Subject<LessonDisplay> = new Subject()
 
-  constructor(private firestore: AngularFirestore) {}
+  constructor(private firestore: AngularFirestore, private websocketService: WebsocketService) {}
 
   init(courseId: string, lessonId: string) {
     this.firestore
@@ -55,10 +59,27 @@ export class ExerciseService {
       })
   }
 
+  goNext() {
+    const nextIndex = this.exIndex.value + 1
+    if (this.unlockedIndex + 1 === nextIndex) {
+      this.unlockedIndex++
+      this.exIndex.next(nextIndex)
+    } else if (nextIndex < this.exList.value.length) {
+      this.exIndex.next(nextIndex)
+    } else {
+      this.modeRequest.next('wrapup')
+    }
+  }
+
   changeExIndex(i: number) {
     if (i > this.unlockedIndex) {
       return
     }
     this.exIndex.next(i)
+  }
+
+  judge(data: { language_id: number; source_code: string; exercise: string }) {
+    this.websocketService.emit('judge', JSON.stringify(data))
+    this.judging = true
   }
 }

@@ -12,12 +12,19 @@
     [autoUpdateContent]="true"
     [durationBeforeCallback]="1000"
   ></ace-editor>
-  <div class="button execute" (click)="execute()"><i class="material-icons">play_arrow</i>実行</div>
+  <div class="button execute" (click)="execute()" [class.disabled]="!execEnabled">
+    <i class="material-icons">play_arrow</i>実行
+  </div>
 </div>
 <div class="console-title">
   <div>出力</div>
 </div>
 <div class="console">
   {{ consoleText }}
-  <div class="button judge" (click)="judge()"><i class="material-icons">check</i>採点</div>
+  <div class="button judge" (click)="judge()" *ngIf="judgeEnabled; else judging">
+    <i class="material-icons">check</i>採点
+  </div>
+  <ng-template #judging>
+    <div class="button judge disabled">採点中</div>
+  </ng-template>
 </div>

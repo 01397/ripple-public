@@ -1,0 +1,21 @@
+<div class="container">
+  <h3>採点</h3>
+  <div *ngFor="let item of result; let i = index" class="item">
+    <div class="item-index">{{ i + 1 }}</div>
+    <i class="material-icons" [style.color]="'#c8c8c8'" *ngIf="item <= 2">play_circle_filled</i>
+    <i class="material-icons" [style.color]="'#00ce83'" *ngIf="item === 3">check_circle</i>
+    <i class="material-icons" [style.color]="'#ee0088'" *ngIf="item >= 4">error</i>
+    <div class="item-result">
+      {{ resultString[item] }}
+    </div>
+  </div>
+  <div *ngIf="done">
+    <ng-container *ngIf="allAccepted; else retry">
+      <button (click)="next()">次へ</button>
+    </ng-container>
+    <ng-template #retry>
+      <button (click)="close()">もう一度</button>
+    </ng-template>
+  </div>
+  <div *ngIf="error">申し訳ありません。判定システムに問題が発生しました。</div>
+</div>

@@ -42,9 +42,10 @@ const judge = async (msg: string, io) => {
   const docs = snapshot.docs
   for (let i = 0; i < docs.length; i++) {
     const doc = docs[i]
-    console.log(doc.data())
-    const postData: JudgeConfig = { ...doc.data(), source_code, language_id }
-    postData.expected_output = base64Encode(postData.expected_output)
+    const data = doc.data()
+    const stdin = base64Encode(data.stdin)
+    const expected_output = base64Encode(data.expected_output)
+    const postData: JudgeConfig = { expected_output, stdin, source_code, language_id }
     const jResult: JudgeResult = await callApi(postData)
     result[i] = jResult.status.id
     console.log(jResult)
@@ -94,15 +95,15 @@ export interface JudgeResult {
 async function callApi(postData: JudgeConfig) {
   const submission = await postSubmission(postData)
   const token = JSON.parse(submission).token
-  const max = 10
+  const max = 20
   for (let count = 0; count < max; count++) {
-    await sleep(1000)
     const result: any = await getSubmission(token)
     const data: JudgeResult = JSON.parse(result.chunk)
     const status = data.status.id
     if (status >= 3) {
       return data
     }
+    await sleep(500)
   }
   throw Error('too long time')
 }

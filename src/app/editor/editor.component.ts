@@ -12,22 +12,23 @@ import { ExerciseService } from 'app/exercise.service'
 })
 export class EditorComponent implements OnInit, OnDestroy {
   @ViewChild('editor', { static: false }) editor: AceEditorComponent
-  text: string = ''
-  options = { maxLines: 1000, printMargin: false }
-  consoleText: string
+  public text: string = ''
+  public options = { maxLines: 1000, printMargin: false }
+  public consoleText: string
+  public execEnabled: boolean = true
+  public get judgeEnabled() {
+    return !this.exService.judging
+  }
 
   constructor(private websocketService: WebsocketService, private exService: ExerciseService) {}
 
   ngOnInit() {
     ace.config.set('basePath', 'path')
     this.websocketService.connect()
-    this.websocketService.judgeSubject.subscribe((result: JudgeResult) => {
-      console.log(result)
-      // this.consoleText = result
-    })
     this.websocketService.execSubject.subscribe((result: JudgeResult) => {
       console.log(result)
       this.consoleText = window.atob(result.stdout)
+      this.execEnabled = true
     })
   }
   execute() {
@@ -37,6 +38,7 @@ export class EditorComponent implements OnInit, OnDestroy {
       stdin: '',
     }
     this.websocketService.emit('execute', JSON.stringify(data))
+    this.execEnabled = false
   }
   judge() {
     const data = {
@@ -44,7 +46,7 @@ export class EditorComponent implements OnInit, OnDestroy {
       source_code: window.btoa(this.text),
       exercise: this.exService.exId,
     }
-    this.websocketService.emit('judge', JSON.stringify(data))
+    this.exService.judge(data)
   }
   ngOnDestroy() {
     this.websocketService.close()

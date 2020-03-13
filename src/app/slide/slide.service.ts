@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http'
 import { AngularFirestore } from '@angular/fire/firestore'
 import { LessonItem } from 'firestore-item'
 import { MatSnackBar } from '@angular/material'
+import { LessonDisplay } from 'app/lesson/lesson.component'
 
 @Injectable({
   providedIn: 'root',
@@ -39,7 +40,8 @@ export class SlideService {
   public subtitleEnabled = true
   public muted = false
   public speechAudio = new Audio()
-  path: string
+  private path: string
+  public modeRequest: Subject<LessonDisplay> = new Subject()
 
   constructor(private http: HttpClient, private db: AngularFirestore, private snackBar: MatSnackBar) {}
 
@@ -118,8 +120,12 @@ export class SlideService {
    * @returns 移動できたか?
    */
   go(index: number, force = false) {
-    if ((this.limit < index && !force) || index < 0 || this.slideData.length - 1 < index) {
+    if ((this.limit < index && !force) || index < 0) {
       return false
+    }
+    if (this.slideData.length - 1 < index) {
+      this.modeRequest.next('exercise')
+      return
     }
     this.index = index
     this.updateSlide()
@@ -144,7 +150,7 @@ export class SlideService {
   updateNav() {
     this.nav.next({
       back: this.index > 0,
-      forward: this.index < this.slideData.length - 1 && this.index < this.limit,
+      forward: /* this.index < this.slideData.length - 1 && */ this.index < this.limit,
     })
   }
 

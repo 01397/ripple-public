@@ -2,19 +2,20 @@ import { Injectable } from '@angular/core'
 import * as io from 'socket.io-client'
 import { Subject } from 'rxjs'
 import { JudgeResult } from '../../routes/judge'
+import { environment } from 'environments/environment'
 
 @Injectable({
   providedIn: 'root',
 })
 export class WebsocketService {
   private socket: SocketIOClient.Socket
-  public judgeSubject = new Subject<JudgeResult>()
+  public judgeSubject = new Subject<{ error: false; done: true; result: (number | null)[] }>()
   public execSubject = new Subject<JudgeResult>()
 
   constructor() {}
 
   connect() {
-    this.socket = io()
+    this.socket = environment.production ? io() : io('localhost:3000')
     this.socket.on('connect', () => {
       this.log('connected')
     })
@@ -44,7 +45,7 @@ export class WebsocketService {
     this.socket.on('pong', (ms: number) => {
       this.log(`pong (${ms}ms)`)
     })
-    this.socket.on('judge', (msg: JudgeResult) => {
+    this.socket.on('judge', msg => {
       this.log('judge ' + msg)
       this.judgeSubject.next(msg)
     })

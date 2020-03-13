@@ -67,7 +67,7 @@ var execConfig = {
     max_file_size: '1024',
 };
 var judge = function (msg, io) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, exercise, source_code, language_id, snapshot, result, docs, i, doc, postData, jResult;
+    var _a, exercise, source_code, language_id, snapshot, result, docs, i, doc, data, stdin, expected_output, postData, jResult;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -90,9 +90,10 @@ var judge = function (msg, io) { return __awaiter(void 0, void 0, void 0, functi
             case 2:
                 if (!(i < docs.length)) return [3 /*break*/, 5];
                 doc = docs[i];
-                console.log(doc.data());
-                postData = __assign(__assign({}, doc.data()), { source_code: source_code, language_id: language_id });
-                postData.expected_output = base64Encode(postData.expected_output);
+                data = doc.data();
+                stdin = base64Encode(data.stdin);
+                expected_output = base64Encode(data.expected_output);
+                postData = { expected_output: expected_output, stdin: stdin, source_code: source_code, language_id: language_id };
                 return [4 /*yield*/, callApi(postData)];
             case 3:
                 jResult = _b.sent();
@@ -134,22 +135,22 @@ function callApi(postData) {
                 case 1:
                     submission = _a.sent();
                     token = JSON.parse(submission).token;
-                    max = 10;
+                    max = 20;
                     count = 0;
                     _a.label = 2;
                 case 2:
                     if (!(count < max)) return [3 /*break*/, 6];
-                    return [4 /*yield*/, sleep(1000)];
-                case 3:
-                    _a.sent();
                     return [4 /*yield*/, getSubmission(token)];
-                case 4:
+                case 3:
                     result = _a.sent();
                     data = JSON.parse(result.chunk);
                     status_1 = data.status.id;
                     if (status_1 >= 3) {
                         return [2 /*return*/, data];
                     }
+                    return [4 /*yield*/, sleep(500)];
+                case 4:
+                    _a.sent();
                     _a.label = 5;
                 case 5:
                     count++;

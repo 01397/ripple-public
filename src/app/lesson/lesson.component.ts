@@ -5,6 +5,8 @@ import { SlideService } from '../slide/slide.service'
 import { ActivatedRoute } from '@angular/router'
 import { ExerciseService } from '../exercise.service'
 
+export type LessonDisplay = 'slide' | 'exercise' | 'wrapup'
+
 @Component({
   selector: 'app-lesson',
   templateUrl: './lesson.component.html',
@@ -17,20 +19,19 @@ export class LessonComponent implements OnInit {
 
   public navBack = false
   public navForward = true
-  public displayMode: 'slide' | 'exercise' | 'wrapup' = 'exercise'
+  public displayMode: LessonDisplay = 'slide'
+  public get judging() {
+    return this.displayMode === 'exercise' && this.exService.judging
+  }
 
-  constructor(
-    private slideService: SlideService,
-    private exerciseService: ExerciseService,
-    private route: ActivatedRoute
-  ) {}
+  constructor(private slideService: SlideService, private exService: ExerciseService, private route: ActivatedRoute) {}
 
   ngOnInit() {
     const courseId = this.route.snapshot.paramMap.get('course')
     const lessonId = this.route.snapshot.paramMap.get('lesson')
     const path = `course/${courseId}/lesson/${lessonId}`
     this.slideService.setSlideData(path)
-    this.exerciseService.init(courseId, lessonId)
+    this.exService.init(courseId, lessonId)
 
     ace.config.set('basePath', 'path')
     this.slideService.nav.subscribe(nav => {
@@ -39,6 +40,12 @@ export class LessonComponent implements OnInit {
         this.navBack = nav.back
         this.navForward = nav.forward
       })
+    })
+    this.exService.modeRequest.subscribe(mode => {
+      this.displayMode = mode
+    })
+    this.slideService.modeRequest.subscribe(mode => {
+      this.displayMode = mode
     })
   }
   slidePrev() {

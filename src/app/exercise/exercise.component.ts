@@ -9,6 +9,9 @@ import { ExerciseService, ExerciseData } from 'app/exercise.service'
 export class ExerciseComponent implements OnInit {
   public exList: ExerciseData[] = []
   public exIndex: number = 0
+  public get unlockedIndex() {
+    return this.exService.unlockedIndex
+  }
   constructor(private exService: ExerciseService) {}
 
   ngOnInit() {

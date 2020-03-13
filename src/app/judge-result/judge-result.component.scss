@@ -1,0 +1,31 @@
+@import '~assets/styles/variables';
+:host {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $black-a50;
+  overflow: auto;
+  z-index: 100;
+  backdrop-filter: blur(4px);
+}
+.container {
+  margin: 32px auto;
+  border-radius: 8px;
+  padding: 8px;
+  width: 500px;
+  max-width: 90%;
+  background-color: $mono-100;
+}
+h3 {
+  margin: 0 0 16px;
+  @include font-size(24);
+  color: $mono-20;
+}
+.item {
+  display: flex;
+}
+.item-index {
+  width: 32px;
+}

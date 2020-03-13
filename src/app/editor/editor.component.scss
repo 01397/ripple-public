@@ -43,6 +43,9 @@
   &:hover {
     background-color: $accent-300;
   }
+  &.disabled {
+    background-color: $mono-30;
+  }
 }
 .editor-wrapper {
   position: relative;
