@@ -36,7 +36,7 @@
         <ng-container *ngSwitchCase="'code'">
           <mat-select name="lang-select" required [(ngModel)]="el.lang">
             <mat-option value="python">Python</mat-option>
-            <mat-option value="plain">プレーンテキスト</mat-option>
+            <mat-option value="plain_text">プレーンテキスト</mat-option>
           </mat-select>
           <mat-form-field class="full-width">
             <textarea matTextareaAutosize matInput placeholder="コード" [(ngModel)]="el.code"></textarea>
@@ -46,7 +46,7 @@
         <ng-container *ngSwitchCase="'fillingCode'">
           <mat-select name="lang-select" required [(ngModel)]="el.lang">
             <mat-option value="python">Python</mat-option>
-            <mat-option value="plain">プレーンテキスト</mat-option>
+            <mat-option value="plaintext">プレーンテキスト</mat-option>
           </mat-select>
           <mat-form-field class="full-width">
             <textarea matTextareaAutosize matInput placeholder="コード" [(ngModel)]="el.code"></textarea>

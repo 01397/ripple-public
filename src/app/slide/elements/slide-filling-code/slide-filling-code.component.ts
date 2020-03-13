@@ -29,12 +29,18 @@ export class SlideFillingCodeComponent extends SlideAbstractComponent {
 
   constructor(private sanitizer: DomSanitizer, private slideService: SlideService) {
     super()
+    hljs.registerLanguage('plaintext', require('highlight.js/lib/languages/plaintext'))
   }
 
   ngOnInit() {
+    let i = 0
     const code = this.content.code
-    const hlResult = hljs.highlight(this.content.lang, code)
-    const text = hlResult.value.replace(/BLANK/gm, '<input type="text">')
+    const lang = this.content.lang
+    const hlResult = hljs.highlight(lang, code)
+    const text = hlResult.value.replace(
+      /BLANK/gm,
+      () => `<input type="text" style="width: ${this.content.blanks[i++].size}em">`
+    )
     const html = this.sanitizer.bypassSecurityTrustHtml(text)
     this.code = html
     this.slideService.lock()
