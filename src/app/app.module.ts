@@ -74,10 +74,6 @@ const appRoutes: Routes = [
     component: LessonComponent,
   },
   {
-    path: 'editor',
-    component: EditorComponent,
-  },
-  {
     path: 'admin/slide-editor',
     component: SlideEditorComponent,
   },
