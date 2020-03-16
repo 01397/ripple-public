@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser'
 import { HttpClientModule } from '@angular/common/http'
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
+import { FirebaseUIModule, firebase, firebaseui } from 'firebaseui-angular'
 
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
@@ -56,15 +57,49 @@ import { AngularFirestoreModule } from '@angular/fire/firestore'
 import { DragDropModule } from '@angular/cdk/drag-drop'
 import { ExerciseComponent } from './exercise/exercise.component'
 import { AngularFireStorageModule, BUCKET } from '@angular/fire/storage'
-import { ExerciseEditorComponent } from './exercise-editor/exercise-editor.component';
-import { JudgeResultComponent } from './judge-result/judge-result.component';
+import { ExerciseEditorComponent } from './exercise-editor/exercise-editor.component'
+import { JudgeResultComponent } from './judge-result/judge-result.component'
 import { LoginComponent } from './login/login.component'
+import { AngularFireAuthModule } from '@angular/fire/auth'
+
+const firebaseUiAuthConfig: firebaseui.auth.Config = {
+  autoUpgradeAnonymousUsers: false, // 匿名認証ユーザー自動アップグレード
+  signInFlow: 'popup', // redirect or popup
+  signInOptions: [
+    // firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+    // {
+    //   scopes: ['public_profile', 'email', 'user_likes', 'user_friends'],
+    //   customParameters: {
+    //     auth_type: 'reauthenticate',
+    //   },
+    //   provider: firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+    // },
+    firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+    firebase.auth.GithubAuthProvider.PROVIDER_ID,
+    // {
+    //   requireDisplayName: false,
+    //   provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+    // },
+    // firebase.auth.PhoneAuthProvider.PROVIDER_ID,
+    // firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID,
+  ],
+  // // Team Of Service
+  // tosUrl: 'http://localhost:6200/TOS',
+  // privacyPolicyUrl: 'プライバシーポリシーのURL',
+  // signInSuccessUrl: 'http://localhost:6200/home',
+  // credentialHelper: firebaseui.auth.CredentialHelper.ACCOUNT_CHOOSER_COM,
+  // siteName: 'Ripple',
+}
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   {
     path: 'home',
     component: HomeComponent,
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
   },
   {
     path: 'courses',
@@ -172,6 +207,9 @@ const appRoutes: Routes = [
     MatDialogModule,
     AngularFirestoreModule,
     AngularFireStorageModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
+    FirebaseUIModule.forRoot(firebaseUiAuthConfig),
     DragDropModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
