@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser'
 import { HttpClientModule } from '@angular/common/http'
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
-import { FirebaseUIModule, firebase, firebaseui } from 'firebaseui-angular'
+import { FirebaseUIModule, firebase } from 'firebaseui-angular'
 
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
@@ -61,6 +61,7 @@ import { ExerciseEditorComponent } from './exercise-editor/exercise-editor.compo
 import { JudgeResultComponent } from './judge-result/judge-result.component'
 import { LoginComponent } from './login/login.component'
 import { AngularFireAuthModule } from '@angular/fire/auth'
+import { canActivate, redirectLoggedInTo, redirectUnauthorizedTo, AngularFireAuthGuard } from '@angular/fire/auth-guard'
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
   autoUpgradeAnonymousUsers: false, // 匿名認証ユーザー自動アップグレード
@@ -91,6 +92,9 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
   // siteName: 'Ripple',
 }
 
+const redirectLoggedInToHome = () => redirectLoggedInTo(['home'])
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login'])
+
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   {
@@ -100,34 +104,50 @@ const appRoutes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectLoggedInToHome },
   },
   {
     path: 'courses',
     component: CoursesComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
   {
     path: 'lesson',
     component: LessonComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
   {
     path: 'admin/slide-editor',
     component: SlideEditorComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
   {
     path: 'admin/exercise-editor',
     component: ExerciseEditorComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
   {
     path: 'notifications',
     component: NotificationsComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
   {
     path: 'settings',
     component: SettingsComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
   {
     path: 'admin/material',
     component: MaterialComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
   { path: '**', component: NotFoundComponent },
 ]
@@ -213,7 +233,7 @@ const appRoutes: Routes = [
     DragDropModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [InMemoryApiService, { provide: BUCKET, useValue: 'ripple-public.appspot.com' }],
+  providers: [InMemoryApiService, { provide: BUCKET, useValue: 'ripple-public.appspot.com' }, AngularFireAuthGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
