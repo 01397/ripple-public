@@ -4,6 +4,7 @@ import * as ace from 'ace-builds'
 import { SlideService } from '../slide/slide.service'
 import { ActivatedRoute } from '@angular/router'
 import { ExerciseService } from '../exercise.service'
+import { AppService } from 'app/app.service'
 
 export type LessonDisplay = 'slide' | 'exercise' | 'wrapup'
 
@@ -23,8 +24,12 @@ export class LessonComponent implements OnInit {
   public get judging() {
     return this.displayMode === 'exercise' && this.exService.judging
   }
-
-  constructor(private slideService: SlideService, private exService: ExerciseService, private route: ActivatedRoute) {}
+  constructor(
+    private slideService: SlideService,
+    private exService: ExerciseService,
+    private route: ActivatedRoute,
+    private app: AppService
+  ) {}
 
   ngOnInit() {
     const courseId = this.route.snapshot.paramMap.get('course')

@@ -1,1 +1,9 @@
-<p>header works!</p>
+<div class="container">
+  <a class="logo" routerLink="/home"></a>
+  <div class="title">{{title}}</div>
+  <div class="spacer"></div>
+  <div class="account">
+    <i class="material-icons icon">account_circle</i>
+    <span class="label">{{userName || 'ログインしていません'}}</span>
+  </div>
+</div>

@@ -26,3 +26,14 @@ export interface LessonItemId extends LessonItem {
   id: string
   courseId: string
 }
+export interface UserItem {
+  name: string
+  gender: number
+  age: number
+  job: number
+  purpose: number
+  region: any
+  trigger: number
+  interest: number[]
+  experience: number
+}

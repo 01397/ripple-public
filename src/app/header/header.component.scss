@@ -1,0 +1,39 @@
+@import '~assets/styles/variables';
+.container {
+  display: flex;
+  background: $primary-600-grad-horizontal;
+  height: 64px;
+  align-items: center;
+  color: $mono-100;
+  font-weight: 500;
+  @include font-size(20);
+}
+.logo {
+  background-image: url(/assets/images/logo.svg);
+  background-position: 16px center;
+  background-repeat: no-repeat;
+  background-size: 96px 32px;
+  height: 100%;
+  width: 128px;
+  opacity: 0.75;
+}
+.title {
+  padding: 16px;
+}
+.spacer {
+  flex: 1;
+}
+.account {
+  display: flex;
+  padding: 16px;
+  align-items: center;
+  .icon {
+    @include font-size(36);
+  }
+  .label {
+    max-width: 10em;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+}
