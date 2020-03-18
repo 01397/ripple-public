@@ -173,7 +173,7 @@ export class MaterialComponent implements OnInit {
             .delete()
             .then(() => {
               this.snackbar.open('削除しました')
-              this.selectLesson = null
+              this.selectedLesson = null
             })
         }
       })

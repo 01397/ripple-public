@@ -23,7 +23,7 @@ export class CoursesComponent implements OnInit {
 
   ngOnInit() {
     this.courseObservable = this.db
-      .collection<CourseItem>('course')
+      .collection<CourseItem>('course', ref => ref.where('private', '==', false))
       .snapshotChanges()
       .pipe(
         map(actions =>
@@ -55,7 +55,7 @@ export class CoursesComponent implements OnInit {
     this.selectedCourse = course
     const courseId = course.id
     this.lessons = this.db
-      .collection<LessonItemId>(`course/${courseId}/lesson`)
+      .collection<LessonItemId>(`course/${courseId}/lesson`, ref => ref.where('private', '==', false))
       .snapshotChanges()
       .pipe(
         map(actions =>
