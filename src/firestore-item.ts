@@ -37,3 +37,29 @@ export interface UserItem {
   interest: number[]
   experience: number
 }
+export interface LessonLogItem {
+  user: string
+  course: string
+  lesson: string
+  done: boolean
+  start: firestore.Timestamp | object
+  end: firestore.Timestamp | object | null
+  created: firestore.Timestamp | object
+  modified: firestore.Timestamp | object
+}
+export interface ExerciseLogItem {
+  user: string
+  course: string
+  lesson: string
+  exercise: string
+  source_code: string
+  pass: boolean
+  stdout_1?: string
+  stderr_1?: string
+  stdout_2?: string
+  stderr_2?: string
+  stdout_3?: string
+  stderr_3?: string
+  created: firestore.Timestamp
+  modified: firestore.Timestamp
+}

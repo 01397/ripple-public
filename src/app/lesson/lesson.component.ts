@@ -24,12 +24,7 @@ export class LessonComponent implements OnInit {
   public get judging() {
     return this.displayMode === 'exercise' && this.exService.judging
   }
-  constructor(
-    private slideService: SlideService,
-    private exService: ExerciseService,
-    private route: ActivatedRoute,
-    private app: AppService
-  ) {}
+  constructor(private slideService: SlideService, private exService: ExerciseService, private route: ActivatedRoute) {}
 
   ngOnInit() {
     const courseId = this.route.snapshot.paramMap.get('course')
@@ -52,6 +47,7 @@ export class LessonComponent implements OnInit {
     this.slideService.modeRequest.subscribe(mode => {
       this.displayMode = mode
     })
+    this.exService.logStart({ courseId, lessonId })
   }
   slidePrev() {
     this.slideService.back()

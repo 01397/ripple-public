@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core'
-import { AngularFirestore } from '@angular/fire/firestore'
+import { AngularFirestore, DocumentReference } from '@angular/fire/firestore'
 import { SlideElementType } from './slide/slide-item'
 import { Subject, BehaviorSubject } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { WebsocketService } from './websocket.service'
 import { LessonDisplay } from './lesson/lesson.component'
+import { LessonLogItem } from 'firestore-item'
+import * as firebase from 'firebase'
+import { AppService } from './app.service'
 export interface ExerciseData {
   index: number
   title: string
@@ -19,6 +22,9 @@ export interface ExerciseDataId extends ExerciseData {
   providedIn: 'root',
 })
 export class ExerciseService {
+  /**
+   * 演習問題のデータ
+   */
   public exList: BehaviorSubject<ExerciseDataId[]> = new BehaviorSubject([
     {
       id: null,
@@ -28,23 +34,38 @@ export class ExerciseService {
       defaultCode: '',
     },
   ])
+  /**
+   * 表示中の演習問題番号
+   */
   public exIndex: BehaviorSubject<number> = new BehaviorSubject(0)
+  /**
+   * 表示可能な演習問題番号の最大値
+   */
   public unlockedIndex: number = 0
+  /**
+   * 判定処理中か？
+   */
   public judging: boolean = false
+  /**
+   * 演習問題のID (db上のid)
+   */
   public get exId() {
     return this.exList.value[this.exIndex.value].id
   }
+  /**
+   * 画面モードの変更要求を伝える
+   */
   public modeRequest: Subject<LessonDisplay> = new Subject()
+  /**
+   * レッスン実行記録, 終了時に記録用に保管hokann
+   */
+  private lessonLogRef: DocumentReference = null
 
-  constructor(private firestore: AngularFirestore, private websocketService: WebsocketService) {}
+  constructor(private db: AngularFirestore, private websocketService: WebsocketService, private app: AppService) {}
 
   init(courseId: string, lessonId: string) {
-    this.firestore
-      .collection('course')
-      .doc(courseId)
-      .collection('lesson')
-      .doc(lessonId)
-      .collection<ExerciseData>('exercise')
+    this.db
+      .collection<ExerciseData>(`course/${courseId}/lesson/${lessonId}/exercise`)
       .snapshotChanges()
       .pipe(
         map(actions =>
@@ -82,5 +103,36 @@ export class ExerciseService {
   judge(data: { language_id: number; source_code: string; exercise: string }) {
     this.websocketService.emit('judge', JSON.stringify(data))
     this.judging = true
+  }
+
+  logStart({ courseId, lessonId }: { courseId: string; lessonId: string }) {
+    const timestamp = firebase.database.ServerValue.TIMESTAMP
+    this.db
+      .collection<LessonLogItem>('lesson_log')
+      .add({
+        course: courseId,
+        lesson: lessonId,
+        user: this.app.getUser().uid,
+        start: timestamp,
+        end: null,
+        done: false,
+        created: timestamp,
+        modified: timestamp,
+      })
+      .then(ref => {
+        this.lessonLogRef = ref
+      })
+  }
+  logEnd(abort: boolean = false) {
+    if (this.lessonLogRef === null) {
+      return
+    }
+    const timestamp = firebase.database.ServerValue.TIMESTAMP
+    this.lessonLogRef.update({
+      end: timestamp,
+      done: !abort,
+      modified: timestamp,
+    })
+    this.lessonLogRef = null
   }
 }

@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core'
-import { Router, NavigationEnd, ActivatedRoute, NavigationStart, RoutesRecognized } from '@angular/router'
+import { Router, NavigationStart } from '@angular/router'
 import { filter } from 'rxjs/operators'
-import { Subject, Observable } from 'rxjs'
-import { Location } from '@angular/common'
+import { Subject } from 'rxjs'
 import { AngularFireAuth } from '@angular/fire/auth'
 import { AngularFirestore } from '@angular/fire/firestore'
-import { UserItem } from 'firestore-item'
 
 @Injectable({
   providedIn: 'root',
@@ -44,8 +42,8 @@ export class AppService {
   public getUser() {
     return this.user
   }
-  punlic getUserName() {
-    return this.user ? this.user.displayName || null
+  public getUserName() {
+    return this.user ? this.user.displayName : null
   }
   public login() {}
   public logout() {
