@@ -50,6 +50,7 @@ import {
   MatSnackBarModule,
   MatIconModule,
   MatDialogModule,
+  MatProgressSpinnerModule,
 } from '@angular/material'
 import { HttpClientInMemoryWebApiModule, InMemoryDbService } from 'angular-in-memory-web-api'
 import { MaterialComponent, MaterialDialog } from './admin/material/material.component'
@@ -62,6 +63,7 @@ import { JudgeResultComponent } from './judge-result/judge-result.component'
 import { LoginComponent } from './login/login.component'
 import { AngularFireAuthModule } from '@angular/fire/auth'
 import { canActivate, redirectLoggedInTo, redirectUnauthorizedTo, AngularFireAuthGuard } from '@angular/fire/auth-guard'
+import { SignupComponent } from './signup/signup.component'
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
   autoUpgradeAnonymousUsers: false, // 匿名認証ユーザー自動アップグレード
@@ -106,6 +108,12 @@ const appRoutes: Routes = [
     component: LoginComponent,
     canActivate: [AngularFireAuthGuard],
     data: { authGuardPipe: redirectLoggedInToHome },
+  },
+  {
+    path: 'signup',
+    component: SignupComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
   {
     path: 'courses',
@@ -185,6 +193,7 @@ const appRoutes: Routes = [
     ExerciseEditorComponent,
     JudgeResultComponent,
     LoginComponent,
+    SignupComponent,
   ],
   entryComponents: [
     SlideCoverComponent,
@@ -225,6 +234,7 @@ const appRoutes: Routes = [
     MatSnackBarModule,
     MatIconModule,
     MatDialogModule,
+    MatProgressSpinnerModule,
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireModule.initializeApp(environment.firebase),

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core'
 import { Router, NavigationEnd, ActivatedRoute, NavigationStart, RoutesRecognized } from '@angular/router'
 import { filter } from 'rxjs/operators'
-import { Subject } from 'rxjs'
+import { Subject, Observable } from 'rxjs'
 import { Location } from '@angular/common'
+import { AngularFireAuth } from '@angular/fire/auth'
 
 @Injectable({
   providedIn: 'root',
@@ -16,8 +17,9 @@ export class AppService {
   private get withSidebar() {
     return ['/home', '/courses', '/notifications', '/settings']
   }
+  private user: firebase.User
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private angularFireAuth: AngularFireAuth) {
     this.router.events.pipe(filter(event => event instanceof NavigationStart)).subscribe((event: NavigationStart) => {
       const url = event.url.match(/^[^;?]*/)[0]
       if (this.withHeader.includes(url)) {
@@ -31,5 +33,15 @@ export class AppService {
         this.sidebarVisiblity.next(false)
       }
     })
+    this.angularFireAuth.authState.subscribe(user => {
+      this.user = user
+    })
+  }
+  public getUser() {
+    return this.user
+  }
+  public login() {}
+  public logout() {
+    this.angularFireAuth.auth.signOut()
   }
 }

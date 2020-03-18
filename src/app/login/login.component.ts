@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core'
-import { Observable } from 'rxjs'
-import { AngularFireAuth } from '@angular/fire/auth'
 import { FirebaseUISignInSuccessWithAuthResult, FirebaseUISignInFailure } from 'firebaseui-angular'
+import { AppService } from 'app/app.service'
 
 @Component({
   selector: 'app-login',
@@ -9,17 +8,10 @@ import { FirebaseUISignInSuccessWithAuthResult, FirebaseUISignInFailure } from '
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  user: Observable<firebase.User>
 
-  constructor(private angularFireAuth: AngularFireAuth) {}
+  constructor(private app: AppService) {}
 
-  ngOnInit() {
-    this.user = this.angularFireAuth.authState
-  }
-
-  logout() {
-    this.angularFireAuth.auth.signOut()
-  }
+  ngOnInit() {}
 
   successCallback(signInSuccessData: FirebaseUISignInSuccessWithAuthResult) {
     console.log(signInSuccessData)

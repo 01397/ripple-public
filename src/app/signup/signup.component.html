@@ -1,0 +1,169 @@
+<div class="container">
+  <h2>新規登録</h2>
+  <div class="form-item">
+    <label class="form-label">ユーザ名</label>
+    <div class="form-field">
+      <input
+        type="text"
+        class="form-input"
+        [(ngModel)]="name"
+        required
+        [minlength]="minNameLength"
+        [maxlength]="maxNameLength"
+      />
+    </div>
+    <div class="form-error">
+      <ng-container *ngIf="!nameCheck1()">
+        <i class="material-icons">error</i>
+        <span>必須項目</span>
+      </ng-container>
+      <ng-container *ngIf="nameCheck1() && !nameCheck2()">
+        <i class="material-icons">error</i>
+        <span>{{ minNameLength }}文字以上{{ maxNameLength }}文字以下</span>
+      </ng-container>
+    </div>
+  </div>
+  <div class="form-item">
+    <span class="form-label">性別</span>
+    <div class="form-field">
+      <label *ngFor="let item of genderList; let i = index">
+        <input type="radio" name="gender" [(ngModel)]="gender" [value]="i" />
+        <div>{{ item }}</div>
+      </label>
+    </div>
+    <div class="form-error">
+      <ng-container *ngIf="gender === null">
+        <i class="material-icons">error</i>
+        <span>1つ選んでください</span>
+      </ng-container>
+    </div>
+  </div>
+  <div class="form-item">
+    <span class="form-label">年齢</span>
+    <div class="form-field">
+      <label *ngFor="let item of ageList; let i = index">
+        <input type="radio" name="age" [(ngModel)]="age" [value]="i" />
+        <div>{{ item }}</div>
+      </label>
+    </div>
+    <div class="form-error">
+      <ng-container *ngIf="age === null">
+        <i class="material-icons">error</i>
+        <span>1つ選んでください</span>
+      </ng-container>
+    </div>
+  </div>
+  <div class="form-item">
+    <span class="form-label">職業</span>
+    <div class="form-field">
+      <label *ngFor="let item of jobList; let i = index">
+        <input type="radio" name="job" [(ngModel)]="job" [value]="i" />
+        <div>{{ item }}</div>
+      </label>
+    </div>
+    <div class="form-error">
+      <ng-container *ngIf="job === null">
+        <i class="material-icons">error</i>
+        <span>1つ選んでください</span>
+      </ng-container>
+    </div>
+  </div>
+  <div class="form-item">
+    <span class="form-label">地域</span>
+    <div class="form-field">
+      <label *ngFor="let item of region2List; let i = index">
+        <input type="radio" name="region2" [(ngModel)]="region2" [value]="i" />
+        <div>{{ item.label }}</div>
+      </label>
+    </div>
+  </div>
+  <div class="form-item">
+    <div class="form-field" *ngIf="region2 !== null && region2List[region2].min !== null">
+      <ng-container *ngFor="let item of regionList; let i = index">
+        <label *ngIf="region2List[region2].min <= i && i <= region2List[region2].max">
+          <input type="radio" name="region" [(ngModel)]="region" [value]="i" />
+          <div>{{ item }}</div>
+        </label>
+      </ng-container>
+    </div>
+    <div class="form-error">
+      <ng-container *ngIf="region === null">
+        <i class="material-icons">error</i>
+        <span>1つ選んでください</span>
+      </ng-container>
+    </div>
+  </div>
+  <div class="form-item">
+    <span class="form-label">使用目的</span>
+    <div class="form-field">
+      <label *ngFor="let item of purposeList; let i = index">
+        <input type="radio" name="purpose" [(ngModel)]="purpose" [value]="i" />
+        <div>{{ item }}</div>
+      </label>
+    </div>
+    <div class="form-error">
+      <ng-container *ngIf="purpose === null">
+        <i class="material-icons">error</i>
+        <span>1つ選んでください</span>
+      </ng-container>
+    </div>
+  </div>
+  <div class="form-item">
+    <span class="form-label">本サービスを<br />知ったきっかけ</span>
+    <div class="form-field">
+      <label *ngFor="let item of triggerList; let i = index">
+        <input type="radio" name="trigger" [(ngModel)]="trigger" [value]="i" />
+        <div>{{ item }}</div>
+      </label>
+    </div>
+    <div class="form-error">
+      <ng-container *ngIf="trigger === null">
+        <i class="material-icons">error</i>
+        <span>1つ選んでください</span>
+      </ng-container>
+    </div>
+  </div>
+  <div class="form-item">
+    <span class="form-label">関心のある分野<br />(複数選択可)</span>
+    <div class="form-field">
+      <label *ngFor="let item of interestList; let i = index">
+        <input type="checkbox" [name]="item" [(ngModel)]="interest[i]" [value]="i" />
+        <div>
+          <i class="material-icons blank">check_box_outline_blank</i><i class="material-icons checked">check_box</i
+          >{{ item }}
+        </div>
+      </label>
+    </div>
+    <div class="form-error">
+      <ng-container *ngIf="!interest.includes(true)">
+        <i class="material-icons">error</i>
+        <span>少なくとも1つ選んでください</span>
+      </ng-container>
+    </div>
+  </div>
+  <div class="form-item">
+    <span class="form-label">プログラミング<br />経験年数</span>
+    <div class="form-field">
+      <input type="number" class="form-input form-experience" [(ngModel)]="experience" min="0" max="100" /><span
+        class="form-over"
+        >年</span
+      >
+    </div>
+    <div class="form-error">
+      <ng-container *ngIf="experience === null">
+        <i class="material-icons">error</i>
+        <span>必須項目</span>
+      </ng-container>
+      <ng-container *ngIf="!experienceCheck()">
+        <i class="material-icons">error</i>
+        <span>0~100で記入してください</span>
+      </ng-container>
+    </div>
+  </div>
+  <div class="form-action">
+    <mat-spinner *ngIf="inProgress === true" [diameter]="50" class="spinner"></mat-spinner>
+    <button class="button-submit" (click)="submit()" [disabled]="!submittionCheck()" *ngIf="inProgress === false">
+      学習を始める<i class="material-icons">arrow_forward</i>
+    </button>
+  </div>
+</div>
