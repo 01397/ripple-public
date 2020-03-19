@@ -22,4 +22,60 @@
   <app-exercise class="ex-left"></app-exercise>
   <app-editor class="ex-right"></app-editor>
 </div>
+<div class="result" *ngIf="displayMode === 'wrapup'">
+  <div class="result-container">
+    <h2 class="result-header">レッスンクリア</h2>
+    <div class="result-column">
+      <div class="result-label">レッスン</div>
+      <div class="result-title">{{ result.title }}</div>
+    </div>
+    <div class="result-column">
+      <div class="result-label">所要時間</div>
+      <div class="result-title">{{ result.duration | duration }}</div>
+    </div>
+    <div class="result-column">
+      <div class="result-label">自己評価</div>
+      <div class="result-face">
+        <img
+          class="result-face-image"
+          [src]="'../../assets/images/face_' + face + '.svg'"
+          *ngIf="face !== null; else dammy"
+        />
+        <ng-template #dammy>
+          <div class="result-face-dammy"></div>
+        </ng-template>
+        <div class="result-face-wrapper" [class.show]="face === null">
+          <div class="result-face-bubble">
+            <div>評価を記録しましょう</div>
+            <div class="result-face-container">
+              <button class="result-face-item">
+                <img class="result-face-image" src="../../assets/images/face_0.svg" (click)="selectFace(0)" />
+                <span class="result-face-label">余裕</span>
+              </button>
+              <button class="result-face-item">
+                <img class="result-face-image" src="../../assets/images/face_1.svg" (click)="selectFace(1)" />
+                <span class="result-face-label">簡単</span>
+              </button>
+              <button class="result-face-item">
+                <img class="result-face-image" src="../../assets/images/face_2.svg" (click)="selectFace(2)" />
+                <span class="result-face-label">順調</span>
+              </button>
+              <button class="result-face-item">
+                <img class="result-face-image" src="../../assets/images/face_3.svg" (click)="selectFace(3)" />
+                <span class="result-face-label">やや難</span>
+              </button>
+              <button class="result-face-item">
+                <img class="result-face-image" src="../../assets/images/face_4.svg" (click)="selectFace(4)" />
+                <span class="result-face-label">要復習</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="result-column">
+      <button routerLink="/courses" class="result-action" [disabled]="face === null">OK</button>
+    </div>
+  </div>
+</div>
 <app-judge-result *ngIf="judging"></app-judge-result>

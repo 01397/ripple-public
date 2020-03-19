@@ -11,6 +11,7 @@ import { AngularFirestore } from '@angular/fire/firestore'
 export class AppService {
   public headerVisiblity = new Subject<boolean>()
   public sidebarVisiblity = new Subject<boolean>()
+  public headerTitle: string
   private get withHeader() {
     return ['/lesson']
     // return ['/lesson', '/admin/slide-editor', '/admin/exercise-editor', '/admin/material']
@@ -48,5 +49,8 @@ export class AppService {
   public login() {}
   public logout() {
     this.angularFireAuth.auth.signOut()
+  }
+  public setHeaderTitle(title: string) {
+    this.headerTitle = title
   }
 }

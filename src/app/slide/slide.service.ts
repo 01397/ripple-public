@@ -29,7 +29,7 @@ export class SlideService {
       text: '',
     },
   })
-  public slideTitle = ''
+  public slideTitle = new Subject<string>()
   public subtitlesSubject = new BehaviorSubject<string>('')
   /**
    * スライド番号の上限。
@@ -69,7 +69,7 @@ export class SlideService {
       .valueChanges()
       .subscribe(result => {
         console.log(result)
-        this.slideTitle = result.title
+        this.slideTitle.next(result.title)
         this.slideData = result.slide.data
         if (this.slideData.length === 0) {
           this.slideData = [

@@ -41,6 +41,8 @@ export interface LessonLogItem {
   user: string
   course: string
   lesson: string
+  duration: null
+  face: 0 | 1 | 2 | 3 | 4 | null
   done: boolean
   start: firestore.Timestamp | object
   end: firestore.Timestamp | object | null

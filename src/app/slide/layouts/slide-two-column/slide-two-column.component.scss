@@ -3,10 +3,10 @@
 @import '~assets/styles/mixin';
 
 :host {
-  @extend .slide;
+  @extend .extend-slide;
 }
 .title {
-  @extend .slide-title;
+  @extend .extend-slide-title;
   @include fadein(0);
   padding: 48px 32px;
 }
@@ -14,7 +14,7 @@
   display: flex;
 }
 .left, .right {
-  @extend .slide-body;
+  @extend .extend-slide-body;
   width: 50%;
   box-sizing: border-box;
   padding: 0 32px;

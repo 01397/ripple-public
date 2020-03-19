@@ -63,7 +63,8 @@ import { JudgeResultComponent } from './judge-result/judge-result.component'
 import { LoginComponent } from './login/login.component'
 import { AngularFireAuthModule } from '@angular/fire/auth'
 import { canActivate, redirectLoggedInTo, redirectUnauthorizedTo, AngularFireAuthGuard } from '@angular/fire/auth-guard'
-import { SignupComponent } from './signup/signup.component'
+import { SignupComponent } from './signup/signup.component';
+import { DurationPipe } from './duration.pipe'
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
   autoUpgradeAnonymousUsers: false, // 匿名認証ユーザー自動アップグレード
@@ -194,6 +195,7 @@ const appRoutes: Routes = [
     JudgeResultComponent,
     LoginComponent,
     SignupComponent,
+    DurationPipe,
   ],
   entryComponents: [
     SlideCoverComponent,

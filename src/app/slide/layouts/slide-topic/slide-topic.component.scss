@@ -3,7 +3,7 @@
 @import '~assets/styles/mixin';
 
 :host {
-  @extend .slide;
+  @extend .extend-slide;
 }
 .title {
   @include fadein(1);
@@ -54,7 +54,7 @@
 }
 .left,
 .right {
-  @extend .slide-body;
+  @extend .extend-slide-body;
   width: 50%;
   box-sizing: border-box;
   padding: 0 32px;

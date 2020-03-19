@@ -60,6 +60,10 @@ export class ExerciseService {
    * レッスン実行記録, 終了時に記録用に保管hokann
    */
   private lessonLogRef: DocumentReference = null
+  /**
+   * レッスン開始時刻
+   */
+  private lessonStart: Date = null
 
   constructor(private db: AngularFirestore, private websocketService: WebsocketService, private app: AppService) {}
 
@@ -114,7 +118,9 @@ export class ExerciseService {
         lesson: lessonId,
         user: this.app.getUser().uid,
         start: timestamp,
+        duration: null,
         end: null,
+        face: null,
         done: false,
         created: timestamp,
         modified: timestamp,
@@ -122,17 +128,28 @@ export class ExerciseService {
       .then(ref => {
         this.lessonLogRef = ref
       })
+    this.lessonStart = new Date()
   }
   logEnd(abort: boolean = false) {
     if (this.lessonLogRef === null) {
       return
     }
     const timestamp = firebase.database.ServerValue.TIMESTAMP
+    const duration = new Date().getTime() - this.lessonStart.getTime()
     this.lessonLogRef.update({
       end: timestamp,
+      duration,
       done: !abort,
       modified: timestamp,
     })
-    this.lessonLogRef = null
+    return duration
+  }
+  logFace(face: 0 | 1 | 2 | 3 | 4) {
+    if (this.lessonLogRef === null) {
+      return
+    }
+    this.lessonLogRef.update({
+      face,
+    })
   }
 }

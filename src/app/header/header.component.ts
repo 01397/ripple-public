@@ -8,9 +8,8 @@ import { AppService } from 'app/app.service'
 })
 export class HeaderComponent implements OnInit {
   public userName = this.app.getUserName()
-  public title = 'Lesson 1. はじめての えいご'
 
-  constructor(private app: AppService) {}
+  constructor(public app: AppService) {}
 
   ngOnInit() {}
 }

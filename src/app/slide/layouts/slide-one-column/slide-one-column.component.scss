@@ -3,17 +3,17 @@
 @import '~assets/styles/mixin';
 
 :host {
-  @extend .slide;
+  @extend .extend-slide;
 }
 
 .title {
-  @extend .slide-title;
+  @extend .extend-slide-title;
   @include fadein(0);
   text-align: center;
   padding: 48px 32px;
 }
 .body {
-  @extend .slide-body;
+  @extend .extend-slide-body;
   @include fadein(1);
   margin: 0 auto;
   max-width: 80%;

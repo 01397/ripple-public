@@ -60,7 +60,7 @@ $section-margin: 24px;
 }
 
 .lessons {
-  @extend .card;
+  @extend .extend-card;
   width: 512px;
   margin: $section-margin;
 }

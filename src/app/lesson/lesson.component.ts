@@ -21,17 +21,33 @@ export class LessonComponent implements OnInit {
   public navBack = false
   public navForward = true
   public displayMode: LessonDisplay = 'slide'
+  public result: { title: string; duration: number } = {
+    title: '',
+    duration: null,
+  }
   public get judging() {
     return this.displayMode === 'exercise' && this.exService.judging
   }
-  constructor(private slideService: SlideService, private exService: ExerciseService, private route: ActivatedRoute) {}
+  // 感想の顔番号
+  public face: number = null
+  constructor(
+    private slideService: SlideService,
+    private exService: ExerciseService,
+    private app: AppService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     const courseId = this.route.snapshot.paramMap.get('course')
     const lessonId = this.route.snapshot.paramMap.get('lesson')
     const path = `course/${courseId}/lesson/${lessonId}`
+    this.slideService.slideTitle.subscribe(title => {
+      this.result.title = title
+      this.app.setHeaderTitle(title)
+    })
     this.slideService.setSlideData(path)
     this.exService.init(courseId, lessonId)
+    this.exService.logStart({ courseId, lessonId })
 
     ace.config.set('basePath', 'path')
     this.slideService.nav.subscribe(nav => {
@@ -41,12 +57,14 @@ export class LessonComponent implements OnInit {
         this.navForward = nav.forward
       })
     })
-    this.exService.modeRequest.subscribe(mode => {
+    const modeChange = (mode: LessonDisplay) => {
       this.displayMode = mode
-    })
-    this.slideService.modeRequest.subscribe(mode => {
-      this.displayMode = mode
-    })
+      if (mode === 'wrapup') {
+        this.onWrapup()
+      }
+    }
+    this.exService.modeRequest.subscribe(modeChange)
+    this.slideService.modeRequest.subscribe(modeChange)
     this.exService.logStart({ courseId, lessonId })
   }
   slidePrev() {
@@ -64,5 +82,16 @@ export class LessonComponent implements OnInit {
     } else if (this.displayMode === 'exercise') {
       this.displayMode = 'slide'
     }
+  }
+  onWrapup() {
+    this.result.duration = this.exService.logEnd()
+  }
+  /**
+   * 感想を記録する
+   * @param i 感想番号
+   */
+  selectFace(i: 0 | 1 | 2 | 3 | 4) {
+    this.face = i
+    this.exService.logFace(i)
   }
 }

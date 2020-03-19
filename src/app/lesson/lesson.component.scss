@@ -1,4 +1,5 @@
 @import '~assets/styles/variables';
+@import '~assets/styles/extends';
 @import '~assets/styles/mixin';
 
 :host {
@@ -89,4 +90,102 @@
 }
 .ex-left-slide {
   height: 600px;
+}
+
+.result-header {
+  text-align: center;
+  font-size: 32px;
+}
+.result-container {
+  @extend .extend-card;
+  width: 80%;
+  max-width: 700px;
+  margin: auto;
+}
+.result-face {
+  flex: 1;
+}
+.result-face-container {
+  display: flex;
+  justify-content: space-between;
+}
+.result-face-item {
+  padding: 4px;
+  appearance: none;
+  font: inherit;
+  background-color: $mono-100;
+  transition: 0.25s background-color ease;
+  border: 1px solid $primary-300;
+  border-radius: 6px;
+  margin-right: 6px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  flex: 1;
+  cursor: pointer;
+  &:hover {
+    background-color: $mono-90;
+  }
+}
+.result-column {
+  padding: 0;
+  margin: 0 24px;
+  display: flex;
+  align-items: center;
+  border-top: 1px solid #ddd;
+  padding: 8px;
+}
+.result-label {
+  margin-right: 16px;
+}
+.result-title {
+  font-weight: 500;
+  font-size: 24px;
+}
+.result-face-dammy {
+  min-height: 64px;
+}
+.result-face-label {
+  font-weight: bold;
+  @include font-size(20);
+}
+.result-face-image {
+  width: 64px;
+  height: 64px;
+}
+.result-face-wrapper {
+  padding: 0 !important;
+  overflow: hidden;
+  max-height: 0px;
+  transition: 0.3s ease max-height;
+  pointer-events: none;
+}
+.result-face-wrapper.show {
+  max-height: 200px;
+  margin-bottom: 16px;
+  pointer-events: all;
+}
+
+.result-face-bubble {
+  padding: 8px;
+  background: $primary-200;
+  position: relative;
+  margin-top: 16px;
+}
+
+.result-face-bubble::before {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 16px solid transparent;
+  border-bottom-color: $primary-200;
+  top: -32px;
+  pointer-events: none;
+  left: 64px;
+}
+.result-action {
+  @extend .extend-button1;
 }

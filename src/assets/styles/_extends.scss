@@ -1,6 +1,6 @@
 @import './variables';
 
-.card {
+.extend-card {
   background-color: $mono-100;
   border-radius: 6px;
   box-shadow: $card-shadow;
@@ -13,18 +13,18 @@
     margin: 0;
   }
 }
-.card > *:first-child {
+.extend-card > *:first-child {
   padding-top: 24px;
 }
-.card > *:last-child {
+.extend-card > *:last-child {
   padding-bottom: 24px;
 }
-.card > * {
+.extend-card > * {
   padding-left: 24px;
   padding-right: 24px;
 }
 
-.slide {
+.extend-slide {
   width: 100%;
   min-height: 100%;
   font-weight: 300;
@@ -33,18 +33,18 @@
   box-sizing: border-box;
 }
 
-.slide-title {
+.extend-slide-title {
   @include font-size(32);
   color: $mono-40;
   font-weight: 700;
 }
-.slide-body {
+.extend-slide-body {
   @include font-size(24);
   width: max-content;
   display: block;
 }
 
-.slide-rounded-button {
+.extend-slide-rounded-button {
   background-color: $slide-main;
   transition: background-color 0.3s ease;
   color: $mono-100;
@@ -60,6 +60,39 @@
   margin-top: 8px;
 }
 
-.slide-rounded-button:hover {
+.extend-slide-rounded-button:hover {
   background-color: lighten($slide-main, 10%);
+}
+
+.extend-button1{
+    background-image: $primary-600-grad-horizontal;
+  font-size: 24px;
+  color: $mono-100;
+  border: none;
+  appearance: none;
+  font-weight: bold;
+  border-radius: 6px;
+  padding: 8px;
+  width: 50%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  align-items: center;
+  box-shadow: 2px 2px 6px -2px #0008;
+  animation: 0.25s ease appear;
+  &:hover {
+    filter: brightness(1.1);
+  }
+  &:disabled {
+    opacity: 0.5;
+  }
+}
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
