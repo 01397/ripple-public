@@ -10,3 +10,6 @@
     margin-top: 12px;
   }
 }
+.card {
+  @extend .extend-card;
+}
