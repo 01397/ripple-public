@@ -5,7 +5,7 @@ import { Subject, BehaviorSubject } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { WebsocketService } from './websocket.service'
 import { LessonDisplay } from './lesson/lesson.component'
-import { LessonLogItem } from 'firestore-item'
+import { LessonLogItem, LessonRecordItem } from 'firestore-item'
 import * as firebase from 'firebase'
 import { AppService } from './app.service'
 export interface ExerciseData {
@@ -64,10 +64,20 @@ export class ExerciseService {
    * レッスン開始時刻
    */
   private lessonStart: Date = null
+  /**
+   * 現在のレッスンID
+   */
+  private lessonId: string
+  /**
+   * 現在のレッスンID
+   */
+  private courseId: string
 
   constructor(private db: AngularFirestore, private websocketService: WebsocketService, private app: AppService) {}
 
   init(courseId: string, lessonId: string) {
+    this.lessonId = lessonId
+    this.courseId = courseId
     this.db
       .collection<ExerciseData>(`course/${courseId}/lesson/${lessonId}/exercise`)
       .snapshotChanges()
@@ -109,13 +119,13 @@ export class ExerciseService {
     this.judging = true
   }
 
-  logStart({ courseId, lessonId }: { courseId: string; lessonId: string }) {
-    const timestamp = firebase.database.ServerValue.TIMESTAMP
+  logStart() {
+    const timestamp = firebase.firestore.FieldValue.serverTimestamp()
     this.db
       .collection<LessonLogItem>('lesson_log')
       .add({
-        course: courseId,
-        lesson: lessonId,
+        course: this.courseId,
+        lesson: this.lessonId,
         user: this.app.getUser().uid,
         start: timestamp,
         duration: null,
@@ -128,28 +138,69 @@ export class ExerciseService {
       .then(ref => {
         this.lessonLogRef = ref
       })
+
     this.lessonStart = new Date()
   }
   logEnd(abort: boolean = false) {
     if (this.lessonLogRef === null) {
       return
     }
-    const timestamp = firebase.database.ServerValue.TIMESTAMP
+    const timestamp = firebase.firestore.FieldValue.serverTimestamp()
     const duration = new Date().getTime() - this.lessonStart.getTime()
-    this.lessonLogRef.update({
+    const userID = this.app.getUser().uid
+    const batch = this.db.firestore.batch()
+    const lessonLog: Partial<LessonLogItem> = {
       end: timestamp,
       duration,
       done: !abort,
       modified: timestamp,
+    }
+    batch.set(this.lessonLogRef, lessonLog, {
+      merge: true,
     })
+    const lessonRecordPath = `user/${userID}/lesson_record/${this.lessonId}`
+    const lessonRecordRef = this.db.doc<LessonRecordItem>(lessonRecordPath).ref
+    const lessonRecord: LessonRecordItem = {
+      user: this.app.getUser().uid,
+      course: this.courseId,
+      lesson: this.lessonId,
+      face: null,
+      last: firebase.firestore.FieldValue.serverTimestamp(),
+      count: firebase.firestore.FieldValue.increment(1),
+      modified: firebase.firestore.FieldValue.serverTimestamp(),
+    }
+    batch.set(lessonRecordRef, lessonRecord, {
+      merge: true,
+    })
+    batch.commit()
     return duration
   }
+  /**
+   * レッスン終了後に、感想を選択したときに呼ばれる
+   * @param face 顔番号
+   */
   logFace(face: 0 | 1 | 2 | 3 | 4) {
     if (this.lessonLogRef === null) {
       return
     }
-    this.lessonLogRef.update({
+    const batch = this.db.firestore.batch()
+    // ユーザの記録
+    const lessonRecordPath = `user/${this.app.getUser().uid}/lesson_record/${this.lessonId}`
+    const lessonRecordRef = this.db.doc<LessonRecordItem>(lessonRecordPath).ref
+    const lessonRecord: Partial<LessonRecordItem> = {
       face,
-    })
+      modified: firebase.firestore.FieldValue.serverTimestamp(),
+    }
+    batch.set(lessonRecordRef, lessonRecord, { merge: true })
+    // logの記録
+    batch.set(
+      this.lessonLogRef,
+      {
+        face,
+        modified: firebase.database.ServerValue.TIMESTAMP,
+      },
+      { merge: true }
+    )
+    batch.commit().then(() => console.log('sent'))
   }
 }

@@ -41,13 +41,13 @@ export interface LessonLogItem {
   user: string
   course: string
   lesson: string
-  duration: null
+  duration: number
   face: 0 | 1 | 2 | 3 | 4 | null
   done: boolean
-  start: firestore.Timestamp | object
-  end: firestore.Timestamp | object | null
-  created: firestore.Timestamp | object
-  modified: firestore.Timestamp | object
+  start: firestore.Timestamp | firestore.FieldValue
+  end: firestore.Timestamp | firestore.FieldValue | null
+  created: firestore.Timestamp | firestore.FieldValue
+  modified: firestore.Timestamp | firestore.FieldValue
 }
 export interface ExerciseLogItem {
   user: string
@@ -62,6 +62,16 @@ export interface ExerciseLogItem {
   stderr_2?: string
   stdout_3?: string
   stderr_3?: string
-  created: firestore.Timestamp
-  modified: firestore.Timestamp
+  // created: firestore.Timestamp | firestore.FieldValue
+  modified: firestore.Timestamp | firestore.FieldValue
+}
+export interface LessonRecordItem {
+  user: string
+  course: string
+  lesson: string
+  last: firestore.Timestamp | firestore.FieldValue
+  count: firestore.Timestamp | firestore.FieldValue
+  face: 0 | 1 | 2 | 3 | 4 | null
+  // created: firestore.Timestamp | firestore.FieldValue
+  modified: firestore.Timestamp | firestore.FieldValue
 }

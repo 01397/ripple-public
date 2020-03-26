@@ -47,7 +47,7 @@ export class LessonComponent implements OnInit {
     })
     this.slideService.setSlideData(path)
     this.exService.init(courseId, lessonId)
-    this.exService.logStart({ courseId, lessonId })
+    this.exService.logStart()
 
     ace.config.set('basePath', 'path')
     this.slideService.nav.subscribe(nav => {
@@ -65,7 +65,6 @@ export class LessonComponent implements OnInit {
     }
     this.exService.modeRequest.subscribe(modeChange)
     this.slideService.modeRequest.subscribe(modeChange)
-    this.exService.logStart({ courseId, lessonId })
   }
   slidePrev() {
     this.slideService.back()
