@@ -5,7 +5,7 @@ import { Subject, BehaviorSubject } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { WebsocketService } from './websocket.service'
 import { LessonDisplay } from './lesson/lesson.component'
-import { LessonLogItem, LessonRecordItem } from 'firestore-item'
+import { LessonLogItem, LessonRecordItem } from './../firestore-item'
 import * as firebase from 'firebase'
 import { AppService } from './app.service'
 export interface ExerciseData {
@@ -82,15 +82,15 @@ export class ExerciseService {
       .collection<ExerciseData>(`course/${courseId}/lesson/${lessonId}/exercise`)
       .snapshotChanges()
       .pipe(
-        map(actions =>
-          actions.map(a => {
+        map((actions) =>
+          actions.map((a) => {
             const data = a.payload.doc.data()
             const id = a.payload.doc.id
             return { id, ...data }
           })
         )
       )
-      .subscribe(docs => {
+      .subscribe((docs) => {
         this.exList.next(docs.sort((a, b) => a.index - b.index))
         this.exIndex.next(0)
       })
@@ -135,7 +135,7 @@ export class ExerciseService {
         created: timestamp,
         modified: timestamp,
       })
-      .then(ref => {
+      .then((ref) => {
         this.lessonLogRef = ref
       })
 

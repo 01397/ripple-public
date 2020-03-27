@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import * as io from 'socket.io-client'
 import { Subject } from 'rxjs'
 import { JudgeResult } from '../../routes/judge'
-import { environment } from 'environments/environment'
+import { environment } from '../environments/environment'
 
 @Injectable({
   providedIn: 'root',
@@ -45,7 +45,7 @@ export class WebsocketService {
     this.socket.on('pong', (ms: number) => {
       this.log(`pong (${ms}ms)`)
     })
-    this.socket.on('judge', msg => {
+    this.socket.on('judge', (msg) => {
       this.log('judge ' + msg)
       this.judgeSubject.next(msg)
     })

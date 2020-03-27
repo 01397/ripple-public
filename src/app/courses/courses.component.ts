@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { AngularFirestore } from '@angular/fire/firestore'
-import { CourseItem, LessonItem, LessonItemId, LessonRecordItem } from 'firestore-item'
+import { CourseItem, LessonItemId, LessonRecordItem } from '../../firestore-item'
 import { map } from 'rxjs/operators'
 import { Observable, Subscription } from 'rxjs'
-import { AppService } from 'app/app.service'
+import { AppService } from '../app.service'
 
 interface CourseItemId extends CourseItem {
   id: string
@@ -25,11 +25,11 @@ export class CoursesComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.courseObservable = this.db
-      .collection<CourseItem>('course', ref => ref.where('private', '==', false))
+      .collection<CourseItem>('course', (ref) => ref.where('private', '==', false))
       .snapshotChanges()
       .pipe(
-        map(actions =>
-          actions.map(a => {
+        map((actions) =>
+          actions.map((a) => {
             const data = a.payload.doc.data()
             const id = a.payload.doc.id
             return { id, ...data }
@@ -37,7 +37,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
         )
       )
     this.subscription.add(
-      this.courseObservable.subscribe(courses => {
+      this.courseObservable.subscribe((courses) => {
         this.courses = courses
       })
     )
@@ -46,7 +46,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
       this.db
         .collection<LessonRecordItem>(lessonRecordPath)
         .valueChanges()
-        .subscribe(docs => {
+        .subscribe((docs) => {
           const record: {
             [key in string]: { count: number; last: Date; lessons: { [key2 in string]: { count: number; last: Date } } }
           } = {}
@@ -85,11 +85,11 @@ export class CoursesComponent implements OnInit, OnDestroy {
     this.selectedCourse = course
     const courseId = course.id
     this.lessons = this.db
-      .collection<LessonItemId>(`course/${courseId}/lesson`, ref => ref.where('private', '==', false))
+      .collection<LessonItemId>(`course/${courseId}/lesson`, (ref) => ref.where('private', '==', false))
       .snapshotChanges()
       .pipe(
-        map(actions =>
-          actions.map(a => {
+        map((actions) =>
+          actions.map((a) => {
             const data = a.payload.doc.data()
             const id = a.payload.doc.id
             return { id, courseId, ...data }

@@ -22,7 +22,7 @@ export class AppService {
   private user: firebase.User
 
   constructor(private router: Router, private angularFireAuth: AngularFireAuth, private db: AngularFirestore) {
-    this.router.events.pipe(filter(event => event instanceof NavigationStart)).subscribe((event: NavigationStart) => {
+    this.router.events.pipe(filter((event) => event instanceof NavigationStart)).subscribe((event: NavigationStart) => {
       const url = event.url.match(/^[^;?]*/)[0]
       if (this.withHeader.includes(url)) {
         this.headerVisiblity.next(true)
@@ -35,7 +35,7 @@ export class AppService {
         this.sidebarVisiblity.next(false)
       }
     })
-    this.angularFireAuth.authState.subscribe(user => {
+    this.angularFireAuth.authState.subscribe((user) => {
       console.log(this.user)
       this.user = user
     })

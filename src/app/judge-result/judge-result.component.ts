@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
-import { ExerciseService } from 'app/exercise.service'
-import { WebsocketService } from 'app/websocket.service'
+import { ExerciseService } from '../exercise.service'
+import { WebsocketService } from '../websocket.service'
 
 @Component({
   selector: 'app-judge-result',
@@ -29,12 +29,12 @@ export class JudgeResultComponent implements OnInit {
   public done = false
   public error = false
   public get allAccepted() {
-    return this.result.every(v => v === 3)
+    return this.result.every((v) => v === 3)
   }
   constructor(private exService: ExerciseService, private websocketService: WebsocketService) {}
 
   ngOnInit() {
-    this.websocketService.judgeSubject.subscribe(data => {
+    this.websocketService.judgeSubject.subscribe((data) => {
       this.result = data.result
       this.done = data.done
       this.error = data.error

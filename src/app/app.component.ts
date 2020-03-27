@@ -11,10 +11,10 @@ export class AppComponent {
   headerVisiblity = false
   sidebarVisiblity = false
   constructor(private appService: AppService) {
-    this.appService.headerVisiblity.subscribe(visibility => {
+    this.appService.headerVisiblity.subscribe((visibility) => {
       this.headerVisiblity = visibility
     })
-    this.appService.sidebarVisiblity.subscribe(visibility => {
+    this.appService.sidebarVisiblity.subscribe((visibility) => {
       this.sidebarVisiblity = visibility
     })
   }

@@ -9,7 +9,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "prettier": "prettier --write \"src/**/*.ts\""
+    "prettier": "prettier --write \"src/**/*.ts\"",
+    "analyze": "webpack-bundle-analyzer dist/browser/stats-es2015.json"
   },
   "engines": {
     "node": "12.x.x"
@@ -74,6 +75,7 @@
     "tslint": "^6.1.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-plugin-prettier": "^2.1.0",
-    "typescript": "~3.8.3"
+    "typescript": "~3.8.3",
+    "webpack-bundle-analyzer": "^3.6.1"
   }
 }

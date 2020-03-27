@@ -6,7 +6,7 @@ describe('SlideEditorService', () => {
   beforeEach(() => TestBed.configureTestingModule({}))
 
   it('should be created', () => {
-    const service: SlideEditorService = TestBed.get(SlideEditorService)
+    const service: SlideEditorService = TestBed.inject(SlideEditorService)
     expect(service).toBeTruthy()
   })
 })

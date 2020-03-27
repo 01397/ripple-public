@@ -29,10 +29,7 @@ export interface Testcase {
 
 const judge = async (msg: string, io) => {
   const { exercise, source_code, language_id } = JSON.parse(msg)
-  const snapshot = await db
-    .collection('testcase')
-    .where('exercise', '==', exercise)
-    .get()
+  const snapshot = await db.collection('testcase').where('exercise', '==', exercise).get()
   if (snapshot.empty) {
     io.emit('judge', { error: true, done: true, result: [] })
     return
@@ -57,10 +54,10 @@ const judge = async (msg: string, io) => {
 const execute = async (msg: string, io) => {
   const postData: JudgeConfig = JSON.parse(msg)
   callApi(postData)
-    .then(result => {
+    .then((result) => {
       io.emit('execute', result)
     })
-    .catch(err => {
+    .catch((err) => {
       io.emit('execute', err)
     })
 }
@@ -120,7 +117,7 @@ function postSubmission(postData: JudgeConfig) {
         'Content-Length': Buffer.byteLength(postDataStr),
       },
     }
-    const req = https.request(options, response => {
+    const req = https.request(options, (response) => {
       const statusCode = response.statusCode
       response.setEncoding('utf8')
       response.on('data', (chunk: string) => {
@@ -132,7 +129,7 @@ function postSubmission(postData: JudgeConfig) {
         resolve(chunk)
       })
     })
-    req.on('error', e => {
+    req.on('error', (e) => {
       console.log('problem with request: ' + e.message)
       reject('request error')
     })
@@ -147,10 +144,10 @@ function getSubmission(token: string) {
       path: `/submissions/${token}?base64_encoded=true&wait=false`,
       method: 'GET',
     }
-    const req = https.request(options, res => {
+    const req = https.request(options, (res) => {
       const statusCode = res.statusCode
       res.setEncoding('utf8')
-      res.on('data', chunk => {
+      res.on('data', (chunk) => {
         if (statusCode !== 200) {
           console.log(chunk)
           reject('status code ' + statusCode)
@@ -159,7 +156,7 @@ function getSubmission(token: string) {
         resolve({ statusCode, chunk })
       })
     })
-    req.on('error', err => {
+    req.on('error', (err) => {
       console.log('problem with request: ' + err.message)
       reject('request error')
     })

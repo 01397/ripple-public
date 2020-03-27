@@ -44,30 +44,30 @@ export class ExerciseEditorComponent implements OnInit {
       .doc(lessonId)
       .collection<ExerciseData>('exercise')
     this.exObservable = this.exRef.snapshotChanges().pipe(
-      map(actions =>
-        actions.map(a => {
+      map((actions) =>
+        actions.map((a) => {
           const data = a.payload.doc.data()
           const id = a.payload.doc.id
           return { id, ...data }
         })
       )
     )
-    this.exObservable.subscribe(list => {
+    this.exObservable.subscribe((list) => {
       this.exList = list.sort((a, b) => a.index - b.index)
     })
-    this.caseRef = this.firestore.collection<Testcase>('testcase', ref =>
+    this.caseRef = this.firestore.collection<Testcase>('testcase', (ref) =>
       ref.where('lesson', '==', lessonId).orderBy('index')
     )
     this.caseObservale = this.caseRef.snapshotChanges().pipe(
-      map(actions =>
-        actions.map(a => {
+      map((actions) =>
+        actions.map((a) => {
           const data = a.payload.doc.data()
           const id = a.payload.doc.id
           return { id, ...data }
         })
       )
     )
-    this.caseObservale.subscribe(list => {
+    this.caseObservale.subscribe((list) => {
       this.caseList = list.sort((a, b) => a.index - b.index)
     })
   }
@@ -91,7 +91,7 @@ export class ExerciseEditorComponent implements OnInit {
       const ref = !v.id ? this.exRef.ref.doc() : this.exRef.doc<ExerciseData>(v.id).ref
       batch.set(ref, value)
     })
-    this.removedId.map(id => {
+    this.removedId.map((id) => {
       batch.delete(this.exRef.doc(id).ref)
     })
     this.caseList.map((v, i) => {
@@ -102,7 +102,7 @@ export class ExerciseEditorComponent implements OnInit {
       const ref = !v.id ? this.caseRef.ref.doc() : this.caseRef.doc<Testcase>(v.id).ref
       batch.set(ref, value)
     })
-    this.removedCaseId.map(id => {
+    this.removedCaseId.map((id) => {
       batch.delete(this.caseRef.doc(id).ref)
     })
     try {

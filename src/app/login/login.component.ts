@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { FirebaseUISignInSuccessWithAuthResult, FirebaseUISignInFailure } from 'firebaseui-angular'
-import { AppService } from 'app/app.service'
+import { AppService } from '../app.service'
 
 @Component({
   selector: 'app-login',
@@ -8,7 +8,6 @@ import { AppService } from 'app/app.service'
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-
   constructor(private app: AppService) {}
 
   ngOnInit() {}

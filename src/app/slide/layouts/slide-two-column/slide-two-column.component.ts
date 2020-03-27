@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core'
 import { SlideComponent } from '../slide.component'
-import { SlideElementType } from 'app/slide/slide-item'
+import { SlideElementType } from '../../../slide/slide-item'
 
 export interface TwoColumnSlideType {
   type: 'twoColumn'

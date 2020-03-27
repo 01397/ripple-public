@@ -1,6 +1,6 @@
 import { AngularFirestoreCollection } from '@angular/fire/firestore'
 import { firestore } from 'firebase'
-import { SlideData } from 'app/slide/slide-item'
+import { SlideData } from './app/slide/slide-item'
 
 export interface CourseItem {
   title: string

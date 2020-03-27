@@ -4,7 +4,7 @@ import * as ace from 'ace-builds'
 import { SlideService } from '../slide/slide.service'
 import { ActivatedRoute } from '@angular/router'
 import { ExerciseService } from '../exercise.service'
-import { AppService } from 'app/app.service'
+import { AppService } from '../app.service'
 import { Subscription } from 'rxjs'
 
 export type LessonDisplay = 'slide' | 'exercise' | 'wrapup'
@@ -44,7 +44,7 @@ export class LessonComponent implements OnInit, OnDestroy {
     const lessonId = this.route.snapshot.paramMap.get('lesson')
     const path = `course/${courseId}/lesson/${lessonId}`
     this.subscription.add(
-      this.slideService.slideTitle.subscribe(title => {
+      this.slideService.slideTitle.subscribe((title) => {
         this.result.title = title
         this.app.setHeaderTitle(title)
       })
@@ -55,7 +55,7 @@ export class LessonComponent implements OnInit, OnDestroy {
 
     ace.config.set('basePath', 'path')
     this.subscription.add(
-      this.slideService.nav.subscribe(nav => {
+      this.slideService.nav.subscribe((nav) => {
         // ExpressionChangedAfterItHasBeenCheckedError を回避するために非同期関数を利用
         setTimeout(() => {
           this.navBack = nav.back

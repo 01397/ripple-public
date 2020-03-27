@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core'
 import { SlideComponent } from '../slide.component'
-import { SlideData, SlideElementType } from 'app/slide/slide-item'
+import { SlideData, SlideElementType } from '../../../slide/slide-item'
 
 export interface OneColumnSlideType {
   type: 'oneColumn'

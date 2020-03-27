@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { ExerciseService, ExerciseData } from 'app/exercise.service'
+import { ExerciseService, ExerciseData } from '../exercise.service'
 
 @Component({
   selector: 'app-exercise',
@@ -15,8 +15,8 @@ export class ExerciseComponent implements OnInit {
   constructor(private exService: ExerciseService) {}
 
   ngOnInit() {
-    this.exService.exList.subscribe(list => (this.exList = list))
-    this.exService.exIndex.subscribe(index => (this.exIndex = index))
+    this.exService.exList.subscribe((list) => (this.exList = list))
+    this.exService.exIndex.subscribe((index) => (this.exIndex = index))
   }
 
   changeExIndex(i: number) {

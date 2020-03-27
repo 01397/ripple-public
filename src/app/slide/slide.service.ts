@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core'
 import { SlideData, SlideType, SlideItem } from './slide-item'
-import { BehaviorSubject, Subject, Observable } from 'rxjs'
+import { BehaviorSubject, Subject } from 'rxjs'
 import { HttpClient } from '@angular/common/http'
 import { AngularFirestore } from '@angular/fire/firestore'
-import { LessonItem } from 'firestore-item'
+import { LessonItem } from '../../firestore-item'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import { LessonDisplay } from 'app/lesson/lesson.component'
+import { LessonDisplay } from '../lesson/lesson.component'
 
 @Injectable({
   providedIn: 'root',
@@ -67,7 +67,7 @@ export class SlideService {
     this.db
       .doc<LessonItem>(path)
       .valueChanges()
-      .subscribe(result => {
+      .subscribe((result) => {
         console.log(result)
         this.slideTitle.next(result.title)
         this.slideData = result.slide.data
@@ -194,7 +194,7 @@ export class SlideService {
           horizontalPosition: 'right',
         })
       )
-      .catch(e => {
+      .catch((e) => {
         this.snackBar.open('保存できませんでした。', null, {
           duration: 3000,
           horizontalPosition: 'right',

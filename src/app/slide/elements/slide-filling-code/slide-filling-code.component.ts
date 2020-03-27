@@ -1,8 +1,10 @@
 import { Component, Input, ViewChild, ViewContainerRef } from '@angular/core'
 import { SlideAbstractComponent } from '../slide-abstract-element.component'
-import * as hljs from 'highlight.js'
+import { registerLanguage, highlight } from 'highlight.js/index'
+import hljsPlain from 'highlight.js/lib/languages/plaintext'
+import hljsPython from 'highlight.js/lib/languages/python'
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
-import { SlideService } from 'app/slide/slide.service'
+import { SlideService } from '../../../slide/slide.service'
 
 export interface FillingCodeElementType {
   type: 'fillingCode'
@@ -29,14 +31,15 @@ export class SlideFillingCodeComponent extends SlideAbstractComponent {
 
   constructor(private sanitizer: DomSanitizer, private slideService: SlideService) {
     super()
-    hljs.registerLanguage('plaintext', require('highlight.js/lib/languages/plaintext'))
+    registerLanguage('plaintext', hljsPlain)
+    registerLanguage('plaintext', hljsPython)
   }
 
   ngOnInit() {
     let i = 0
     const code = this.content.code
     const lang = this.content.lang
-    const hlResult = hljs.highlight(lang, code)
+    const hlResult = highlight(lang, code)
     const text = hlResult.value.replace(
       /BLANK/gm,
       () => `<input type="text" style="width: ${this.content.blanks[i++].size}em">`
@@ -47,7 +50,7 @@ export class SlideFillingCodeComponent extends SlideAbstractComponent {
   }
   check() {
     const input = this.codeElm.element.nativeElement.getElementsByTagName('input') as HTMLCollectionOf<HTMLInputElement>
-    const values = Array.from(input).map(v => v.value)
+    const values = Array.from(input).map((v) => v.value)
     const len = values.length
     let isAllCorrect = true
     for (let i = 0; i < len; i++) {

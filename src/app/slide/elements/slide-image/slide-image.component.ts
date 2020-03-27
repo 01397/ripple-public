@@ -26,7 +26,7 @@ export class SlideImageComponent extends SlideAbstractComponent {
     this.strage
       .ref(this.content.src)
       .getDownloadURL()
-      .subscribe(path => {
+      .subscribe((path) => {
         this.loaded = true
         this.src = path
       })

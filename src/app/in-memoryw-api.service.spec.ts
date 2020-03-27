@@ -6,7 +6,7 @@ describe('InMemorywApiService', () => {
   beforeEach(() => TestBed.configureTestingModule({}))
 
   it('should be created', () => {
-    const service: InMemoryDbService = TestBed.get(InMemoryDbService)
+    const service: InMemoryDbService = TestBed.inject(InMemoryDbService)
     expect(service).toBeTruthy()
   })
 })

@@ -6,7 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { firestore } from 'firebase'
 import { Router } from '@angular/router'
-import { CourseItemId, LessonItemId, CourseItem, LessonItem } from 'firestore-item'
+import { CourseItemId, LessonItemId, CourseItem, LessonItem } from '../../../firestore-item'
 
 export interface DialogData {
   name: string
@@ -36,19 +36,19 @@ export class MaterialComponent implements OnInit {
   public type: 'course' | 'lesson' = 'course'
 
   constructor(
-    public firestore: AngularFirestore,
+    public db: AngularFirestore,
     private snackbar: MatSnackBar,
     public dialog: MatDialog,
     private router: Router
   ) {}
 
   ngOnInit() {
-    this.courses = this.firestore
+    this.courses = this.db
       .collection<CourseItem>('course')
       .snapshotChanges()
       .pipe(
-        map(actions =>
-          actions.map(a => {
+        map((actions) =>
+          actions.map((a) => {
             const data = a.payload.doc.data()
             const id = a.payload.doc.id
             return { id, ...data }
@@ -78,12 +78,12 @@ export class MaterialComponent implements OnInit {
    * @param courseId 表示するid情報を含めたコース
    */
   openCourse(courseId: string) {
-    this.lessons = this.firestore
+    this.lessons = this.db
       .collection<LessonItem>(`course/${courseId}/lesson`)
       .snapshotChanges()
       .pipe(
-        map(actions =>
-          actions.map(a => {
+        map((actions) =>
+          actions.map((a) => {
             const data = a.payload.doc.data()
             const id = a.payload.doc.id
             return { id, courseId, ...data }
@@ -109,13 +109,13 @@ export class MaterialComponent implements OnInit {
     const content = { ...course }
     delete content.id
     content.modified = firestore.Timestamp.fromDate(new Date())
-    this.firestore
+    this.db
       .doc(`course/${course.id}`)
       .update(content)
       .then(() => {
         this.snackbar.open('更新しました', null, { duration: 2000, horizontalPosition: 'right' })
       })
-      .catch(reason => {
+      .catch((reason) => {
         console.error(reason)
         this.snackbar.open('更新処理に失敗しました。', null, { duration: 5000, horizontalPosition: 'right' })
       })
@@ -130,13 +130,13 @@ export class MaterialComponent implements OnInit {
     delete content.courseId
     delete content.id
     content.modified = firestore.Timestamp.fromDate(new Date())
-    this.firestore
+    this.db
       .doc(`course/${lesson.courseId}/lesson/${lesson.id}`)
       .update(content)
       .then(() => {
         this.snackbar.open('更新しました', null, { duration: 2000, horizontalPosition: 'right' })
       })
-      .catch(reason => {
+      .catch((reason) => {
         console.error(reason)
         this.snackbar.open('更新処理に失敗しました。', null, { duration: 5000, horizontalPosition: 'right' })
       })
@@ -168,9 +168,9 @@ export class MaterialComponent implements OnInit {
       })
       .afterClosed()
       .pipe(take(1))
-      .subscribe(result => {
+      .subscribe((result) => {
         if (result) {
-          this.firestore
+          this.db
             .doc(`course/${courseId}/lesson/${lessonId}`)
             .delete()
             .then(() => {
@@ -193,7 +193,7 @@ export class MaterialComponent implements OnInit {
       modified: now,
       created: now,
     }
-    this.firestore.collection('course').add(newCourse)
+    this.db.collection('course').add(newCourse)
   }
   /**
    * コース作成
@@ -212,7 +212,7 @@ export class MaterialComponent implements OnInit {
       modified: now,
       created: now,
     }
-    this.firestore.collection(`course/${this.selectedCourse.id}/lesson`).add(newLesson)
+    this.db.collection(`course/${this.selectedCourse.id}/lesson`).add(newLesson)
   }
 
   /**

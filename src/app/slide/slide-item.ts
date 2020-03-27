@@ -1,5 +1,4 @@
 import { Type } from '@angular/core'
-import { SlideCodingComponent } from './layouts/slide-coding/slide-coding.component'
 import { SlideCoverComponent, CoverSlideType } from './layouts/slide-cover/slide-cover.component'
 import { SlideOneColumnComponent, OneColumnSlideType } from './layouts/slide-one-column/slide-one-column.component'
 import { SlideComponent } from './layouts/slide.component'

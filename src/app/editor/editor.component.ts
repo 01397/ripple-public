@@ -3,7 +3,7 @@ import * as ace from 'ace-builds'
 import { AceEditorComponent } from 'ng2-ace-editor'
 import { WebsocketService } from '../websocket.service'
 import { JudgeResult } from '../../../routes/judge'
-import { ExerciseService } from 'app/exercise.service'
+import { ExerciseService } from '../exercise.service'
 
 @Component({
   selector: 'app-editor',
@@ -30,7 +30,7 @@ export class EditorComponent implements OnInit, OnDestroy {
       this.consoleText = window.atob(result.stdout)
       this.execEnabled = true
     })
-    this.exService.exIndex.subscribe(index => {
+    this.exService.exIndex.subscribe((index) => {
       const defaultCode = this.exService.exList.value[index].defaultCode
       if (!defaultCode) {
         return

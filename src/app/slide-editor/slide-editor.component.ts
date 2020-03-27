@@ -27,7 +27,7 @@ export class SlideEditorComponent implements OnInit {
     const lessonId = this.route.snapshot.paramMap.get('lesson')
     this.path = `course/${courseId}/lesson/${lessonId}`
     this.slideService.setSlideData(this.path)
-    this.slideService.slideSubject.subscribe(slide => {
+    this.slideService.slideSubject.subscribe((slide) => {
       this.current = slide
       this.currentIndex = this.slideService.index
     })

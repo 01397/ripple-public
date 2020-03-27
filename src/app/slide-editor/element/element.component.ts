@@ -1,11 +1,11 @@
 import { Component, Input, OnDestroy } from '@angular/core'
-import { SlideElementType, SlideItem } from 'app/slide/slide-item'
+import { SlideElementType, SlideItem } from '../../slide/slide-item'
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar'
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop'
 import { AngularFireStorage } from '@angular/fire/storage'
-import { ImageElementType } from 'app/slide/elements/slide-image/slide-image.component'
-import { SlideService } from 'app/slide/slide.service'
-import { FillingCodeElementType } from 'app/slide/elements/slide-filling-code/slide-filling-code.component'
+import { ImageElementType } from '../../slide/elements/slide-image/slide-image.component'
+import { SlideService } from '../../slide/slide.service'
+import { FillingCodeElementType } from '../../slide/elements/slide-filling-code/slide-filling-code.component'
 
 @Component({
   selector: 'app-slide-editor-element',
@@ -67,7 +67,6 @@ export class SlideEditorElementComponent implements OnDestroy {
   }
   /**
    * DnDによる順序変更
-   * @param event
    */
   elementDrop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.elements, event.previousIndex, event.currentIndex)
@@ -89,7 +88,7 @@ export class SlideEditorElementComponent implements OnDestroy {
         this.slideService.updateSlide()
         this.removeImage(oldPath)
       })
-      .catch(e => {
+      .catch((e) => {
         console.error(e)
         this.snackBar.open('アップロードに失敗しました', null, snackConfig)
       })
