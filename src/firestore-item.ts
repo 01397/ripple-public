@@ -70,7 +70,7 @@ export interface LessonRecordItem {
   course: string
   lesson: string
   last: firestore.Timestamp | firestore.FieldValue
-  count: firestore.Timestamp | firestore.FieldValue
+  count: number | firestore.FieldValue
   face: 0 | 1 | 2 | 3 | 4 | null
   // created: firestore.Timestamp | firestore.FieldValue
   modified: firestore.Timestamp | firestore.FieldValue
