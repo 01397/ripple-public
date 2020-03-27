@@ -16,7 +16,7 @@
   },
   "exclude": ["routes"],
   "angularCompilerOptions": {
-    "fullTemplateTypeCheck": true,
+    "fullTemplateTypeCheck": false,
     "strictInjectionParameters": true
   }
 }

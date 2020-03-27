@@ -67,7 +67,7 @@
     <div class="detail-created">作成日: {{ selectedCourse.created.toDate() | date: 'yyyy/MM/dd HH:mm' }}</div>
     <div class="detail-modified">更新日: {{ selectedCourse.modified.toDate() | date: 'yyyy/MM/dd HH:mm' }}</div>
     <div class="detail-id">ID: {{ selectedCourse.id }}</div>
-    <button mat-raised-button color="warn" class="detail-remove" (click)="removeCourse()">
+    <button mat-raised-button color="warn" class="detail-remove" (click)="removeCourse(selectedCourse.id)">
       <mat-icon>delete</mat-icon>削除
     </button>
   </ng-container>
