@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core'
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core'
 import { AceEditorComponent } from 'ng2-ace-editor'
 import * as ace from 'ace-builds'
 import { SlideService } from '../slide/slide.service'
 import { ActivatedRoute } from '@angular/router'
 import { ExerciseService } from '../exercise.service'
 import { AppService } from 'app/app.service'
+import { Subscription } from 'rxjs'
 
 export type LessonDisplay = 'slide' | 'exercise' | 'wrapup'
 
@@ -13,7 +14,7 @@ export type LessonDisplay = 'slide' | 'exercise' | 'wrapup'
   templateUrl: './lesson.component.html',
   styleUrls: ['./lesson.component.scss'],
 })
-export class LessonComponent implements OnInit {
+export class LessonComponent implements OnInit, OnDestroy {
   @ViewChild('editor', { static: false }) editor: AceEditorComponent
   public text: string = ''
   public options = { maxLines: 1000, printMargin: false }
@@ -28,6 +29,7 @@ export class LessonComponent implements OnInit {
   public get judging() {
     return this.displayMode === 'exercise' && this.exService.judging
   }
+  private subscription = new Set<Subscription>()
   // 感想の顔番号
   public face: number = null
   constructor(
@@ -41,30 +43,34 @@ export class LessonComponent implements OnInit {
     const courseId = this.route.snapshot.paramMap.get('course')
     const lessonId = this.route.snapshot.paramMap.get('lesson')
     const path = `course/${courseId}/lesson/${lessonId}`
-    this.slideService.slideTitle.subscribe(title => {
-      this.result.title = title
-      this.app.setHeaderTitle(title)
-    })
+    this.subscription.add(
+      this.slideService.slideTitle.subscribe(title => {
+        this.result.title = title
+        this.app.setHeaderTitle(title)
+      })
+    )
     this.slideService.setSlideData(path)
     this.exService.init(courseId, lessonId)
     this.exService.logStart()
 
     ace.config.set('basePath', 'path')
-    this.slideService.nav.subscribe(nav => {
-      // ExpressionChangedAfterItHasBeenCheckedError を回避するために非同期関数を利用
-      setTimeout(() => {
-        this.navBack = nav.back
-        this.navForward = nav.forward
+    this.subscription.add(
+      this.slideService.nav.subscribe(nav => {
+        // ExpressionChangedAfterItHasBeenCheckedError を回避するために非同期関数を利用
+        setTimeout(() => {
+          this.navBack = nav.back
+          this.navForward = nav.forward
+        })
       })
-    })
+    )
     const modeChange = (mode: LessonDisplay) => {
       this.displayMode = mode
       if (mode === 'wrapup') {
         this.onWrapup()
       }
     }
-    this.exService.modeRequest.subscribe(modeChange)
-    this.slideService.modeRequest.subscribe(modeChange)
+    this.subscription.add(this.exService.modeRequest.subscribe(modeChange))
+    this.subscription.add(this.slideService.modeRequest.subscribe(modeChange))
   }
   slidePrev() {
     this.slideService.back()
@@ -92,5 +98,11 @@ export class LessonComponent implements OnInit {
   selectFace(i: 0 | 1 | 2 | 3 | 4) {
     this.face = i
     this.exService.logFace(i)
+  }
+
+  ngOnDestroy() {
+    for (const sub of this.subscription) {
+      sub.unsubscribe()
+    }
   }
 }

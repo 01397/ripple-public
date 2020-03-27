@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, OnDestroy } from '@angular/core'
 import { AngularFirestore } from '@angular/fire/firestore'
 import { CourseItem, LessonItem, LessonItemId } from 'firestore-item'
 import { map } from 'rxjs/operators'
-import { Observable } from 'rxjs'
+import { Observable, Subscription } from 'rxjs'
 
 interface CourseItemId extends CourseItem {
   id: string
@@ -13,11 +13,12 @@ interface CourseItemId extends CourseItem {
   templateUrl: './courses.component.html',
   styleUrls: ['./courses.component.scss'],
 })
-export class CoursesComponent implements OnInit {
+export class CoursesComponent implements OnInit, OnDestroy {
   private courseObservable: Observable<CourseItemId[]>
   public courses: CourseItemId[]
   public lessons: Observable<LessonItemId[]>
   public selectedCourse: CourseItemId
+  private subscription = new Set<Subscription>()
 
   constructor(public db: AngularFirestore) {}
 
@@ -34,9 +35,17 @@ export class CoursesComponent implements OnInit {
           })
         )
       )
-    this.courseObservable.subscribe(courses => {
-      this.courses = courses
-    })
+    this.subscription.add(
+      this.courseObservable.subscribe(courses => {
+        this.courses = courses
+      })
+    )
+  }
+
+  ngOnDestroy() {
+    for (const sub of this.subscription) {
+      sub.unsubscribe()
+    }
   }
 
   getCourseLastStudy(id: string) {

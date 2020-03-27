@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core'
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore'
 import { Observable } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { map, take } from 'rxjs/operators'
 import { MatSnackBar, MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material'
 import { firestore } from 'firebase'
 import { Router } from '@angular/router'
@@ -166,6 +166,7 @@ export class MaterialComponent implements OnInit {
         data: { name: this.selectedLesson.title },
       })
       .afterClosed()
+      .pipe(take(1))
       .subscribe(result => {
         if (result) {
           this.firestore
