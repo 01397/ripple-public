@@ -4,7 +4,7 @@ import { BehaviorSubject, Subject, Observable } from 'rxjs'
 import { HttpClient } from '@angular/common/http'
 import { AngularFirestore } from '@angular/fire/firestore'
 import { LessonItem } from 'firestore-item'
-import { MatSnackBar } from '@angular/material'
+import { MatSnackBar } from '@angular/material/snack-bar'
 import { LessonDisplay } from 'app/lesson/lesson.component'
 
 @Injectable({

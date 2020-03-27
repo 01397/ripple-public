@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy } from '@angular/core'
 import { SlideElementType, SlideItem } from 'app/slide/slide-item'
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material'
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar'
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop'
 import { AngularFireStorage } from '@angular/fire/storage'
 import { ImageElementType } from 'app/slide/elements/slide-image/slide-image.component'

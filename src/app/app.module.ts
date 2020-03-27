@@ -36,23 +36,21 @@ import { environment } from '../environments/environment'
 import { AngularFireModule } from '@angular/fire'
 import { FormsModule } from '@angular/forms'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import {
-  MatInputModule,
-  MatExpansionModule,
-  MatFormFieldModule,
-  MatSelectModule,
-  MatRadioModule,
-  MatCardModule,
-  MatMenuModule,
-  MatButtonModule,
-  MatCheckboxModule,
-  MatListModule,
-  MatSnackBarModule,
-  MatIconModule,
-  MatDialogModule,
-  MatProgressSpinnerModule,
-} from '@angular/material'
-import { HttpClientInMemoryWebApiModule, InMemoryDbService } from 'angular-in-memory-web-api'
+import { MatButtonModule } from '@angular/material/button'
+import { MatCardModule } from '@angular/material/card'
+import { MatCheckboxModule } from '@angular/material/checkbox'
+import { MatDialogModule } from '@angular/material/dialog'
+import { MatExpansionModule } from '@angular/material/expansion'
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatIconModule } from '@angular/material/icon'
+import { MatInputModule } from '@angular/material/input'
+import { MatListModule } from '@angular/material/list'
+import { MatMenuModule } from '@angular/material/menu'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
+import { MatRadioModule } from '@angular/material/radio'
+import { MatSelectModule } from '@angular/material/select'
+import { MatSnackBarModule } from '@angular/material/snack-bar'
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api'
 import { MaterialComponent, MaterialDialog } from './admin/material/material.component'
 import { AngularFirestoreModule } from '@angular/fire/firestore'
 import { DragDropModule } from '@angular/cdk/drag-drop'
@@ -62,8 +60,8 @@ import { ExerciseEditorComponent } from './exercise-editor/exercise-editor.compo
 import { JudgeResultComponent } from './judge-result/judge-result.component'
 import { LoginComponent } from './login/login.component'
 import { AngularFireAuthModule } from '@angular/fire/auth'
-import { canActivate, redirectLoggedInTo, redirectUnauthorizedTo, AngularFireAuthGuard } from '@angular/fire/auth-guard'
-import { SignupComponent } from './signup/signup.component';
+import { redirectLoggedInTo, redirectUnauthorizedTo, AngularFireAuthGuard } from '@angular/fire/auth-guard'
+import { SignupComponent } from './signup/signup.component'
 import { DurationPipe } from './duration.pipe'
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
