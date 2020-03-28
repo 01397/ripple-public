@@ -3,7 +3,14 @@
   <ul class="course-list">
     <li *ngFor="let course of courses" class="course-item" (click)="selectCourse(course)">
       <div class="course-item-left">
-        <div class="course-item-circle">{{ getCourseProgress(course) }}</div>
+        <svg viewBox="0 0 128 128" width="128" height="128" class="course-item-progress">
+          <circle class="course-item-progress-border"></circle>
+          <circle
+            [style.strokeDasharray]="getProgressArray(course, 17)"
+            class="course-item-progress-current"
+            [style.strokeDashoffset]="31.42"
+          ></circle>
+        </svg>
       </div>
       <div class="course-item-title">{{ course.title }}</div>
       <div class="course-item-date">前回の学習: {{ getCourseLastStudy(course) | fromNow }}</div>

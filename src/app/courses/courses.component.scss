@@ -77,21 +77,41 @@ $section-margin: 24px;
   margin-top: 24px;
   display: flex;
 }
-.lessons-progress-border {
-  cx: 64;
-  cy: 64;
-  r: 56;
-  stroke-width: 16;
+.ex-progress-border {
   stroke: $mono-80;
   fill: none;
 }
-.lessons-progress-current {
+.ex-progress-current {
+  stroke: $primary-500;
+  fill: none;
+}
+.ex-progress-course {
+  cx: 20;
+  cy: 20;
+  r: 17;
+  stroke-width: 6;
+}
+.ex-progress-lesson {
   cx: 64;
   cy: 64;
   r: 56;
   stroke-width: 16;
-  stroke: $primary-500;
-  fill: none;
+}
+.course-item-progress-border {
+  @extend .ex-progress-border;
+  @extend .ex-progress-course;
+}
+.course-item-progress-current {
+  @extend .ex-progress-current;
+  @extend .ex-progress-course;
+}
+.lessons-progress-border {
+  @extend .ex-progress-border;
+  @extend .ex-progress-lesson;
+}
+.lessons-progress-current {
+  @extend .ex-progress-current;
+  @extend .ex-progress-lesson;
 }
 .lessons-progress-label1 {
   font-size: 16px;
