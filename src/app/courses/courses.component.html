@@ -6,7 +6,7 @@
         <div class="course-item-circle">{{ getCourseProgress(course) }}</div>
       </div>
       <div class="course-item-title">{{ course.title }}</div>
-      <div class="course-item-date">前回の学習: {{ getCourseLastStudy(course.id) }}</div>
+      <div class="course-item-date">前回の学習: {{ getCourseLastStudy(course) | fromNow }}</div>
     </li>
   </ul>
 </section>
@@ -14,7 +14,18 @@
 <section class="lessons" *ngIf="selectedCourse">
   <h2 class="lessons-heading">{{ selectedCourse.title }}</h2>
   <div class="lessons-overview">
-    <div class="lessons-progress"></div>
+    <svg viewBox="0 0 128 128" width="128" height="128" class="lessons-progress">
+      <circle class="lessons-progress-border"></circle>
+      <circle
+        [style.strokeDasharray]="getProgressArray(selectedCourse, 56)"
+        class="lessons-progress-current"
+        [style.strokeDashoffset]="87.96"
+      ></circle>
+      <text class="lessons-progress-label1" x="64" y="48">
+        達成率
+      </text>
+      <text class="lessons-progress-label2" x="64" y="72">{{ getProgressPercent(selectedCourse) }}%</text>
+    </svg>
     <div class="lessons-description">{{ selectedCourse.description }}</div>
   </div>
   <div class="lesson-list">
@@ -24,11 +35,9 @@
           <div class="lesson-item-title">
             {{ lesson.title }}
           </div>
-          <div class="lesson-item-count">学習回数: {{ getLessonStudyCount(lesson.id) }}回</div>
-          <div class="lesson-item-date">前回学習: {{ getLessonLastStudy(lesson.id) }}</div>
-          <div class="lesson-item-star">
-            <i class="material-icons">star_border</i>
-          </div>
+          <div class="lesson-item-count">学習回数: {{ getLessonStudyCount(lesson) }}回</div>
+          <div class="lesson-item-date">前回学習: {{ getLessonLastStudy(lesson) | fromNow }}</div>
+          <img [src]="getFaceSrc(lesson)" class="lesson-item-face" />
         </a>
       </li>
     </ul>

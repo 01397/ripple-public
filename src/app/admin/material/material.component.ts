@@ -192,6 +192,7 @@ export class MaterialComponent implements OnInit {
       private: true,
       modified: now,
       created: now,
+      total: 0,
     }
     this.db.collection('course').add(newCourse)
   }

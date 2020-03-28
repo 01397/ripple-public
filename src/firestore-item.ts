@@ -4,6 +4,7 @@ import { SlideData } from './app/slide/slide-item'
 
 export interface CourseItem {
   title: string
+  total: number
   description: string
   private: boolean
   lesson?: AngularFirestoreCollection

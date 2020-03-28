@@ -62,7 +62,8 @@ import { LoginComponent } from './login/login.component'
 import { AngularFireAuthModule } from '@angular/fire/auth'
 import { redirectLoggedInTo, redirectUnauthorizedTo, AngularFireAuthGuard } from '@angular/fire/auth-guard'
 import { SignupComponent } from './signup/signup.component'
-import { DurationPipe } from './duration.pipe'
+import { DurationPipe } from './duration.pipe';
+import { FromNowPipe } from './from-now.pipe'
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
   autoUpgradeAnonymousUsers: false, // 匿名認証ユーザー自動アップグレード
@@ -194,6 +195,7 @@ const appRoutes: Routes = [
     LoginComponent,
     SignupComponent,
     DurationPipe,
+    FromNowPipe,
   ],
   entryComponents: [
     SlideCoverComponent,

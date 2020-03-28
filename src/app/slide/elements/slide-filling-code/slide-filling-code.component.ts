@@ -1,6 +1,6 @@
 import { Component, Input, ViewChild, ViewContainerRef } from '@angular/core'
 import { SlideAbstractComponent } from '../slide-abstract-element.component'
-import { registerLanguage, highlight } from 'highlight.js/index'
+import { registerLanguage, highlight } from 'highlight.js'
 import hljsPlain from 'highlight.js/lib/languages/plaintext'
 import hljsPython from 'highlight.js/lib/languages/python'
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
