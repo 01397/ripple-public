@@ -28,9 +28,10 @@ $section-margin: 24px;
   display: grid;
   width: 384px;
   border-radius: 6px;
-  grid-template-columns: 72px 1fr;
+  grid-template-columns: 40px 1fr;
+  column-gap: 16px;
   grid-template-rows: ($main-font-size * 1.4 + rem) ($sub-font-size * 1.4 + rem);
-  padding: 8px;
+  padding: 8px 8px 8px 16px;
   &:hover {
     background-color: $white-a75;
   }
@@ -43,11 +44,9 @@ $section-margin: 24px;
   justify-content: center;
   align-items: center;
 }
-.course-item-circle {
+.course-item-progress {
   width: 40px;
   height: 40px;
-  border-radius: 100%;
-  background-color: $primary-400;
 }
 .course-item-title {
   @include font-size(20);
