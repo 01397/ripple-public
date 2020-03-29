@@ -1,5 +1,6 @@
 @import './variables';
 
+/***** card *****/
 .extend-card {
   background-color: $mono-100;
   border-radius: 6px;
@@ -23,6 +24,8 @@
   padding-left: 24px;
   padding-right: 24px;
 }
+
+/***** slide *****/
 
 .extend-slide {
   width: 100%;
@@ -64,8 +67,9 @@
   background-color: lighten($slide-main, 10%);
 }
 
-.extend-button1{
-    background-image: $primary-600-grad-horizontal;
+/***** forms *****/
+.extend-button1 {
+  background-image: $primary-600-grad-horizontal;
   font-size: 24px;
   color: $mono-100;
   border: none;
@@ -95,4 +99,36 @@
   to {
     opacity: 1;
   }
+}
+
+/***** list *****/
+$list-title-font-size: 20;
+$list-sub-font-size: 14;
+.extend-list-item {
+  cursor: pointer;
+  display: grid;
+  border-radius: 6px;
+  grid-template-columns: 40px 1fr;
+  column-gap: 16px;
+  grid-template-rows: ($list-title-font-size / 16 * 1.4 + rem) ($list-sub-font-size / 16 * 1.4 + rem);
+  padding: 8px 8px 8px 16px;
+  &:hover {
+    background-color: $white-a75;
+  }
+}
+.extend-list-item-symbol {
+  grid-row: 1 / 3;
+  grid-column: 1 / 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.extend-list-item-title {
+  @include font-size(20);
+  color: $mono-30;
+  font-weight: 500;
+}
+.extend-list-item-sub {
+  @include font-size(14);
+  color: $mono-60;
 }
