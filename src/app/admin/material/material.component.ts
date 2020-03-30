@@ -7,6 +7,7 @@ import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dial
 import { firestore } from 'firebase'
 import { Router } from '@angular/router'
 import { CourseItemId, LessonItemId, CourseItem, LessonItem } from '../../../firestore-item'
+import { AppService } from 'app/app.service'
 
 export interface DialogData {
   name: string
@@ -39,10 +40,12 @@ export class MaterialComponent implements OnInit {
     public db: AngularFirestore,
     private snackbar: MatSnackBar,
     public dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private app: AppService
   ) {}
 
   ngOnInit() {
+    this.app.setHeaderTitle('教材編集')
     this.courses = this.db
       .collection<CourseItem>('course')
       .snapshotChanges()

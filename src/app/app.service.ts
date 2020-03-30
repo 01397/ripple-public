@@ -13,7 +13,7 @@ export class AppService {
   public sidebarVisiblity = new Subject<boolean>()
   public headerTitle: string
   private get withHeader() {
-    return ['/lesson']
+    return ['/lesson', '/admin/material']
     // return ['/lesson', '/admin/slide-editor', '/admin/exercise-editor', '/admin/material']
   }
   private get withSidebar() {
