@@ -76,3 +76,14 @@ export interface LessonRecordItem {
   // created: firestore.Timestamp | firestore.FieldValue
   modified: firestore.Timestamp | firestore.FieldValue
 }
+export interface NotificationItem {
+  title: string
+  body: string
+  type: 'info'
+  private: boolean
+  modified: firestore.Timestamp | firestore.FieldValue
+  created: firestore.Timestamp | firestore.FieldValue
+}
+export interface NotificationItemId extends NotificationItem {
+  id: string
+}

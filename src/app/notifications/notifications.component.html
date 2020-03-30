@@ -1,1 +1,30 @@
-<p>notifications works!</p>
+<div class="container">
+  <div class="list" *ngFor="let item of notifications">
+    <div class="list-item" (click)="selectNotification(item)">
+      <div class="list-item-icon">{{ item.type }}</div>
+      <div class="list-item-title">{{ item.title }}</div>
+      <div class="list-item-date">
+        {{ item.created | fromNow
+        }}<span *ngIf="item.created != item.modified" class="list-item-update">
+          ({{ item.modified | fromNow }} 更新)</span
+        >
+      </div>
+    </div>
+  </div>
+</div>
+<div class="popup-wrapper" [class.visible]="visible" (click)="hide()">
+  <div class="popup" *ngIf="active !== null">
+    <div class="popup-title">
+      <h2 class="popup-title">{{ active.title }}</h2>
+      <div class="popup-date">
+        <div>{{ getCreated(active) | date: 'yyyy/MM/dd' }} ({{ active.created | fromNow }})</div>
+        <div *ngIf="active.created != active.modified" class="popup-update">
+          更新: {{ getModified(active) | date: 'yyyy/MM/dd' }} ({{ active.created | fromNow }})
+        </div>
+      </div>
+      <div class="popup-body">
+        {{ active.body }}
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+@import '~assets/styles/variables';
+@import '~assets/styles/extends';
+.list {
+  margin: 24px auto;
+  width: 80%;
+  max-width: 600px;
+}
+.list-item {
+  @extend .extend-list-item;
+}
+.list-item-icon {
+  @extend .extend-list-item-symbol;
+}
+.list-item-title {
+  @extend .extend-list-item-title;
+}
+.list-item-date {
+  @extend .extend-list-item-sub;
+}
+.list-item-update {
+  color: $accent-400;
+  font-weight: 500;
+}
+.popup-wrapper {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: $black-a50;
+  overflow: auto;
+  z-index: 100;
+  backdrop-filter: blur(4px);
+  pointer-events: none;
+  opacity: 0;
+}
+.popup-wrapper.visible {
+  pointer-events: all;
+  opacity: 1;
+}
+.popup {
+  @extend .extend-card;
+}
