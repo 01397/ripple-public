@@ -52,7 +52,7 @@ export class SlideEditorComponent implements OnInit {
   }
 
   public speech() {
-    this.slideService.speech()
+    this.slideService.speechTest()
   }
 
   public updateTTS(value: string) {
