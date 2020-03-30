@@ -6,6 +6,7 @@ import { AngularFireStorage } from '@angular/fire/storage'
 import { ImageElementType } from '../../slide/elements/slide-image/slide-image.component'
 import { SlideService } from '../../slide/slide.service'
 import { FillingCodeElementType } from '../../slide/elements/slide-filling-code/slide-filling-code.component'
+import { SlideEditorService } from '../slide-editor.service'
 
 @Component({
   selector: 'app-slide-editor-element',
@@ -23,7 +24,12 @@ export class SlideEditorElementComponent implements OnDestroy {
   @Input() public elements: SlideElementType[] = []
   private tmpGb: { index: number; content: SlideElementType[] } = { index: 0, content: [] }
 
-  constructor(private snackBar: MatSnackBar, private storage: AngularFireStorage, private slideService: SlideService) {}
+  constructor(
+    private snackBar: MatSnackBar,
+    private storage: AngularFireStorage,
+    private slideService: SlideService,
+    private editorServide: SlideEditorService
+  ) {}
 
   ngOnDestroy() {
     this.snackBar.dismiss()
@@ -33,6 +39,7 @@ export class SlideEditorElementComponent implements OnDestroy {
     const newEl = SlideItem.generateElement(type)
     this.elements.push(newEl)
     this.snackBar.dismiss()
+    this.slideService.reflesh()
   }
 
   remove(index: number) {
@@ -43,6 +50,7 @@ export class SlideEditorElementComponent implements OnDestroy {
     this.tmpGb.index = index
     this.tmpGb.content = this.elements.splice(index, 1)
     this.openSnackBar('削除しました', '元に戻す')
+    this.slideService.reflesh()
   }
 
   undo() {

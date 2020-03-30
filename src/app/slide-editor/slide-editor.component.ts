@@ -3,6 +3,7 @@ import { SlideType, SlideData } from 'app/slide/slide-item'
 import { SlideService } from 'app/slide/slide.service'
 import { ActivatedRoute, Router } from '@angular/router'
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop'
+import { SlideEditorService } from './slide-editor.service'
 
 @Component({
   selector: 'app-slide-editor',
@@ -19,8 +20,14 @@ export class SlideEditorComponent implements OnInit {
   public current: SlideData
   public currentIndex: number
   private path: string
+  public title: string
 
-  constructor(public slideService: SlideService, private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    public slideService: SlideService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private editorService: SlideEditorService
+  ) {}
 
   ngOnInit() {
     const courseId = this.route.snapshot.paramMap.get('course')
@@ -31,6 +38,9 @@ export class SlideEditorComponent implements OnInit {
       this.current = slide
       this.currentIndex = this.slideService.index
     })
+    this.slideService.slideTitle.subscribe((title) => {
+      this.title = title
+    })
   }
 
   changeSlide(index: number) {
@@ -38,11 +48,20 @@ export class SlideEditorComponent implements OnInit {
   }
 
   updateSlide() {
-    this.changeSlide(this.slideService.index)
+    this.slideService.reflesh()
   }
 
   public speech() {
     this.slideService.speech()
+  }
+
+  public updateTTS(value: string) {
+    this.current.speech.text = value
+    this.updateSlide()
+    this.editorService.updateTTS(value, this.current.speech.path).then((filePath) => {
+      this.current.speech.path = filePath
+      this.current.speech.text = value
+    })
   }
 
   save() {

@@ -17,6 +17,7 @@ export interface SlideData {
   title: string
   slide: SlideType
   speech: {
+    path: string | null
     text: string
   }
 }

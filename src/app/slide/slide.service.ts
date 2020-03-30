@@ -26,6 +26,7 @@ export class SlideService {
       ],
     },
     speech: {
+      path: null,
       text: '',
     },
   })
@@ -83,6 +84,7 @@ export class SlideService {
                 lesson: 'タイトルスライド',
               },
               speech: {
+                path: null,
                 text: '',
               },
             },
@@ -130,6 +132,13 @@ export class SlideService {
     this.index = index
     this.updateSlide()
     return true
+  }
+
+  /**
+   * 画面表示更新
+   */
+  reflesh() {
+    this.go(this.index, true)
   }
 
   /**
@@ -208,6 +217,7 @@ export class SlideService {
       title: '新規スライド',
       slide,
       speech: {
+        path: null,
         text: '',
       },
     }

@@ -21,6 +21,7 @@ export class InMemoryApiService implements InMemoryDbService {
               lesson: 'タイトルスライド',
             },
             speech: {
+              path: null,
               text: '',
             },
           },
@@ -61,6 +62,7 @@ export class InMemoryApiService implements InMemoryDbService {
               ],
             },
             speech: {
+              path: null,
               text: 'これは、1カラムのスライドです。ここでは、本文とコードの空欄補充問題の2つを含めています。',
             },
           },
@@ -97,6 +99,7 @@ export class InMemoryApiService implements InMemoryDbService {
               ],
             },
             speech: {
+              path: null,
               text: 'こちらは2カラムのテストです。電通大について正しいものを1つ選びましょう。',
             },
           },
@@ -115,6 +118,7 @@ export class InMemoryApiService implements InMemoryDbService {
               right: [{ type: 'image', src: '/assets/images/sample.png' }],
             },
             speech: {
+              path: null,
               text:
                 'これは概念スライドです。例えば、本気と書いて[本気|まじ]と読むとか、正解は、<1.5s>3番でした！のように[間|ま]を持たせることもできます。',
             },

@@ -3,7 +3,7 @@
 </div>
 <div class="header">
   <div class="header-title">
-    {{ slideService.slideTitle }}
+    {{ title }}
   </div>
   <button class="header-button" mat-stroked-button (click)="save()">保存</button>
   <button class="header-button" mat-stroked-button (click)="finish()">終了</button>
@@ -45,15 +45,20 @@
 </div>
 <div class="tts-container">
   <mat-card>
-    <mat-form-field class="tts-field">
-      <textarea
-        matInput
-        matTextareaAutosize
-        type="text"
-        placeholder="読み上げ文章"
-        [(ngModel)]="current.speech.text"
-      ></textarea>
-    </mat-form-field>
+    <div class="tts-main">
+      <mat-form-field class="tts-field">
+        <textarea
+          matInput
+          matTextareaAutosize
+          type="text"
+          placeholder="読み上げ文章"
+          [value]="current.speech.text"
+          #ttsField
+        ></textarea>
+      </mat-form-field>
+      <button mat-stroked-button color="primary" [disabled]="current.speech.text === ttsField.value" (click)="updateTTS(ttsField.value)">更新</button>
+    </div>
+
     <div class="tts-card-footer">
       <div class="tts-description">読み方:<code class="tts-description-code">[日本橋|にっぽんばし]</code></div>
       <div class="tts-description">
