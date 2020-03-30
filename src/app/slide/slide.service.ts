@@ -6,6 +6,7 @@ import { AngularFirestore } from '@angular/fire/firestore'
 import { LessonItem } from '../../firestore-item'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { LessonDisplay } from '../lesson/lesson.component'
+import { AngularFireStorage } from '@angular/fire/storage'
 
 @Injectable({
   providedIn: 'root',
@@ -44,7 +45,12 @@ export class SlideService {
   private path: string
   public modeRequest: Subject<LessonDisplay> = new Subject()
 
-  constructor(private http: HttpClient, private db: AngularFirestore, private snackBar: MatSnackBar) {}
+  constructor(
+    private http: HttpClient,
+    private db: AngularFirestore,
+    private storage: AngularFireStorage,
+    private snackBar: MatSnackBar
+  ) {}
 
   /**
    * 画面更新が必要なタイミングで呼び出す
@@ -53,6 +59,7 @@ export class SlideService {
     this.updateNav()
     this.slideSubject.next(this.slideData[this.index])
     this.subtitlesSubject.next(this.slideData[this.index].speech.text)
+    this.speech()
   }
 
   /**
@@ -171,9 +178,7 @@ export class SlideService {
     this.limit = this.slideData.length
     this.updateNav()
   }
-
-  speech() {
-    this.speechAudio.pause()
+  speechTest() {
     const ssml =
       '<speak>' +
       this.slideData[this.index].speech.text
@@ -183,6 +188,17 @@ export class SlideService {
     this.speechAudio.src = 'api/tts?ssml=' + ssml
     this.speechAudio.play()
   }
+  async speech() {
+    this.speechAudio.pause()
+    const path = this.slideData[this.index].speech.path
+    if (!path) {
+      return
+    }
+    const src = await this.storage.ref(path).getDownloadURL().toPromise()
+    this.speechAudio.src = src
+    this.speechAudio.play()
+  }
+
   toggleSubtitles() {
     this.subtitleEnabled = !this.subtitleEnabled
     // 字幕を更新させると、slide-containerのadjustScaleが呼ばれる
