@@ -51,8 +51,8 @@ export class SlideEditorComponent implements OnInit {
     this.slideService.reflesh()
   }
 
-  public speech() {
-    this.slideService.speechTest()
+  public speech(value: string) {
+    this.slideService.speechTest(value)
   }
 
   public updateTTS(value: string) {

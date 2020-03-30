@@ -7,6 +7,7 @@ import { LessonItem } from '../../firestore-item'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { LessonDisplay } from '../lesson/lesson.component'
 import { AngularFireStorage } from '@angular/fire/storage'
+import { environment } from 'environments/environment'
 
 @Injectable({
   providedIn: 'root',
@@ -178,14 +179,14 @@ export class SlideService {
     this.limit = this.slideData.length
     this.updateNav()
   }
-  speechTest() {
+  speechTest(value: string) {
     const ssml =
       '<speak>' +
-      this.slideData[this.index].speech.text
-        .replace(/<(.+?s)>/g, '<break time="$1"/>')
-        .replace(/\[(.+?)\|(.+?)\]/g, '<sub alias="$2">$1</sub>') +
+      value.replace(/<(.+?s)>/g, '<break time="$1"/>').replace(/\[(.+?)\|(.+?)\]/g, '<sub alias="$2">$1</sub>') +
       '</speak>'
-    this.speechAudio.src = 'api/tts?ssml=' + ssml
+    const src =
+      (environment.production ? '' : 'https://ripple-public.appspot.com') + '/api/tts?ssml=' + encodeURIComponent(ssml)
+    this.speechAudio.src = src
     this.speechAudio.play()
   }
   async speech() {

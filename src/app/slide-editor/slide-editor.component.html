@@ -64,7 +64,7 @@
       <div class="tts-description">
         間隔:<code class="tts-description-code">&lt;2s&gt;</code><code class="tts-description-code">&lt;100ms&gt;</code>
       </div>
-      <button mat-stroked-button color="primary" (click)="speech()">
+      <button mat-stroked-button color="primary" (click)="speech(ttsField.value)">
         <ng-container *ngIf="this.slideService.speechAudio.paused; else pauseBtn">
           <i class="material-icons">play_arrow</i>再生
         </ng-container>
