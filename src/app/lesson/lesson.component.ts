@@ -30,6 +30,7 @@ export class LessonComponent implements OnInit, OnDestroy {
     return this.displayMode === 'exercise' && this.exService.judging
   }
   private subscription = new Set<Subscription>()
+  public isPlaying = false
   // 感想の顔番号
   public face: number = null
   constructor(
@@ -71,6 +72,17 @@ export class LessonComponent implements OnInit, OnDestroy {
     }
     this.subscription.add(this.exService.modeRequest.subscribe(modeChange))
     this.subscription.add(this.slideService.modeRequest.subscribe(modeChange))
+    this.subscription.add(
+      this.slideService.playState.subscribe((flag) => {
+        this.isPlaying = flag
+      })
+    )
+  }
+  get isMuted() {
+    return this.slideService.muted
+  }
+  toggleMute() {
+    this.slideService.toggleMute()
   }
   slidePrev() {
     this.slideService.back()

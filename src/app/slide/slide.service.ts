@@ -43,6 +43,7 @@ export class SlideService {
   public subtitleEnabled = true
   public muted = false
   public speechAudio = new Audio()
+  public playState = new Subject<boolean>()
   private path: string
   public modeRequest: Subject<LessonDisplay> = new Subject()
 
@@ -198,8 +199,15 @@ export class SlideService {
     const src = await this.storage.ref(path).getDownloadURL().toPromise()
     this.speechAudio.src = src
     this.speechAudio.play()
+    this.playState.next(true)
+    this.speechAudio.addEventListener('ended', () => {
+      this.playState.next(false)
+    })
   }
 
+  /**
+   * 字幕の表示 / 非表示
+   */
   toggleSubtitles() {
     this.subtitleEnabled = !this.subtitleEnabled
     // 字幕を更新させると、slide-containerのadjustScaleが呼ばれる
@@ -208,6 +216,14 @@ export class SlideService {
     } else {
       this.subtitlesSubject.next(this.slideData[this.index].speech.text)
     }
+  }
+
+  /**
+   * 音声のオンオフ
+   */
+  toggleMute() {
+    this.muted = !this.muted
+    this.speechAudio.muted = this.muted
   }
 
   save() {

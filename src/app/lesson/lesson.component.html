@@ -3,8 +3,8 @@
     <div class="tools-item">
       <i class="material-icons">list</i>
     </div>
-    <div class="tools-item">
-      <i class="material-icons">volume_down</i>
+    <div class="tools-item" [class.playing]="isPlaying" (click)="toggleMute()">
+      <i class="material-icons">{{ isMuted ? 'volume_mute' : 'volume_up' }}</i>
     </div>
     <div class="tools-item" (click)="toggleSubtitles()">
       <i class="material-icons">subtitles</i>
