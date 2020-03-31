@@ -1,7 +1,12 @@
-<app-header id="header" *ngIf="headerVisiblity"></app-header>
-<div id="app-bottom-container">
-  <app-sidebar id="sidebar" *ngIf="sidebarVisiblity"></app-sidebar>
-  <div id="main">
-    <router-outlet></router-outlet>
+<ng-container *ngIf="authState !== 'unknown'">
+  <app-header id="header" *ngIf="headerVisiblity"></app-header>
+  <div id="app-bottom-container">
+    <app-sidebar id="sidebar" *ngIf="sidebarVisiblity"></app-sidebar>
+    <div id="main">
+      <router-outlet></router-outlet>
+    </div>
   </div>
+</ng-container>
+<div class="loader" [class.hidden]="authState !== 'unknown'">
+  <img src="../assets/images/logo.svg" alt="Rippleロゴ" class="loader-logo" />
 </div>

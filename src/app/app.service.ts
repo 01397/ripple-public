@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core'
 import { Router, NavigationStart } from '@angular/router'
-import { filter } from 'rxjs/operators'
-import { Subject } from 'rxjs'
+import { filter, map, take } from 'rxjs/operators'
+import { Subject, BehaviorSubject } from 'rxjs'
 import { AngularFireAuth } from '@angular/fire/auth'
 import { AngularFirestore } from '@angular/fire/firestore'
+
+export type AuthState = 'unknown' | 'unauthorized' | 'authorised'
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +14,7 @@ export class AppService {
   public headerVisiblity = new Subject<boolean>()
   public sidebarVisiblity = new Subject<boolean>()
   public headerTitle: string
+  public authState = new BehaviorSubject<AuthState>('unknown')
   private get withHeader() {
     return ['/lesson', '/admin/material']
     // return ['/lesson', '/admin/slide-editor', '/admin/exercise-editor', '/admin/material']
@@ -21,7 +24,7 @@ export class AppService {
   }
   private user: firebase.User
 
-  constructor(private router: Router, private angularFireAuth: AngularFireAuth, private db: AngularFirestore) {
+  constructor(private router: Router, private auth: AngularFireAuth, private db: AngularFirestore) {
     this.router.events.pipe(filter((event) => event instanceof NavigationStart)).subscribe((event: NavigationStart) => {
       const url = event.url.match(/^[^;?]*/)[0]
       if (this.withHeader.includes(url)) {
@@ -35,20 +38,28 @@ export class AppService {
         this.sidebarVisiblity.next(false)
       }
     })
-    this.angularFireAuth.authState.subscribe((user) => {
-      console.log(this.user)
+    this.auth.authState.subscribe((user) => {
+      console.log(user)
       this.user = user
+      if (this.user !== null) {
+        this.authState.next('authorised')
+      } else {
+        this.authState.next('unauthorized')
+      }
     })
   }
   public getUser() {
-    return this.user
+    return this.auth.user
+  }
+  public getUserId() {
+    return this.user?.uid ?? null
   }
   public getUserName() {
-    return this.user ? this.user.displayName : null
+    return this.user?.displayName ?? null
   }
   public login() {}
   public logout() {
-    this.angularFireAuth.auth.signOut()
+    this.auth.auth.signOut()
   }
   public setHeaderTitle(title: string) {
     this.headerTitle = title

@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router'
 import { ExerciseService } from '../exercise.service'
 import { AppService } from '../app.service'
 import { Subscription } from 'rxjs'
+import { take, filter } from 'rxjs/operators'
 
 export type LessonDisplay = 'slide' | 'exercise' | 'wrapup'
 
@@ -41,15 +42,25 @@ export class LessonComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    const courseId = this.route.snapshot.paramMap.get('course')
-    const lessonId = this.route.snapshot.paramMap.get('lesson')
-    const path = `course/${courseId}/lesson/${lessonId}`
     this.subscription.add(
       this.slideService.slideTitle.subscribe((title) => {
         this.result.title = title
         this.app.setHeaderTitle(title)
       })
     )
+    this.app.authState
+      .pipe(
+        filter((value) => value === 'authorised'),
+        take(1)
+      )
+      .subscribe(() => {
+        this.onAuth()
+      })
+  }
+  onAuth() {
+    const courseId = this.route.snapshot.paramMap.get('course')
+    const lessonId = this.route.snapshot.paramMap.get('lesson')
+    const path = `course/${courseId}/lesson/${lessonId}`
     this.slideService.setSlideData(path)
     this.exService.init(courseId, lessonId)
     this.exService.logStart()

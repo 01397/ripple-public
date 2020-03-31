@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { AngularFirestore } from '@angular/fire/firestore'
 import { CourseItem, LessonItemId, LessonRecordItem } from '../../firestore-item'
-import { map, min } from 'rxjs/operators'
+import { map, min, filter, take } from 'rxjs/operators'
 import { Observable, Subscription } from 'rxjs'
 import { AppService } from '../app.service'
 
@@ -44,37 +44,45 @@ export class CoursesComponent implements OnInit, OnDestroy {
         this.courses = courses
       })
     )
-    const lessonRecordPath = `user/${this.app.getUser().uid}/lesson_record`
-    this.subscription.add(
-      this.db
-        .collection<LessonRecordItem>(lessonRecordPath)
-        .valueChanges()
-        .subscribe((docs) => {
-          const record: {
-            [key in string]: {
-              count: number
-              last: Date
-              lessons: { [key2 in string]: { count: number; last: Date; face: number | null } }
-            }
-          } = {}
-          for (const doc of docs) {
-            if (!record[doc.course]) {
-              record[doc.course] = { count: 0, lessons: {}, last: null }
-            }
-            const { count, last, face } = doc
-            const lastDate = (last as firebase.firestore.Timestamp).toDate()
-            const course = record[doc.course]
-            course.lessons[doc.lesson] = { count: count as number, last: lastDate, face }
-            course.count++
-            if (course.last === null) {
-              course.last = lastDate
-            } else if (course.last < lastDate) {
-              course.last = lastDate
-            }
-          }
-          this.record = record
-        })
-    )
+    this.app.authState
+      .pipe(
+        filter((value) => value === 'authorised'),
+        take(1)
+      )
+      .subscribe(() => {
+        const uid = this.app.getUserId()
+        const lessonRecordPath = `user/${uid}/lesson_record`
+        this.subscription.add(
+          this.db
+            .collection<LessonRecordItem>(lessonRecordPath)
+            .valueChanges()
+            .subscribe((docs) => {
+              const record: {
+                [key in string]: {
+                  count: number
+                  last: Date
+                  lessons: { [key2 in string]: { count: number; last: Date; face: number | null } }
+                }
+              } = {}
+              for (const doc of docs) {
+                if (!record[doc.course]) {
+                  record[doc.course] = { count: 0, lessons: {}, last: null }
+                }
+                const { count, last, face } = doc
+                const lastDate = (last as firebase.firestore.Timestamp).toDate()
+                const course = record[doc.course]
+                course.lessons[doc.lesson] = { count: count as number, last: lastDate, face }
+                course.count++
+                if (course.last === null) {
+                  course.last = lastDate
+                } else if (course.last < lastDate) {
+                  course.last = lastDate
+                }
+              }
+              this.record = record
+            })
+        )
+      })
   }
 
   ngOnDestroy() {

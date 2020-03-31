@@ -4,6 +4,7 @@ import { AngularFirestore } from '@angular/fire/firestore'
 import { AppService } from '../app.service'
 import { Router } from '@angular/router'
 import { UserItem } from '../../firestore-item'
+import { take } from 'rxjs/operators'
 
 @Component({
   selector: 'app-signup',
@@ -92,7 +93,10 @@ export class SignupComponent implements OnInit {
       this.experienceCheck()
     )
   }
-  submit() {
+  async submit() {
+    if (this.app.authState.value !== 'authorised') {
+      throw new Error('ログインしていないため、登録できません')
+    }
     const data: UserItem = {
       name: this.name,
       gender: this.gender,
@@ -105,10 +109,15 @@ export class SignupComponent implements OnInit {
       experience: this.experience,
     }
     this.inProgress = true
-    const userID = this.app.getUser().uid
+    const userID = this.app.getUserId()
     Promise.all([
       this.db.doc(`user/${userID}`).set(data, { merge: true }),
-      this.app.getUser().updateProfile({ displayName: this.name }),
+      this.app
+        .getUser()
+        .pipe(take(1))
+        .subscribe((user) => {
+          user.updateProfile({ displayName: this.name })
+        }),
     ])
       .then(() => {
         this.router.navigate(['/home'])

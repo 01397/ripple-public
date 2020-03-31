@@ -7,9 +7,13 @@ import { AppService } from '../app.service'
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  public userName = this.app.getUserName()
+  public userName = ''
 
   constructor(public app: AppService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.app.getUser().subscribe((user) => {
+      this.userName = user.displayName
+    })
+  }
 }

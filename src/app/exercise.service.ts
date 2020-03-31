@@ -120,13 +120,16 @@ export class ExerciseService {
   }
 
   logStart() {
+    if (this.app.authState.value !== 'authorised') {
+      throw new Error('ログインしていないため、学習ログを記録できません')
+    }
     const timestamp = firebase.firestore.FieldValue.serverTimestamp()
     this.db
       .collection<LessonLogItem>('lesson_log')
       .add({
         course: this.courseId,
         lesson: this.lessonId,
-        user: this.app.getUser().uid,
+        user: this.app.getUserId(),
         start: timestamp,
         duration: null,
         end: null,
@@ -142,12 +145,15 @@ export class ExerciseService {
     this.lessonStart = new Date()
   }
   logEnd(abort: boolean = false) {
+    if (this.app.authState.value !== 'authorised') {
+      throw new Error('ログインしていないため、学習ログを記録できません')
+    }
     if (this.lessonLogRef === null) {
-      return
+      throw new Error('学習開始記録がないため、学習ログを記録できません')
     }
     const timestamp = firebase.firestore.FieldValue.serverTimestamp()
     const duration = new Date().getTime() - this.lessonStart.getTime()
-    const userID = this.app.getUser().uid
+    const userID = this.app.getUserId()
     const batch = this.db.firestore.batch()
     const lessonLog: Partial<LessonLogItem> = {
       end: timestamp,
@@ -161,7 +167,7 @@ export class ExerciseService {
     const lessonRecordPath = `user/${userID}/lesson_record/${this.lessonId}`
     const lessonRecordRef = this.db.doc<LessonRecordItem>(lessonRecordPath).ref
     const lessonRecord: LessonRecordItem = {
-      user: this.app.getUser().uid,
+      user: userID,
       course: this.courseId,
       lesson: this.lessonId,
       face: null,
@@ -179,13 +185,17 @@ export class ExerciseService {
    * レッスン終了後に、感想を選択したときに呼ばれる
    * @param face 顔番号
    */
-  logFace(face: 0 | 1 | 2 | 3 | 4) {
+  async logFace(face: 0 | 1 | 2 | 3 | 4) {
+    if (this.app.authState.value !== 'authorised') {
+      throw new Error('ログインしていないため、学習ログを記録できません')
+    }
     if (this.lessonLogRef === null) {
-      return
+      throw new Error('学習開始記録がないため、学習ログを記録できません')
     }
     const batch = this.db.firestore.batch()
     // ユーザの記録
-    const lessonRecordPath = `user/${this.app.getUser().uid}/lesson_record/${this.lessonId}`
+    const uid = this.app.getUserId()
+    const lessonRecordPath = `user/${uid}/lesson_record/${this.lessonId}`
     const lessonRecordRef = this.db.doc<LessonRecordItem>(lessonRecordPath).ref
     const lessonRecord: Partial<LessonRecordItem> = {
       face,
