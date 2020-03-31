@@ -11,10 +11,10 @@
   </div>
   <div *ngIf="done">
     <ng-container *ngIf="allAccepted; else retry">
-      <button (click)="next()">次へ</button>
+      <button class="button-action" (click)="next()">次へ</button>
     </ng-container>
     <ng-template #retry>
-      <button (click)="close()">もう一度</button>
+      <button class="button-action" (click)="close()">もう一度</button>
     </ng-template>
   </div>
   <div *ngIf="error">申し訳ありません。判定システムに問題が発生しました。</div>
