@@ -1,0 +1,27 @@
+@import '~assets/styles/extends';
+.container {
+  margin: 24px;
+}
+section {
+  @extend .extend-card;
+}
+h3 {
+  padding-bottom: 0.5rem;
+}
+.item:last-child {
+  border-bottom: 1px solid $mono-95;
+}
+.item {
+  border-top: 1px solid $mono-95;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  display: block;
+  text-decoration: none;
+  color: $mono-0;
+}
+.item.button {
+  cursor: pointer;
+}
+.item.button:hover {
+  background: $primary-50;
+}

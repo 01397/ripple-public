@@ -6,6 +6,7 @@
   border-radius: 6px;
   box-shadow: $card-shadow;
   margin: 24px;
+  padding-bottom: 24px;
   overflow: hidden;
 
   h1 {
@@ -16,9 +17,6 @@
 }
 .extend-card > *:first-child {
   padding-top: 24px;
-}
-.extend-card > *:last-child {
-  padding-bottom: 24px;
 }
 .extend-card > * {
   padding-left: 24px;

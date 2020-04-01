@@ -1,1 +1,21 @@
-<button (click)="logout()">ログアウト</button>
+<div class="container">
+  <h2>設定</h2>
+  <section>
+    <h3>アカウント設定</h3>
+    <div class="item">{{ userName }} さんとしてログイン中</div>
+    <div class="item button" (click)="logout()">ログアウト</div>
+    <!--<a class="item button" href="#" target="_blank">アカウントの削除</a>-->
+  </section>
+  <section>
+    <h3>Rippleについて</h3>
+    <a class="item button" href="/tos.html" target="_blank">
+      利用規約
+    </a>
+    <a class="item button" href="/privacy.html" target="_blank">
+      プライバシーポリシー
+    </a>
+    <a class="item button" href="/cookie.html" target="_blank">
+      Cookie
+    </a>
+  </section>
+</div>
