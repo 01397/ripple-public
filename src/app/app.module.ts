@@ -62,36 +62,25 @@ import { LoginComponent } from './login/login.component'
 import { AngularFireAuthModule } from '@angular/fire/auth'
 import { redirectLoggedInTo, redirectUnauthorizedTo, AngularFireAuthGuard } from '@angular/fire/auth-guard'
 import { SignupComponent } from './signup/signup.component'
-import { DurationPipe } from './duration.pipe';
+import { DurationPipe } from './duration.pipe'
 import { FromNowPipe } from './from-now.pipe'
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
   autoUpgradeAnonymousUsers: false, // 匿名認証ユーザー自動アップグレード
   signInFlow: 'popup', // redirect or popup
   signInOptions: [
-    // firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-    // {
-    //   scopes: ['public_profile', 'email', 'user_likes', 'user_friends'],
-    //   customParameters: {
-    //     auth_type: 'reauthenticate',
-    //   },
-    //   provider: firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-    // },
+    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+    firebase.auth.FacebookAuthProvider.PROVIDER_ID,
     firebase.auth.TwitterAuthProvider.PROVIDER_ID,
     firebase.auth.GithubAuthProvider.PROVIDER_ID,
-    // {
-    //   requireDisplayName: false,
-    //   provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
-    // },
-    // firebase.auth.PhoneAuthProvider.PROVIDER_ID,
-    // firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID,
+    firebase.auth.EmailAuthProvider.PROVIDER_ID,
   ],
   // // Team Of Service
   // tosUrl: 'http://localhost:6200/TOS',
   // privacyPolicyUrl: 'プライバシーポリシーのURL',
   // signInSuccessUrl: 'http://localhost:6200/home',
   // credentialHelper: firebaseui.auth.CredentialHelper.ACCOUNT_CHOOSER_COM,
-  // siteName: 'Ripple',
+  siteName: 'Ripple',
 }
 
 const redirectLoggedInToHome = () => redirectLoggedInTo(['home'])
@@ -102,6 +91,8 @@ const appRoutes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
   {
     path: 'login',

@@ -4,7 +4,7 @@ import { AngularFirestore } from '@angular/fire/firestore'
 import { AppService } from '../app.service'
 import { Router } from '@angular/router'
 import { UserItem } from '../../firestore-item'
-import { take } from 'rxjs/operators'
+import { take, filter } from 'rxjs/operators'
 
 @Component({
   selector: 'app-signup',
@@ -55,7 +55,16 @@ export class SignupComponent implements OnInit {
   public inProgress: boolean = false
 
   constructor(private db: AngularFirestore, private app: AppService, private router: Router) {}
-  ngOnInit() {}
+  ngOnInit() {
+    this.app.authState
+      .pipe(
+        filter((value) => value === 'authorised'),
+        take(1)
+      )
+      .subscribe(() => {
+        this.name = this.app.getUserName() ?? ''
+      })
+  }
 
   nameCheck1() {
     return this.name.length !== 0

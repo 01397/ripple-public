@@ -1,0 +1,7 @@
+@import '../../assets/styles/extends';
+:host {
+  text-align: center;
+}
+.main{
+  @extend .extend-card
+}
