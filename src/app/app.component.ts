@@ -1,6 +1,5 @@
 import { Component, ChangeDetectorRef } from '@angular/core'
 import { AppService, AuthState } from './app.service'
-import { auth } from 'firebase'
 
 @Component({
   selector: 'app-root',

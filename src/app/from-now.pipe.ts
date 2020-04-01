@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core'
-import { firestore } from 'firebase'
+import { firestore } from 'firebase/app'
 
 @Pipe({
   name: 'fromNow',

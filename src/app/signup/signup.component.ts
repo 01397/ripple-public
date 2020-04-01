@@ -4,7 +4,7 @@ import { AngularFirestore } from '@angular/fire/firestore'
 import { AppService } from '../app.service'
 import { Router } from '@angular/router'
 import { UserItem } from '../../firestore-item'
-import { take, filter } from 'rxjs/operators'
+import { take } from 'rxjs/operators'
 
 @Component({
   selector: 'app-signup',

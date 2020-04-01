@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators'
 import { WebsocketService } from './websocket.service'
 import { LessonDisplay } from './lesson/lesson.component'
 import { LessonLogItem, LessonRecordItem } from './../firestore-item'
-import * as firebase from 'firebase'
+import { firestore } from 'firebase/app'
 import { AppService } from './app.service'
 export interface ExerciseData {
   index: number
@@ -123,7 +123,7 @@ export class ExerciseService {
     if (this.app.authState.value !== 'authorised') {
       throw new Error('ログインしていないため、学習ログを記録できません')
     }
-    const timestamp = firebase.firestore.FieldValue.serverTimestamp()
+    const timestamp = firestore.FieldValue.serverTimestamp()
     this.db
       .collection<LessonLogItem>('lesson_log')
       .add({
@@ -151,7 +151,7 @@ export class ExerciseService {
     if (this.lessonLogRef === null) {
       throw new Error('学習開始記録がないため、学習ログを記録できません')
     }
-    const timestamp = firebase.firestore.FieldValue.serverTimestamp()
+    const timestamp = firestore.FieldValue.serverTimestamp()
     const duration = new Date().getTime() - this.lessonStart.getTime()
     const userID = this.app.getUserId()
     const batch = this.db.firestore.batch()
@@ -171,9 +171,9 @@ export class ExerciseService {
       course: this.courseId,
       lesson: this.lessonId,
       face: null,
-      last: firebase.firestore.FieldValue.serverTimestamp(),
-      count: firebase.firestore.FieldValue.increment(1),
-      modified: firebase.firestore.FieldValue.serverTimestamp(),
+      last: firestore.FieldValue.serverTimestamp(),
+      count: firestore.FieldValue.increment(1),
+      modified: firestore.FieldValue.serverTimestamp(),
     }
     batch.set(lessonRecordRef, lessonRecord, {
       merge: true,
@@ -199,7 +199,7 @@ export class ExerciseService {
     const lessonRecordRef = this.db.doc<LessonRecordItem>(lessonRecordPath).ref
     const lessonRecord: Partial<LessonRecordItem> = {
       face,
-      modified: firebase.firestore.FieldValue.serverTimestamp(),
+      modified: firestore.FieldValue.serverTimestamp(),
     }
     batch.set(lessonRecordRef, lessonRecord, { merge: true })
     // logの記録
@@ -207,7 +207,7 @@ export class ExerciseService {
       this.lessonLogRef,
       {
         face,
-        modified: firebase.database.ServerValue.TIMESTAMP,
+        modified: firestore.FieldValue.serverTimestamp(),
       },
       { merge: true }
     )

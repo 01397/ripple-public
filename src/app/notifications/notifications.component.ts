@@ -3,7 +3,7 @@ import { Observable, Subscription } from 'rxjs'
 import { NotificationItem, NotificationItemId } from '../../firestore-item'
 import { AngularFirestore } from '@angular/fire/firestore'
 import { map } from 'rxjs/operators'
-import { firestore } from 'firebase'
+import { firestore } from 'firebase/app'
 
 @Component({
   selector: 'app-notifications',
