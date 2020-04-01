@@ -56,14 +56,13 @@ export class SignupComponent implements OnInit {
 
   constructor(private db: AngularFirestore, private app: AppService, private router: Router) {}
   ngOnInit() {
-    this.app.authState
-      .pipe(
-        filter((value) => value === 'authorised'),
-        take(1)
-      )
-      .subscribe(() => {
+    this.app.authState.pipe(take(1)).subscribe((value) => {
+      if (value === 'unregistered') {
         this.name = this.app.getUserName() ?? ''
-      })
+      } else if (value === 'authorised') {
+        this.router.navigate(['/home'])
+      }
+    })
   }
 
   nameCheck1() {

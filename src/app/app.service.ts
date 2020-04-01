@@ -5,7 +5,7 @@ import { Subject, BehaviorSubject } from 'rxjs'
 import { AngularFireAuth } from '@angular/fire/auth'
 import { AngularFirestore } from '@angular/fire/firestore'
 
-export type AuthState = 'unknown' | 'unauthorized' | 'authorised'
+export type AuthState = 'unknown' | 'unauthorized' | 'authorised' | 'unregistered'
 
 @Injectable({
   providedIn: 'root',
@@ -39,10 +39,20 @@ export class AppService {
       }
     })
     this.auth.authState.subscribe((user) => {
-      console.log(user)
       this.user = user
-      if (this.user !== null) {
-        this.authState.next('authorised')
+      if (this.user !== null && !!user?.uid) {
+        this.db
+          .doc('user/' + user.uid)
+          .get()
+          .pipe(take(1))
+          .subscribe((snapshot) => {
+            if (snapshot.exists) {
+              this.authState.next('authorised')
+            } else {
+              router.navigate(['signup'])
+              this.authState.next('unregistered')
+            }
+          })
       } else {
         this.authState.next('unauthorized')
       }
