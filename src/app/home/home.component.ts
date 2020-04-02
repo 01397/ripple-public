@@ -9,14 +9,7 @@ import { LessonItemId } from '../../firestore-item'
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  notifications: { title: string; body: string; link?: { path: string; label: string } }[] = [
-    {
-      title: '教室説明会のお知らせ',
-      body: 'キテネ〜〜サンプルテキストサンプルテキストサンプルテキストサンプルテキスト',
-    },
-  ]
   public lastLesson: LessonItemId = null
-
   constructor(private app: AppService) {}
 
   ngOnInit() {
@@ -28,5 +21,8 @@ export class HomeComponent implements OnInit {
       .subscribe((lesson) => {
         this.lastLesson = lesson
       })
+  }
+  getPickupList() {
+    return this.app.pickupList
   }
 }

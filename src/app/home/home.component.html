@@ -12,7 +12,7 @@
   </div>
 </section>
 
-<section class="notification" *ngFor="let item of notifications">
+<section class="pickup" *ngFor="let item of getPickupList() | async">
   <h1>{{ item.title }}</h1>
   <p class="card-body">
     {{ item.body }}

@@ -1,13 +1,13 @@
 @import '~assets/styles/extends';
 
-.notification {
+.pickup {
   @extend .extend-card;
   background: $primary-600-grad-vertical;
   color: $white-a75;
 
   h1 {
     color: $mono-100;
-    margin-top: 12px;
+    margin-top: 0;
   }
 }
 .card {

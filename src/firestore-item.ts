@@ -92,3 +92,9 @@ export interface NotificationItem {
 export interface NotificationItemId extends NotificationItem {
   id: string
 }
+export interface PickupItem {
+  title: string
+  body: string
+  action: { label: string; navigate: string; external: boolean } | null
+  private: boolean
+}

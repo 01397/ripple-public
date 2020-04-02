@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core'
 import { Router, NavigationStart } from '@angular/router'
 import { filter, map, take } from 'rxjs/operators'
-import { Subject, BehaviorSubject } from 'rxjs'
+import { Subject, BehaviorSubject, Observable } from 'rxjs'
 import { AngularFireAuth } from '@angular/fire/auth'
 import { AngularFirestore } from '@angular/fire/firestore'
-import { LessonRecordItem, UserItem, LessonItemId } from 'firestore-item'
+import { LessonRecordItem, UserItem, LessonItemId, PickupItem } from 'firestore-item'
 
 export type AuthState = 'unknown' | 'unauthorized' | 'authorised' | 'unregistered'
 
@@ -17,9 +17,9 @@ export class AppService {
   public headerTitle: string
   public authState = new BehaviorSubject<AuthState>('unknown')
   public lastLesson = new BehaviorSubject<LessonItemId | null>(null)
+  public pickupList: Observable<PickupItem[]>
   private get withHeader() {
     return ['/lesson', '/admin/material']
-    // return ['/lesson', '/admin/slide-editor', '/admin/exercise-editor', '/admin/material']
   }
   private get withSidebar() {
     return ['/home', '/courses', '/notifications', '/settings']
@@ -54,6 +54,7 @@ export class AppService {
             if (snapshot.exists) {
               this.authState.next('authorised')
               this.getRecords()
+              this.getPickup()
             } else {
               router.navigate(['signup'])
               this.authState.next('unregistered')
@@ -172,5 +173,12 @@ export class AppService {
     } else {
       return `../../assets/images/face_${face}.svg`
     }
+  }
+
+  /***** PICKUP *****/
+  private getPickup() {
+    this.pickupList = this.db
+      .collection<PickupItem>('pickup', (ref) => ref.where('private', '==', false))
+      .valueChanges()
   }
 }
