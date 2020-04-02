@@ -5,10 +5,10 @@
   </div>
 </section>
 
-<section class="card">
+<section class="card" *ngIf="lastLesson !== null">
   <h1>前回の続きから</h1>
   <div class="card-body">
-    content
+    <app-lesson-item [lesson]="lastLesson"></app-lesson-item>
   </div>
 </section>
 

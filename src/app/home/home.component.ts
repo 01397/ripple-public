@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core'
-import { AngularFirestore } from '@angular/fire/firestore'
-import { AppService } from 'app/app.service'
-import { filter, take } from 'rxjs/operators'
-import { UserItem } from 'firestore-item'
+import { AppService } from '../app.service'
+import { take, filter } from 'rxjs/operators'
+import { LessonItemId } from '../../firestore-item'
 
 @Component({
   selector: 'app-home',
@@ -16,28 +15,18 @@ export class HomeComponent implements OnInit {
       body: 'キテネ〜〜サンプルテキストサンプルテキストサンプルテキストサンプルテキスト',
     },
   ]
-  public last: {
-    course: string | null
-    lesson: string | null
-  } = { course: null, lesson: null }
+  public lastLesson: LessonItemId = null
 
-  constructor(private db: AngularFirestore, private app: AppService) {}
+  constructor(private app: AppService) {}
 
   ngOnInit() {
-    this.app.authState
+    this.app.lastLesson
       .pipe(
-        filter((value) => value === 'authorised'),
+        filter((val) => val !== null),
         take(1)
       )
-      .subscribe(() => {
-        const uid = this.app.getUserId()
-        this.db
-          .doc<UserItem>('user/' + uid)
-          .valueChanges()
-          .pipe(take(1))
-          .subscribe((snapshot) => {
-            this.last = snapshot.lastLesson
-          })
+      .subscribe((lesson) => {
+        this.lastLesson = lesson
       })
   }
 }

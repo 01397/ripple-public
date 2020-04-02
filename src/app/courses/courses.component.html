@@ -38,14 +38,7 @@
   <div class="lesson-list">
     <ul>
       <li class="lesson-item-wrapper" *ngFor="let lesson of lessons | async">
-        <a class="lesson-item" [routerLink]="['/lesson', { course: lesson.courseId, lesson: lesson.id }]">
-          <div class="lesson-item-title">
-            {{ lesson.title }}
-          </div>
-          <div class="lesson-item-count">学習回数: {{ getLessonStudyCount(lesson) }}回</div>
-          <div class="lesson-item-date">前回学習: {{ getLessonLastStudy(lesson) | fromNow }}</div>
-          <img [src]="getFaceSrc(lesson)" class="lesson-item-face" />
-        </a>
+        <app-lesson-item [lesson]="lesson"></app-lesson-item>
       </li>
     </ul>
   </div>

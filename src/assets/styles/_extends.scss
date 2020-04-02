@@ -8,6 +8,7 @@
   margin: 24px;
   padding-bottom: 24px;
   overflow: hidden;
+  animation: 0.25s ease appear;
 
   h1 {
     font-size: 20px;
@@ -90,14 +91,6 @@
     opacity: 0.5;
   }
 }
-@keyframes appear {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
 
 /***** list *****/
 $list-title-font-size: 20;
@@ -129,4 +122,14 @@ $list-sub-font-size: 14;
 .extend-list-item-sub {
   @include font-size(14);
   color: $mono-60;
+}
+
+/***** animations *****/
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

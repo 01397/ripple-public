@@ -1,0 +1,8 @@
+<a class="lesson-item" [routerLink]="['/lesson', { course: lesson.courseId, lesson: lesson.id }]">
+  <div class="lesson-item-title">
+    {{ lesson.title }}
+  </div>
+  <div class="lesson-item-count">学習回数: {{ count }}回</div>
+  <div class="lesson-item-date">前回学習: {{ last | fromNow }}</div>
+  <img [src]="face" class="lesson-item-face" />
+</a>

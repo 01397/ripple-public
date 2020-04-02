@@ -4,6 +4,7 @@ import { filter, map, take } from 'rxjs/operators'
 import { Subject, BehaviorSubject } from 'rxjs'
 import { AngularFireAuth } from '@angular/fire/auth'
 import { AngularFirestore } from '@angular/fire/firestore'
+import { LessonRecordItem, UserItem, LessonItemId } from 'firestore-item'
 
 export type AuthState = 'unknown' | 'unauthorized' | 'authorised' | 'unregistered'
 
@@ -15,6 +16,7 @@ export class AppService {
   public sidebarVisiblity = new Subject<boolean>()
   public headerTitle: string
   public authState = new BehaviorSubject<AuthState>('unknown')
+  public lastLesson = new BehaviorSubject<LessonItemId | null>(null)
   private get withHeader() {
     return ['/lesson', '/admin/material']
     // return ['/lesson', '/admin/slide-editor', '/admin/exercise-editor', '/admin/material']
@@ -23,6 +25,9 @@ export class AppService {
     return ['/home', '/courses', '/notifications', '/settings']
   }
   private user: firebase.User
+  private record: {
+    [x: string]: { count: number; last: Date; lessons: { [x: string]: { count: number; last: Date; face: number } } }
+  } = {}
 
   constructor(private router: Router, private auth: AngularFireAuth, private db: AngularFirestore) {
     this.router.events.pipe(filter((event) => event instanceof NavigationStart)).subscribe((event: NavigationStart) => {
@@ -48,6 +53,7 @@ export class AppService {
           .subscribe((snapshot) => {
             if (snapshot.exists) {
               this.authState.next('authorised')
+              this.getRecords()
             } else {
               router.navigate(['signup'])
               this.authState.next('unregistered')
@@ -58,6 +64,11 @@ export class AppService {
       }
     })
   }
+
+  /**************** USER ****************/
+  /**
+   * Userの取得
+   */
   public getUser() {
     return this.auth.user
   }
@@ -86,7 +97,80 @@ export class AppService {
   public logout() {
     this.auth.auth.signOut()
   }
+
+  /*************** HEADER ***************/
   public setHeaderTitle(title: string) {
     this.headerTitle = title
+  }
+
+  /********* COURSE and LESSONS *********/
+  private getRecords() {
+    const uid = this.getUserId()
+    // 学習記録を全て取得
+    const lessonRecordPath = `user/${uid}/lesson_record`
+    this.db
+      .collection<LessonRecordItem>(lessonRecordPath)
+      .valueChanges()
+      .subscribe((docs) => {
+        const record: {
+          [key in string]: {
+            count: number
+            last: Date
+            lessons: { [key2 in string]: { count: number; last: Date; face: number | null } }
+          }
+        } = {}
+        for (const doc of docs) {
+          if (!record[doc.course]) {
+            record[doc.course] = { count: 0, lessons: {}, last: null }
+          }
+          const { count, last, face } = doc
+          const lastDate = (last as firebase.firestore.Timestamp).toDate()
+          const course = record[doc.course]
+          course.lessons[doc.lesson] = { count: count as number, last: lastDate, face }
+          course.count++
+          if (course.last === null) {
+            course.last = lastDate
+          } else if (course.last < lastDate) {
+            course.last = lastDate
+          }
+        }
+        this.record = record
+      })
+    //
+    this.db
+      .doc<UserItem>('user/' + uid)
+      .valueChanges()
+      .pipe(take(1))
+      .subscribe((snapshot) => {
+        if (!snapshot.lastLesson) return
+        const { course, lesson } = snapshot.lastLesson
+        this.db
+          .doc<LessonItemId>(`course/${course}/lesson/${lesson}`)
+          .valueChanges()
+          .pipe(take(1))
+          .subscribe((lessonItem) => {
+            this.lastLesson.next({ id: lesson, courseId: course, ...lessonItem })
+          })
+      })
+  }
+  public getCourseLastStudy(id: string) {
+    return this.record[id]?.last ?? null
+  }
+  public getCourseProgress(id: string) {
+    return this.record[id]?.count ?? 0
+  }
+  public getLessonLastStudy(courseId: string, lessonId: string) {
+    return this.record[courseId]?.lessons[lessonId]?.last ?? null
+  }
+  public getLessonStudyCount(courseId: string, lessonId: string) {
+    return this.record[courseId]?.lessons[lessonId]?.count ?? null
+  }
+  public getFaceSrc(courseId: string, lessonId: string) {
+    const face = this.record[courseId]?.lessons[lessonId]?.face ?? null
+    if (face === null) {
+      return `../../assets/images/face_blank.svg`
+    } else {
+      return `../../assets/images/face_${face}.svg`
+    }
   }
 }

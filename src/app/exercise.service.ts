@@ -126,7 +126,8 @@ export class ExerciseService {
     const userID = this.app.getUserId()
     const timestamp = firestore.FieldValue.serverTimestamp()
     const batch = this.db.firestore.batch()
-    const lessonLogRef = (this.lessonLogRef = this.db.collection('lesson_log').doc<LessonLogItem>().ref)
+    const lessonLogRef = this.db.collection('lesson_log').ref.doc()
+    this.lessonLogRef = lessonLogRef
     const lessonLog: LessonLogItem = {
       course: this.courseId,
       lesson: this.lessonId,
@@ -140,7 +141,7 @@ export class ExerciseService {
       modified: timestamp,
     }
     batch.set(lessonLogRef, lessonLog)
-    const userDocPath = `user/${userID}/lesson_record/${this.lessonId}`
+    const userDocPath = `user/${userID}`
     const userDocRef = this.db.doc<LessonRecordItem>(userDocPath).ref
     const userDoc: Partial<UserItem> = {
       lastLesson: {
@@ -150,6 +151,7 @@ export class ExerciseService {
       modified: firestore.FieldValue.serverTimestamp(),
     }
     batch.set(userDocRef, userDoc, { merge: true })
+    batch.commit()
 
     this.lessonStart = new Date()
   }
