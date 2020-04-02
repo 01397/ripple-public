@@ -35,8 +35,8 @@ app.use('/api/', indexRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/tts', ttsRouter)
 
-app.use(express.static(path.join(__dirname, '/dist/ripple-public')))
-app.use('/*', express.static(path.join(__dirname, '/dist/ripple-public/index.html')))
+app.use(express.static(path.join(__dirname, '/dist/angular-app')))
+app.use('/*', express.static(path.join(__dirname, '/dist/angular-app/index.html')))
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
