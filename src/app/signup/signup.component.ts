@@ -5,6 +5,7 @@ import { AppService } from '../app.service'
 import { Router } from '@angular/router'
 import { UserItem } from '../../firestore-item'
 import { take } from 'rxjs/operators'
+import { firestore } from 'firebase'
 
 @Component({
   selector: 'app-signup',
@@ -115,6 +116,8 @@ export class SignupComponent implements OnInit {
       trigger: this.trigger,
       interest: this.getInterest(),
       experience: this.experience,
+      lastLesson: null,
+      modified: firestore.FieldValue.serverTimestamp()
     }
     this.inProgress = true
     const userID = this.app.getUserId()

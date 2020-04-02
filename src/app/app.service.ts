@@ -61,13 +61,28 @@ export class AppService {
   public getUser() {
     return this.auth.user
   }
+  /**
+   * ユーザーIDの取得
+   * authStateが 'authorised' or 'unregistered' である事を確認してから使用する
+   */
   public getUserId() {
+    const state = this.authState.value
+    if (state === 'unauthorized' || state === 'unknown') {
+      console.warn('未認証です')
+    }
     return this.user?.uid ?? null
   }
+  /**
+   * ユーザー名の取得
+   * authStateが 'authorised' or 'unregistered' である事を確認してから使用する
+   */
   public getUserName() {
+    const state = this.authState.value
+    if (state === 'unauthorized' || state === 'unknown') {
+      console.warn('未認証です')
+    }
     return this.user?.displayName ?? null
   }
-  public login() {}
   public logout() {
     this.auth.auth.signOut()
   }

@@ -37,6 +37,11 @@ export interface UserItem {
   trigger: number
   interest: number[]
   experience: number
+  lastLesson: {
+    course: string
+    lesson: string
+  } | null
+  modified: firestore.Timestamp | firestore.FieldValue
 }
 export interface LessonLogItem {
   user: string
