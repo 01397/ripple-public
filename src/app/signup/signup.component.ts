@@ -103,7 +103,7 @@ export class SignupComponent implements OnInit {
     )
   }
   async submit() {
-    if (this.app.authState.value !== 'authorised') {
+    if (this.app.authState.value !== 'unregistered') {
       throw new Error('ログインしていないため、登録できません')
     }
     const data: UserItem = {
@@ -117,7 +117,7 @@ export class SignupComponent implements OnInit {
       interest: this.getInterest(),
       experience: this.experience,
       lastLesson: null,
-      modified: firestore.FieldValue.serverTimestamp()
+      modified: firestore.FieldValue.serverTimestamp(),
     }
     this.inProgress = true
     const userID = this.app.getUserId()
