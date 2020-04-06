@@ -1,0 +1,19 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "testcase",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "lesson",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "index",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

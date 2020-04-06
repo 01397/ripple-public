@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { Router, NavigationStart } from '@angular/router'
+import { Router, NavigationStart, NavigationEnd } from '@angular/router'
 import { filter, map, take } from 'rxjs/operators'
 import { Subject, BehaviorSubject, Observable } from 'rxjs'
 import { AngularFireAuth } from '@angular/fire/auth'
@@ -22,7 +22,7 @@ export class AppService {
     return ['/lesson', '/admin/material']
   }
   private get withSidebar() {
-    return ['/', '/home', '/courses', '/notifications', '/settings']
+    return ['/home', '/courses', '/notifications', '/settings']
   }
   private user: firebase.User
   private record: {
@@ -30,8 +30,8 @@ export class AppService {
   } = {}
 
   constructor(private router: Router, private auth: AngularFireAuth, private db: AngularFirestore) {
-    this.router.events.pipe(filter((event) => event instanceof NavigationStart)).subscribe((event: NavigationStart) => {
-      const url = event.url.match(/^[^;?]*/)[0]
+    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
+      const url = event.urlAfterRedirects.match(/^[^;?]*/)[0]
       if (this.withHeader.includes(url)) {
         this.headerVisiblity.next(true)
         this.sidebarVisiblity.next(false)
@@ -125,13 +125,13 @@ export class AppService {
             record[doc.course] = { count: 0, lessons: {}, last: null }
           }
           const { count, last, face } = doc
-          const lastDate = (last as firebase.firestore.Timestamp).toDate()
+          const lastDate = (last as firebase.firestore.Timestamp)?.toDate() ?? null
           const course = record[doc.course]
           course.lessons[doc.lesson] = { count: count as number, last: lastDate, face }
           course.count++
           if (course.last === null) {
             course.last = lastDate
-          } else if (course.last < lastDate) {
+          } else if (lastDate !== null && course.last < lastDate) {
             course.last = lastDate
           }
         }

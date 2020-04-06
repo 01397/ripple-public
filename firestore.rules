@@ -1,0 +1,64 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // materials
+    match /course/{courseID} {
+      allow read: if isAuthenticated() && isPublic()
+      allow read, write: if isAdmin()
+      match /lesson/{lessonID} {
+        allow read: if isAuthenticated() && isPublic()
+        allow read, write: if isAdmin()
+        match /exercise/{lessonID} {
+          allow read: if isAuthenticated()
+          allow read, write: if isAdmin()
+        }
+      }
+    }
+
+    // users cannot get testcase
+    match /testcase/{docID} {
+      allow read, write: if isAdmin()
+    }
+
+    match /lesson_log/{docID} {
+      allow create, update: if isUserAuthenticated(request.resource.data.user)
+      allow read: if isUserAuthenticated(resource.data.user)
+      allow read: if isAdmin()
+    }
+    match /user/{userID} {
+      allow read, create, update: if isUserAuthenticated(userID)
+      allow read: if isAdmin()
+      match /lesson_record/{user} {
+        allow read, create, update: if isUserAuthenticated(userID)
+        allow read: if isAdmin()
+      }
+    }
+
+    match /notification/{docID} {
+      allow read: if isAuthenticated() && isPublic()
+      allow read, write: if isAdmin()
+    }
+    match /pickup/{docID} {
+      allow read: if isAuthenticated() && isPublic()
+      allow read, write: if isAdmin()
+    }
+
+    match /system/admin_users {
+      allow read, write: if false
+    }
+
+    function isAuthenticated() {
+      return request.auth != null
+    }
+    function isUserAuthenticated(userID) {
+      return request.auth.uid == userID;
+    }
+    function isAdmin() {
+      return request.auth.uid in get(/databases/$(database)/documents/system/admin_users).data.members;
+    }
+    function isPublic() {
+      return resource.data.private == false
+    }
+  }
+}
