@@ -1,8 +1,9 @@
 import * as https from 'https'
 import * as admin from 'firebase-admin'
-// const serviceAccount = require('../secrets/Ripple-Public-1c25c707ebf8.json')
+const serviceAccount = require('../secrets/ripple-public-firebase-adminsdk-zui6n-6c4f5d50e5.json')
 admin.initializeApp({
-  credential: admin.credential.applicationDefault(),
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: 'https://ripple-public.firebaseio.com',
 })
 const db = admin.firestore()
 const execConfig = {

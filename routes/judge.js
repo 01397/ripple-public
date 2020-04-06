@@ -49,9 +49,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var https = require("https");
 var admin = require("firebase-admin");
-// const serviceAccount = require('../secrets/Ripple-Public-1c25c707ebf8.json')
+var serviceAccount = require('../secrets/ripple-public-firebase-adminsdk-zui6n-6c4f5d50e5.json');
 admin.initializeApp({
-    credential: admin.credential.applicationDefault(),
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: 'https://ripple-public.firebaseio.com',
 });
 var db = admin.firestore();
 var execConfig = {
