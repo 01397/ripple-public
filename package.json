@@ -6,6 +6,8 @@
     "start": "export GOOGLE_APPLICATION_CREDENTIALS=\"/Users/naoki/Documents/web/ripple-public/secrets/Ripple-Public-1c25c707ebf8.json\" | node ./bin/www",
     "build:gae": "ng build",
     "build": "ng build",
+    "serve": "ng serve --proxy-config proxy.conf.json",
+    "serveLowCPU": "ng serve --poll=4000 --live-reload=false --proxy-config proxy.conf.json",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",

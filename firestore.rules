@@ -45,7 +45,7 @@ service cloud.firestore {
     }
 
     match /system/admin_users {
-      allow read, write: if false
+      allow read, write: if isAdmin()
     }
 
     function isAuthenticated() {

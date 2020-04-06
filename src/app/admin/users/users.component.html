@@ -1,4 +1,7 @@
-<div>user id: <input type="text" #uid /><button (click)="addAdmin(uid.value)" [disabled]="inProcess" >追加</button></div>
+<div *ngFor="let user of adminList | async | keyvalue">
+  {{ user.value.granted ? '管理者' : '登録中' }} - {{ user.value.name }} (uid: {{ user.key }})
+</div>
+<div>user id: <input type="text" #uid /><button (click)="addAdmin(uid.value)" [disabled]="inProcess">追加</button></div>
 <div>
   {{ statusText }}
 </div>

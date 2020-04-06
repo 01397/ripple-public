@@ -156,6 +156,12 @@ const appRoutes: Routes = [
     canActivate: [AngularFireAuthGuard],
     data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
+  {
+    path: 'admin/users',
+    component: UsersComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin },
+  },
   { path: '**', component: NotFoundComponent },
 ]
 

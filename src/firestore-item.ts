@@ -99,7 +99,10 @@ export interface PickupItem {
   private: boolean
 }
 
+export type AdminUserList = {
+  [uid in string]: AdminUser
+}
 export interface AdminUser {
   granted: boolean
-  created: firestore.Timestamp | firestore.FieldValue
+  name: string
 }
