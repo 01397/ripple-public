@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core'
 import * as io from 'socket.io-client'
 import { Subject } from 'rxjs'
 import { JudgeResult } from '../../routes/judge'
-import { environment } from '../environments/environment'
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +14,7 @@ export class WebsocketService {
   constructor() {}
 
   connect() {
-    this.socket = environment.production ? io() : io('localhost:3000')
+    this.socket = io()
     this.socket.on('connect', () => {
       this.log('connected')
     })

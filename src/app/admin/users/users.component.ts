@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core'
 import { AngularFirestore } from '@angular/fire/firestore'
 import { AdminUser } from '../../../firestore-item'
 import { firestore } from 'firebase'
-import { environment } from 'environments/environment'
 
 @Component({
   selector: 'app-users',
@@ -24,7 +23,7 @@ export class UsersComponent implements OnInit {
         created: firestore.FieldValue.serverTimestamp(),
       })
       .then(async () => {
-        const src = (environment.production ? '' : 'localhost:3000') + '/api/addAdminExec'
+        const src = '/api/addAdminExec'
         const response = await fetch(src)
         const result = (await response.json()) as { success: boolean }
         if (result.success) {
