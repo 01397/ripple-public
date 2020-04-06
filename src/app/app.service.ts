@@ -22,7 +22,7 @@ export class AppService {
     return ['/lesson', '/admin/material']
   }
   private get withSidebar() {
-    return ['/home', '/courses', '/notifications', '/settings']
+    return ['/', '/home', '/courses', '/notifications', '/settings']
   }
   private user: firebase.User
   private record: {
