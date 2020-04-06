@@ -55,7 +55,7 @@ service cloud.firestore {
       return request.auth.uid == userID;
     }
     function isAdmin() {
-      return request.auth.uid in get(/databases/$(database)/documents/system/admin_users).data.members;
+      return request.auth.token.admin == true;
     }
     function isPublic() {
       return resource.data.private == false

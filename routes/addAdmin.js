@@ -39,34 +39,28 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var admin = require("firebase-admin");
 var express = require("express");
 var router = express.Router();
-/* GET users listing. */
-router.get('/', function (req, res, next) {
+router.get('/:uid', function (req, res, next) {
     return (function () { return __awaiter(void 0, void 0, void 0, function () {
-        var db, snapshot, _i, _a, doc, uid;
+        var uid, db, snapshot;
+        var _a;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
+                    uid = req.params.uid;
                     db = admin.firestore();
-                    return [4 /*yield*/, db.collection('admin-list').where('granted', '==', false).get()];
+                    return [4 /*yield*/, db.doc('system/admin_users').get()];
                 case 1:
                     snapshot = _b.sent();
-                    _i = 0, _a = snapshot.docs;
-                    _b.label = 2;
-                case 2:
-                    if (!(_i < _a.length)) return [3 /*break*/, 5];
-                    doc = _a[_i];
-                    uid = doc.id;
-                    return [4 /*yield*/, admin.auth().setCustomUserClaims(uid, { admin: true })];
+                    if (!!snapshot.data().hasOwnProperty(uid)) return [3 /*break*/, 2];
+                    res.json({ success: false });
+                    return [3 /*break*/, 4];
+                case 2: return [4 /*yield*/, admin.auth().setCustomUserClaims(uid, { admin: true })];
                 case 3:
                     _b.sent();
-                    db.doc('admin-list/' + uid).update({ granted: true });
-                    _b.label = 4;
-                case 4:
-                    _i++;
-                    return [3 /*break*/, 2];
-                case 5:
+                    db.doc('system/admin_users').update((_a = {}, _a[uid + ".granted"] = true, _a));
                     res.json({ success: true });
-                    return [2 /*return*/];
+                    _b.label = 4;
+                case 4: return [2 /*return*/];
             }
         });
     }); })().catch(next);
