@@ -1,0 +1,5 @@
+<div>user id: <input type="text" #uid /><button (click)="addAdmin(uid.value)" [disabled]="inProcess" >追加</button></div>
+<div>
+  {{ statusText }}
+</div>
+<mat-progress-spinner *ngIf="inProcess"></mat-progress-spinner>

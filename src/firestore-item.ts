@@ -98,3 +98,8 @@ export interface PickupItem {
   action: { label: string; navigate: string; external: boolean } | null
   private: boolean
 }
+
+export interface AdminUser {
+  granted: boolean
+  created: firestore.Timestamp | firestore.FieldValue
+}

@@ -72,10 +72,7 @@ var judge = function (msg, io) { return __awaiter(void 0, void 0, void 0, functi
         switch (_b.label) {
             case 0:
                 _a = JSON.parse(msg), exercise = _a.exercise, source_code = _a.source_code, language_id = _a.language_id;
-                return [4 /*yield*/, db
-                        .collection('testcase')
-                        .where('exercise', '==', exercise)
-                        .get()];
+                return [4 /*yield*/, db.collection('testcase').where('exercise', '==', exercise).get()];
             case 1:
                 snapshot = _b.sent();
                 if (snapshot.empty) {

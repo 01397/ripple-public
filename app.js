@@ -9,6 +9,7 @@ var indexRouter = require('./routes/index')
 var usersRouter = require('./routes/users')
 var ttsRouter = require('./routes/tts')
 var judgeRouter = require('./routes/judge')
+var addAdminRouter = require('./routes/addAdmin')
 
 var app = express()
 
@@ -34,6 +35,7 @@ app.use(
 app.use('/api/', indexRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/tts', ttsRouter)
+app.use('/api/addAdminExec', addAdminRouter)
 
 app.use(express.static(path.join(__dirname, '/dist/angular-app')))
 app.use('/*', express.static(path.join(__dirname, '/dist/angular-app/index.html')))

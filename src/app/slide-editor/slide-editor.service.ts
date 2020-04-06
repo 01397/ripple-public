@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core'
 import { AngularFireStorage } from '@angular/fire/storage'
 import { v4 as uuidv4 } from 'uuid'
-import { environment } from 'environments/environment'
-import { take } from 'rxjs/operators'
+import { environment } from '../../environments/environment'
 
 @Injectable({
   providedIn: 'root',
