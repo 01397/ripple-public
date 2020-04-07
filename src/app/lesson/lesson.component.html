@@ -1,4 +1,4 @@
-<ng-container *ngIf="displayMode === 'slide'">
+<ng-container *ngIf="displayMode === 'slide' || displayMode === 'review'">
   <div class="tools">
     <div class="tools-item">
       <i class="material-icons">list</i>
@@ -15,6 +15,9 @@
   </div>
   <div class="next-button" (click)="slideNext()" *ngIf="navForward">
     <i class="material-icons">arrow_forward</i>
+  </div>
+  <div class="close-button" (click)="resumeExercise()" *ngIf="displayMode === 'review'">
+    <i class="material-icons">arrow_downward</i>演習に戻る
   </div>
   <app-slide-container class="slide"></app-slide-container>
 </ng-container>

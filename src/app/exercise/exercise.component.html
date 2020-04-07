@@ -18,5 +18,6 @@
       <h2 class="ex-title">演習{{ exIndex + 1 }}: {{ exList[exIndex].title }}</h2>
       <app-slide-element class="ex-body" [contents]="exList[exIndex].description"></app-slide-element>
     </div>
+    <div class="ex-back" (click)="reviewSlide()"><i class="material-icons">arrow_back</i>スライドを見直す</div>
   </div>
 </ng-container>

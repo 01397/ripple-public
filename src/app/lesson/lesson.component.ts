@@ -8,7 +8,7 @@ import { AppService } from '../app.service'
 import { Subscription } from 'rxjs'
 import { take, filter } from 'rxjs/operators'
 
-export type LessonDisplay = 'slide' | 'exercise' | 'wrapup'
+export type LessonDisplay = 'slide' | 'exercise' | 'wrapup' | 'review'
 
 @Component({
   selector: 'app-lesson',
@@ -40,6 +40,10 @@ export class LessonComponent implements OnInit, OnDestroy {
     private app: AppService,
     private route: ActivatedRoute
   ) {}
+  /**
+   * スライドを閉じて演習へ進めるか
+   */
+  public slideClosable: boolean = false
 
   ngOnInit() {
     this.subscription.add(
@@ -77,7 +81,9 @@ export class LessonComponent implements OnInit, OnDestroy {
     )
     const modeChange = (mode: LessonDisplay) => {
       this.displayMode = mode
-      if (mode === 'wrapup') {
+      if (mode === 'review') {
+        this.slideClosable = true
+      } else if (mode === 'wrapup') {
         this.onWrapup()
       }
     }
@@ -113,6 +119,9 @@ export class LessonComponent implements OnInit, OnDestroy {
   }
   onWrapup() {
     this.result.duration = this.exService.logEnd()
+  }
+  resumeExercise() {
+    this.exService.modeRequest.next('exercise')
   }
   /**
    * 感想を記録する

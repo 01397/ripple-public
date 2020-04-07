@@ -41,20 +41,37 @@
   border-radius: 16px;
 }
 .prev-button,
-.next-button {
+.next-button,
+.close-button {
   cursor: pointer;
-  height: 96px;
-  width: 48px;
-  position: fixed;
-  top: 0;
-  bottom: 0;
   margin: auto;
   background-color: $mono-100;
   color: $mono-40;
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 20;
 }
+.prev-button,
+.next-button {
+  height: 96px;
+  width: 48px;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+}
+.close-button {
+  height: 48px;
+  position: absolute;
+  right: 0;
+  top: -32px;
+  padding: 0 8px;
+  border-radius: 6px 6px 0px 0;
+  transform-origin: right bottom;
+  transform: rotate(-90deg);
+  z-index: 20;
+}
+
 .prev-button {
   left: 0;
   border-radius: 0 48px 48px 0;

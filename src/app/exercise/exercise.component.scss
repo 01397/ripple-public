@@ -94,3 +94,17 @@
   color: $mono-20;
   font-weight: 700;
 }
+.ex-back {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border-radius: 8px;
+  width: max-content;
+  font-weight: bold;
+  color: $mono-20;
+}
+.ex-back:hover {
+  background: $white-a50;
+  color: $primary-400;
+}

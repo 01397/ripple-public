@@ -224,4 +224,11 @@ export class ExerciseService {
     )
     batch.commit().then(() => console.log('sent'))
   }
+
+  /**
+   * 演習中にスライドを見返す
+   */
+  reviewSlide() {
+    this.modeRequest.next('review')
+  }
 }

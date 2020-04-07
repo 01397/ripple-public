@@ -22,4 +22,8 @@ export class ExerciseComponent implements OnInit {
   changeExIndex(i: number) {
     this.exService.changeExIndex(i)
   }
+
+  reviewSlide() {
+    this.exService.reviewSlide()
+  }
 }
