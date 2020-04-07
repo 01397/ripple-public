@@ -60,12 +60,20 @@ import { ExerciseEditorComponent } from './exercise-editor/exercise-editor.compo
 import { JudgeResultComponent } from './judge-result/judge-result.component'
 import { LoginComponent } from './login/login.component'
 import { AngularFireAuthModule } from '@angular/fire/auth'
-import { redirectLoggedInTo, redirectUnauthorizedTo, AngularFireAuthGuard } from '@angular/fire/auth-guard'
+import {
+  redirectLoggedInTo,
+  redirectUnauthorizedTo,
+  AngularFireAuthGuard,
+  hasCustomClaim,
+  customClaims,
+} from '@angular/fire/auth-guard'
 import { SignupComponent } from './signup/signup.component'
 import { DurationPipe } from './duration.pipe'
 import { FromNowPipe } from './from-now.pipe'
 import { LessonItemComponent } from './lesson-item/lesson-item.component'
 import { UsersComponent } from './admin/users/users.component'
+import { pipe } from 'rxjs'
+import { map } from 'rxjs/operators'
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
   autoUpgradeAnonymousUsers: false, // 匿名認証ユーザー自動アップグレード
@@ -87,6 +95,11 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
 
 const redirectLoggedInToHome = () => redirectLoggedInTo(['home'])
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login'])
+const adminOnly = () =>
+  pipe(
+    customClaims,
+    map((claims) => (claims.admin === true ? true : ['home']))
+  )
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -124,19 +137,19 @@ const appRoutes: Routes = [
     path: 'admin/slide-editor',
     component: SlideEditorComponent,
     canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin },
+    data: { authGuardPipe: adminOnly },
   },
   {
     path: 'admin/exercise-editor',
     component: ExerciseEditorComponent,
     canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin },
+    data: { authGuardPipe: adminOnly },
   },
   {
     path: 'admin/users',
     component: UsersComponent,
     canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin },
+    data: { authGuardPipe: adminOnly },
   },
   {
     path: 'notifications',
@@ -154,13 +167,13 @@ const appRoutes: Routes = [
     path: 'admin/material',
     component: MaterialComponent,
     canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin },
+    data: { authGuardPipe: adminOnly },
   },
   {
     path: 'admin/users',
     component: UsersComponent,
     canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin },
+    data: { authGuardPipe: adminOnly },
   },
   { path: '**', component: NotFoundComponent },
 ]
