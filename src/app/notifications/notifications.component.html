@@ -14,17 +14,14 @@
 </div>
 <div class="popup-wrapper" [class.visible]="visible" (click)="hide()">
   <div class="popup" *ngIf="active !== null">
-    <div class="popup-title">
-      <h2 class="popup-title">{{ active.title }}</h2>
-      <div class="popup-date">
-        <div>{{ getCreated(active) | date: 'yyyy/MM/dd' }} ({{ active.created | fromNow }})</div>
-        <div *ngIf="active.created != active.modified" class="popup-update">
-          更新: {{ getModified(active) | date: 'yyyy/MM/dd' }} ({{ active.created | fromNow }})
-        </div>
-      </div>
-      <div class="popup-body">
-        {{ active.body }}
-      </div>
+    <h2 class="popup-title">{{ active.title }}</h2>
+    <div class="popup-date">
+      {{ getCreated(active) | date: 'yyyy/MM/dd' }}
+      <span *ngIf="active.created != active.modified" class="popup-update">
+        (更新: {{ getModified(active) | date: 'yyyy/MM/dd' }})
+      </span>
     </div>
+    <div class="popup-body" [innerHTML]="active.body"></div>
+    <div class="popup-button" (click)="hide()">閉じる</div>
   </div>
 </div>

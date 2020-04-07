@@ -43,51 +43,10 @@ h2 {
   display: none;
 }
 .form-field input:checked + div {
-  font-weight: bold;
-  color: $mono-100;
-  background-color: $primary-500;
-  background-image: $primary-600-grad-horizontal;
-  border-color: $primary-500;
-  animation: 0.4s ease push;
-  .blank {
-    display: none;
-  }
-  .checked {
-    display: inline-block;
-  }
-}
-@keyframes push {
-  0% {
-    transform: scale(1);
-    box-shadow: 0 0 2px 0px transparentize($color: $primary-200, $amount: 0);
-  }
-  25% {
-    transform: scale(0.9);
-  }
-  45% {
-    transform: scale(1.1);
-  }
-  75% {
-    transform: scale(1);
-  }
-  100% {
-    box-shadow: 0 0 2px 20px transparentize($color: $primary-200, $amount: 1);
-  }
+  @extend .extend-button2-checked;
 }
 .form-field div {
-  padding: 4px;
-  background-color: $mono-100;
-  transition: 0.25s background-color ease;
-  border: 1px solid $primary-300;
-  border-radius: 6px;
-  margin-right: 6px;
-  margin-bottom: 6px;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  &:hover {
-    background-color: $mono-90;
-  }
+  @extend .extend-button2;
 }
 .form-input {
   padding: 0.5em;
@@ -139,5 +98,5 @@ h2 {
   margin: auto;
 }
 .button-submit {
-  @extend .extend-button1
+  @extend .extend-button1;
 }

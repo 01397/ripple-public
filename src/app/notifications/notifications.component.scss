@@ -27,16 +27,44 @@
   right: 0;
   top: 0;
   bottom: 0;
-  background-color: $black-a50;
+  background-color: $primary-50;
   overflow: auto;
   z-index: 100;
   backdrop-filter: blur(4px);
   pointer-events: none;
+  transition: 0.25s ease opacity;
   opacity: 0;
 }
 .popup-wrapper.visible {
   pointer-events: all;
   opacity: 1;
+}
+.popup-title {
+  background-image: $primary-600-grad-horizontal;
+  padding: 24px;
+  text-align: center;
+  color: #fff;
+  @include font-size(32);
+  margin-bottom: 24px;
+}
+.popup-date {
+  color: $mono-40;
+  @include font-size(14);
+}
+.popup-button {
+  @extend .extend-button1;
+  margin-top: 24px;
+  box-shadow: none;
+  border: 1px solid $primary-400;
+  background: transparent;
+  width: 30%;
+  min-width: 5em;
+  @include font-size(18);
+  color: $mono-30;
+  background-color: $mono-100;
+  &:hover {
+    background-color: $mono-80;
+  }
 }
 .popup {
   @extend .extend-card;
