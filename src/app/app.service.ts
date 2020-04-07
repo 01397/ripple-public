@@ -14,7 +14,7 @@ export type AuthState = 'unknown' | 'unauthorized' | 'authorised' | 'unregistere
 export class AppService {
   public headerVisiblity = new Subject<boolean>()
   public sidebarVisiblity = new Subject<boolean>()
-  public headerTitle: string
+  public headerTitle: string = ''
   public authState = new BehaviorSubject<AuthState>('unknown')
   public lastLesson = new BehaviorSubject<LessonItemId | null>(null)
   public pickupList: Observable<PickupItem[]>
@@ -101,7 +101,10 @@ export class AppService {
 
   /*************** HEADER ***************/
   public setHeaderTitle(title: string) {
-    this.headerTitle = title
+    // ExpressionChangedAfterItHasBeenCheckedError を回避するために非同期関数を利用
+    setTimeout(() => {
+      this.headerTitle = title
+    })
   }
 
   /********* COURSE and LESSONS *********/
