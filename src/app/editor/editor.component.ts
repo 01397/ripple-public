@@ -14,7 +14,8 @@ export class EditorComponent implements OnInit, OnDestroy {
   @ViewChild('editor', { static: false }) editor: AceEditorComponent
   public text: string = ''
   public options = { maxLines: 1000, printMargin: false }
-  public consoleText: string
+  public stdout: string
+  public stderr: string
   public executing: boolean = false
   public execError: boolean = false
   public get judgeEnabled() {
@@ -27,18 +28,8 @@ export class EditorComponent implements OnInit, OnDestroy {
     ace.config.set('basePath', 'path')
     this.websocketService.connect()
     this.websocketService.execSubject.subscribe((result: JudgeResult) => {
-      let output: string
-      if (result.stderr !== null) {
-        output = result.stderr
-        this.execError = true
-      } else if (result.stdout !== null) {
-        output = result.stdout
-        this.execError = false
-      } else {
-        output = ''
-        this.execError = false
-      }
-      this.consoleText = decodeURIComponent(escape(atob(output)))
+      this.stdout = decodeURIComponent(escape(atob(result.stdout ?? '')))
+      this.stderr = decodeURIComponent(escape(atob(result.stderr ?? '')))
       this.executing = false
     })
     this.exService.exIndex.subscribe((index) => {
@@ -47,7 +38,8 @@ export class EditorComponent implements OnInit, OnDestroy {
         return
       }
       this.text = defaultCode
-      this.consoleText = ''
+      this.stdout = ''
+      this.stderr = ''
     })
   }
   getCode() {
