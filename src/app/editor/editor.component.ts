@@ -15,7 +15,8 @@ export class EditorComponent implements OnInit, OnDestroy {
   public text: string = ''
   public options = { maxLines: 1000, printMargin: false }
   public consoleText: string
-  public execEnabled: boolean = true
+  public executing: boolean = false
+  public execError: boolean = false
   public get judgeEnabled() {
     return !this.exService.judging
   }
@@ -26,9 +27,19 @@ export class EditorComponent implements OnInit, OnDestroy {
     ace.config.set('basePath', 'path')
     this.websocketService.connect()
     this.websocketService.execSubject.subscribe((result: JudgeResult) => {
-      console.log(result)
-      this.consoleText = window.atob(result.stdout)
-      this.execEnabled = true
+      let output: string
+      if (result.stderr !== null) {
+        output = result.stderr
+        this.execError = true
+      } else if (result.stdout !== null) {
+        output = result.stdout
+        this.execError = false
+      } else {
+        output = ''
+        this.execError = false
+      }
+      this.consoleText = decodeURIComponent(escape(atob(output)))
+      this.executing = false
     })
     this.exService.exIndex.subscribe((index) => {
       const defaultCode = this.exService.exList.value[index].defaultCode
@@ -36,21 +47,26 @@ export class EditorComponent implements OnInit, OnDestroy {
         return
       }
       this.text = defaultCode
+      this.consoleText = ''
     })
+  }
+  getCode() {
+    const code = this.text
+    return window.btoa(window.unescape(window.encodeURIComponent(code)))
   }
   execute() {
     const data = {
       language_id: 71,
-      source_code: window.btoa(this.text),
+      source_code: this.getCode(),
       stdin: '',
     }
     this.websocketService.emit('execute', JSON.stringify(data))
-    this.execEnabled = false
+    this.executing = true
   }
   judge() {
     const data = {
       language_id: 71,
-      source_code: window.btoa(this.text),
+      source_code: this.getCode(),
       exercise: this.exService.exId,
     }
     this.exService.judge(data)

@@ -59,6 +59,16 @@
   height: 8em;
   background-color: $mono-10;
   color: $mono-100;
-  font-family: 'consolas', 'monaco', monospace;
   border-radius: 0 0 8px 8px;
+  padding: 8px;
+  box-sizing: border-box;
+}
+.console-output {
+  white-space: pre-line;
+  font-family: 'consolas', 'monaco', monospace;
+  overflow-y: auto;
+  height: 100%;
+}
+.console-output.error {
+  color: #ff00aa;
 }
