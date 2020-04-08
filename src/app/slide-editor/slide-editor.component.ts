@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, OnDestroy } from '@angular/core'
 import { SlideType, SlideData } from 'app/slide/slide-item'
 import { SlideService } from 'app/slide/slide.service'
 import { ActivatedRoute, Router } from '@angular/router'
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop'
 import { SlideEditorService } from './slide-editor.service'
+import { takeUntil } from 'rxjs/operators'
+import { Subject } from 'rxjs'
 
 @Component({
   selector: 'app-slide-editor',
   templateUrl: './slide-editor.component.html',
   styleUrls: ['./slide-editor.component.scss'],
 })
-export class SlideEditorComponent implements OnInit {
+export class SlideEditorComponent implements OnInit, OnDestroy {
   public slideTypes: { type: SlideType['type']; label: string }[] = [
     { type: 'cover', label: '表紙' },
     { type: 'oneColumn', label: '1カラム' },
@@ -21,6 +23,7 @@ export class SlideEditorComponent implements OnInit {
   public currentIndex: number
   private path: string
   public title: string
+  private destroy: Subject<void> = new Subject()
 
   constructor(
     public slideService: SlideService,
@@ -34,13 +37,17 @@ export class SlideEditorComponent implements OnInit {
     const lessonId = this.route.snapshot.paramMap.get('lesson')
     this.path = `course/${courseId}/lesson/${lessonId}`
     this.slideService.setSlideData(this.path)
-    this.slideService.slideSubject.subscribe((slide) => {
+    this.slideService.slideSubject.pipe(takeUntil(this.destroy)).subscribe((slide) => {
       this.current = slide
       this.currentIndex = this.slideService.index
     })
-    this.slideService.slideTitle.subscribe((title) => {
+    this.slideService.slideTitle.pipe(takeUntil(this.destroy)).subscribe((title) => {
       this.title = title
     })
+  }
+
+  ngOnDestroy() {
+    this.destroy.next()
   }
 
   changeSlide(index: number) {

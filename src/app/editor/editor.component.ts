@@ -5,6 +5,8 @@ import { WebsocketService } from '../websocket.service'
 import { JudgeResult } from '../../../routes/judge'
 import { ExerciseService } from '../exercise.service'
 import { translate as peg, ExceptionGuide } from '../pyExceptionGuide'
+import { Subject } from 'rxjs'
+import { takeUntil } from 'rxjs/operators'
 
 @Component({
   selector: 'app-editor',
@@ -21,6 +23,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   public executing: boolean = false
   public execError: boolean = false
   public guideVisibility: boolean = false
+  private destroy: Subject<void> = new Subject()
   public get judgeEnabled() {
     return !this.exService.judging
   }
@@ -30,14 +33,14 @@ export class EditorComponent implements OnInit, OnDestroy {
   ngOnInit() {
     ace.config.set('basePath', 'path')
     this.websocketService.connect()
-    this.websocketService.execSubject.subscribe((result: JudgeResult) => {
+    this.websocketService.execSubject.pipe(takeUntil(this.destroy)).subscribe((result: JudgeResult) => {
       this.stdout = decodeURIComponent(escape(atob(result.stdout ?? '')))
       this.stderr = decodeURIComponent(escape(atob(result.stderr ?? '')))
       this.errGuide = peg(this.stderr)
       this.guideVisibility = true
       this.executing = false
     })
-    this.exService.exIndex.subscribe((index) => {
+    this.exService.exIndex.pipe(takeUntil(this.destroy)).subscribe((index) => {
       const defaultCode = this.exService.exList.value[index].defaultCode
       if (!defaultCode) {
         return
@@ -70,6 +73,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     this.websocketService.close()
+    this.destroy.next()
   }
   closeGuide() {
     this.guideVisibility = false

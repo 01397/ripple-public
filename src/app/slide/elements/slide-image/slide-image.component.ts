@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core'
 import { SlideAbstractComponent } from '../slide-abstract-element.component'
 import { AngularFireStorage } from '@angular/fire/storage'
+import { take } from 'rxjs/operators'
 
 export interface ImageElementType {
   type: 'image'
@@ -26,6 +27,7 @@ export class SlideImageComponent extends SlideAbstractComponent {
     this.strage
       .ref(this.content.src)
       .getDownloadURL()
+      .pipe(take(1))
       .subscribe((path) => {
         this.loaded = true
         this.src = path

@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, OnDestroy } from '@angular/core'
 import { ExerciseService } from '../exercise.service'
 import { WebsocketService } from '../websocket.service'
+import { Subscription } from 'rxjs'
 
 @Component({
   selector: 'app-judge-result',
   templateUrl: './judge-result.component.html',
   styleUrls: ['./judge-result.component.scss'],
 })
-export class JudgeResultComponent implements OnInit {
+export class JudgeResultComponent implements OnInit, OnDestroy {
   result: number[]
   resultString = {
     null: '待機中...', // apiリクエスト前
@@ -28,17 +29,21 @@ export class JudgeResultComponent implements OnInit {
   }
   public done = false
   public error = false
+  private judgeSubscription: Subscription
   public get allAccepted() {
     return this.result.every((v) => v === 3)
   }
   constructor(private exService: ExerciseService, private websocketService: WebsocketService) {}
 
   ngOnInit() {
-    this.websocketService.judgeSubject.subscribe((data) => {
+    this.judgeSubscription = this.websocketService.judgeSubject.subscribe((data) => {
       this.result = data.result
       this.done = data.done
       this.error = data.error
     })
+  }
+  ngOnDestroy() {
+    this.judgeSubscription.unsubscribe()
   }
   close() {
     this.exService.judging = false

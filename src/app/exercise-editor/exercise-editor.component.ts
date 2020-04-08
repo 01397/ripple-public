@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore'
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop'
-import { map } from 'rxjs/operators'
+import { map, take } from 'rxjs/operators'
 import { Observable } from 'rxjs'
 import { ExerciseData, ExerciseDataId } from '../exercise.service'
 import { Testcase } from '../../../routes/judge'
@@ -37,12 +37,7 @@ export class ExerciseEditorComponent implements OnInit {
     const courseId = this.route.snapshot.paramMap.get('course')
     const lessonId = this.route.snapshot.paramMap.get('lesson')
     this.lessonId = lessonId
-    this.exRef = this.firestore
-      .collection('course')
-      .doc(courseId)
-      .collection('lesson')
-      .doc(lessonId)
-      .collection<ExerciseData>('exercise')
+    this.exRef = this.firestore.collection<ExerciseData>(`course/${courseId}/lesson/${lessonId}/exercise`)
     this.exObservable = this.exRef.snapshotChanges().pipe(
       map((actions) =>
         actions.map((a) => {
@@ -52,7 +47,7 @@ export class ExerciseEditorComponent implements OnInit {
         })
       )
     )
-    this.exObservable.subscribe((list) => {
+    this.exObservable.pipe(take(1)).subscribe((list) => {
       this.exList = list.sort((a, b) => a.index - b.index)
     })
     this.caseRef = this.firestore.collection<Testcase>('testcase', (ref) =>
@@ -67,7 +62,7 @@ export class ExerciseEditorComponent implements OnInit {
         })
       )
     )
-    this.caseObservale.subscribe((list) => {
+    this.caseObservale.pipe(take(1)).subscribe((list) => {
       this.caseList = list.sort((a, b) => a.index - b.index)
     })
   }

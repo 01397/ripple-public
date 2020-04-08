@@ -7,6 +7,7 @@ import { ImageElementType } from '../../slide/elements/slide-image/slide-image.c
 import { SlideService } from '../../slide/slide.service'
 import { FillingCodeElementType } from '../../slide/elements/slide-filling-code/slide-filling-code.component'
 import { SlideEditorService } from '../slide-editor.service'
+import { take } from 'rxjs/operators'
 
 @Component({
   selector: 'app-slide-editor-element',
@@ -64,6 +65,7 @@ export class SlideEditorElementComponent implements OnDestroy {
         horizontalPosition: 'right',
       })
       .onAction()
+      .pipe(take(1))
       .subscribe(() => {
         this.undo()
       })
@@ -106,12 +108,15 @@ export class SlideEditorElementComponent implements OnDestroy {
       return
     }
     const oldRef = this.storage.ref(path)
-    oldRef.delete().subscribe(() => {
-      this.snackBar.open('以前の画像を削除しました', null, {
-        duration: 3000,
-        horizontalPosition: 'right',
+    oldRef
+      .delete()
+      .pipe(take(1))
+      .subscribe(() => {
+        this.snackBar.open('以前の画像を削除しました', null, {
+          duration: 3000,
+          horizontalPosition: 'right',
+        })
       })
-    })
   }
 
   getElementName() {}

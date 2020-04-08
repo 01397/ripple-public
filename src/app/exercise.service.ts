@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { AngularFirestore, DocumentReference } from '@angular/fire/firestore'
 import { SlideElementType } from './slide/slide-item'
 import { Subject, BehaviorSubject } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { map, take } from 'rxjs/operators'
 import { WebsocketService } from './websocket.service'
 import { LessonDisplay } from './lesson/lesson.component'
 import { LessonLogItem, LessonRecordItem, UserItem } from './../firestore-item'
@@ -88,7 +88,8 @@ export class ExerciseService {
             const id = a.payload.doc.id
             return { id, ...data }
           })
-        )
+        ),
+        take(1)
       )
       .subscribe((docs) => {
         this.exList.next(docs.sort((a, b) => a.index - b.index))

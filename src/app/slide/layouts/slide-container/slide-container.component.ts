@@ -12,6 +12,8 @@ import { SlideData, SlideItem } from '../../slide-item'
 import { SlideService } from '../../slide.service'
 import { SlideComponent } from '../slide.component'
 import { SlideDirective } from './slide.directive'
+import { Subject } from 'rxjs'
+import { takeUntil } from 'rxjs/operators'
 
 @Component({
   selector: 'app-slide-container',
@@ -26,6 +28,7 @@ export class SlideContainerComponent implements OnInit, OnDestroy {
   interval: any
   public subtitles = '字幕テスト。今回扱う内容はあれやこれですが、どういうわけかそうなんですよ。'
   private SUBTITLE_HEIGHT = 80
+  private destroy: Subject<void> = new Subject()
 
   constructor(
     private el: ElementRef,
@@ -38,8 +41,8 @@ export class SlideContainerComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.adjustScale()
-    this.slideService.slideSubject.subscribe((slide) => this.setSlide(slide))
-    this.slideService.subtitlesSubject.subscribe((subtitle) => {
+    this.slideService.slideSubject.pipe(takeUntil(this.destroy)).subscribe((slide) => this.setSlide(slide))
+    this.slideService.subtitlesSubject.pipe(takeUntil(this.destroy)).subscribe((subtitle) => {
       // const text = subtitle.replace(/\[(.+?)\|(.+?)\]/g, '<ruby>$1<rp>(</rp><rt>$2</rt><rp>)</rp>')
       const text = subtitle.replace(/\[(.+?)\|(.+?)\]/gm, '$1').replace(/<.+?s>/g, '')
       this.subtitles = text
@@ -47,6 +50,7 @@ export class SlideContainerComponent implements OnInit, OnDestroy {
     })
   }
   ngOnDestroy() {
+    this.destroy.next()
     clearInterval(this.interval)
   }
 
