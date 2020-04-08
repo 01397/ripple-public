@@ -12,6 +12,12 @@
     [autoUpdateContent]="true"
     [durationBeforeCallback]="1000"
   ></ace-editor>
+  <div class="guide" *ngIf="errGuide" [class.close]="!guideVisibility">
+    <div class="guide-close" (click)="closeGuide()"><i class="material-icons">close</i></div>
+    <div class="guide-line">エラー</div>
+    <div class="guide-heading">{{ errGuide.error.lastLineNo }}行目: {{ errGuide.title }}</div>
+    <div class="guide-description">{{ errGuide.solution }}</div>
+  </div>
   <div class="button execute" (click)="execute()" [class.disabled]="executing">
     <i class="material-icons">play_arrow</i>実行
   </div>
@@ -20,7 +26,9 @@
   <div>出力</div>
 </div>
 <div class="console">
-  <div *ngIf="!executing" class="console-output">{{ stdout }} <span class="console-error">{{stderr}}</span></div>
+  <div *ngIf="!executing" class="console-output">
+    {{ stdout }} <span class="console-error">{{ stderr }}</span>
+  </div>
   <span *ngIf="executing"><mat-spinner></mat-spinner></span>
   <div class="button judge" (click)="judge()" *ngIf="judgeEnabled; else judging">
     <i class="material-icons">check</i>採点

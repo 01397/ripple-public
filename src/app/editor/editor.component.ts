@@ -4,6 +4,7 @@ import { AceEditorComponent } from 'ng2-ace-editor'
 import { WebsocketService } from '../websocket.service'
 import { JudgeResult } from '../../../routes/judge'
 import { ExerciseService } from '../exercise.service'
+import { translate as peg, ExceptionGuide } from '../pyExceptionGuide'
 
 @Component({
   selector: 'app-editor',
@@ -16,8 +17,10 @@ export class EditorComponent implements OnInit, OnDestroy {
   public options = { maxLines: 1000, printMargin: false }
   public stdout: string
   public stderr: string
+  public errGuide: ExceptionGuide | null
   public executing: boolean = false
   public execError: boolean = false
+  public guideVisibility: boolean = false
   public get judgeEnabled() {
     return !this.exService.judging
   }
@@ -30,6 +33,8 @@ export class EditorComponent implements OnInit, OnDestroy {
     this.websocketService.execSubject.subscribe((result: JudgeResult) => {
       this.stdout = decodeURIComponent(escape(atob(result.stdout ?? '')))
       this.stderr = decodeURIComponent(escape(atob(result.stderr ?? '')))
+      this.errGuide = peg(this.stderr)
+      this.guideVisibility = true
       this.executing = false
     })
     this.exService.exIndex.subscribe((index) => {
@@ -65,5 +70,8 @@ export class EditorComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     this.websocketService.close()
+  }
+  closeGuide() {
+    this.guideVisibility = false
   }
 }

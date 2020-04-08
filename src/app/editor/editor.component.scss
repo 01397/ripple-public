@@ -21,6 +21,68 @@
   @extend .title;
   display: flex;
 }
+.guide {
+  position: absolute;
+  bottom: 58px;
+  left: 12px;
+  right: 12px;
+  background-color: #fff;
+  z-index: 10;
+  padding: 16px 36px 12px 12px;
+  border-radius: 8px;
+  border-left: 8px solid #f08;
+  animation: appear-guide 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  &.close {
+    transform-origin: right top;
+    pointer-events: none;
+    animation: hide-guide 0.4s ease-in;
+  }
+}
+@keyframes appear-guide {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes hide-guide {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+.guide-close {
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  border-radius: 1em;
+  color: #888;
+  font-weight: 500;
+  cursor: pointer;
+}
+.guide-line {
+  position: absolute;
+  top: -1em;
+  background: #fce;
+  color: #f08;
+  padding: 2px 12px;
+  border-radius: 1em;
+  font-weight: 700;
+}
+
+.guide-heading {
+  font-weight: 700;
+}
+
+.guide-description {
+  margin-top: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #888;
+}
 .button {
   position: absolute;
   right: 8px;
@@ -40,6 +102,7 @@
   font-weight: 700;
   cursor: pointer;
   transition: 0.3s ease background-color;
+  z-index: 10;
   &:hover {
     background-color: $accent-300;
   }
