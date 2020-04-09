@@ -1,27 +1,30 @@
 @import './mixin';
 
-$primary-50: hsl(255, 50, 95);
-$primary-100: hsl(255, 50, 90);
-$primary-200: hsl(255, 50, 80);
-$primary-300: hsl(255, 50, 70);
-$primary-400: hsl(255, 50, 60);
-$primary-500: hsl(255, 50, 50);
-$primary-600: hsl(255, 50, 40);
-$primary-700: hsl(255, 50, 30);
-$primary-800: hsl(255, 50, 20);
-$primary-900: hsl(255, 50, 10);
-$primary-600-grad-vertical: linear-gradient(180deg, $primary-600, adjust-color($primary-500, $hue: -30));
-$primary-600-grad-horizontal: linear-gradient(90deg, $primary-600, adjust-color($primary-500, $hue: -30));
+$ph: 36;
+$ps: 100;
+$primary-50: hsl($ph, $ps, 95);
+$primary-100: hsl($ph, $ps, 90);
+$primary-200: hsl($ph, $ps, 80);
+$primary-300: hsl($ph, $ps, 70);
+$primary-400: hsl($ph, $ps, 60);
+$primary-500: hsl($ph, $ps, 50);
+$primary-600: hsl($ph, $ps, 40);
+$primary-700: hsl($ph, $ps, 30);
+$primary-800: hsl($ph, $ps, 20);
+$primary-900: hsl($ph, $ps, 10);
+$primary-600-grad-vertical: linear-gradient(180deg, $primary-500, adjust-color($primary-400, $hue: -30));
+$primary-600-grad-horizontal: linear-gradient(90deg, $primary-500, adjust-color($primary-400, $hue: -30));
 
-$accent-100: hsl(32, 88, 90);
-$accent-200: hsl(32, 88, 80);
-$accent-300: hsl(32, 88, 70);
-$accent-400: hsl(32, 88, 60);
-$accent-500: hsl(32, 88, 50);
-$accent-600: hsl(32, 88, 40);
-$accent-700: hsl(32, 88, 30);
-$accent-800: hsl(32, 88, 20);
-$accent-900: hsl(32, 88, 10);
+$ah: $ph - 120 + 360;
+$accent-100: hsl($ah, 88, 90);
+$accent-200: hsl($ah, 88, 80);
+$accent-300: hsl($ah, 88, 70);
+$accent-400: hsl($ah, 88, 60);
+$accent-500: hsl($ah, 88, 50);
+$accent-600: hsl($ah, 88, 40);
+$accent-700: hsl($ah, 88, 30);
+$accent-800: hsl($ah, 88, 20);
+$accent-900: hsl($ah, 88, 10);
 
 $mono-0: hsl(0, 0, 0);
 $mono-10: hsl(0, 0, 10);
@@ -47,4 +50,4 @@ $white-grad: linear-gradient(90deg, $white-a25, transparent);
 
 $card-shadow: 1px 3px 6px rgba(0, 0, 0, 0.2);
 
-$slide-main: rgb(0, 126, 189);
+$slide-main: hsl(36, 100%, 57%);
