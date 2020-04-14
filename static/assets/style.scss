@@ -1,0 +1,319 @@
+@import '../../src/assets/styles/variables';
+
+$header-height: 64px;
+
+html,
+body {
+  font-family: 'M plus 1p', sans-serif;
+}
+body {
+  width: 100%;
+  overflow-x: hidden;
+}
+.dammyImage {
+  background-image: linear-gradient(30deg, #444 50%, #888 50%);
+  background-size: 40px cover;
+}
+
+/****** HEADER ******/
+.header {
+  height: $header-height;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-image: $primary-600-grad-horizontal;
+  padding: 0 16px;
+}
+.header-button {
+  border-radius: 4px;
+  background-image: $primary-600-grad-horizontal;
+  color: $mono-100;
+  font-weight: bold;
+  padding: 8px;
+}
+
+/****** INTRO ******/
+.intro {
+  background: $primary-600-grad-horizontal;
+  padding: 64px 0 0;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(90vh - #{$header-height});
+}
+.intro-title {
+  text-align: center;
+  @include font-size(56);
+  color: $mono-100;
+  animation: 1s zoomin ease-out both;
+}
+.intro-title-1 {
+  letter-spacing: 6px;
+}
+.intro-title-2 {
+  letter-spacing: 3px;
+}
+@keyframes zoomin {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.intro-main {
+  margin-top: 32px;
+  display: flex;
+  width: 60%;
+  max-width: 600px;
+  margin: auto;
+}
+.intro-message {
+  margin-top: 32px;
+  flex: 1;
+  min-width: 13em;
+  color: transparentize($color: $mono-100, $amount: 0.1);
+  line-height: 1.5;
+  @include font-size(24);
+  letter-spacing: 2px;
+}
+.intro-message-item {
+  animation: 1.5s slidein cubic-bezier(0, 0, 0.2, 1) both;
+}
+@for $i from 1 through 4 {
+  .intro-message-item:nth-child(#{$i}) {
+    animation-delay: $i * 0.1s + 0.75s;
+  }
+}
+@keyframes slidein {
+  from {
+    opacity: 0;
+    transform: translateX(-64px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.intro-message-brand {
+  font-weight: bold;
+  color: $mono-100;
+  letter-spacing: 0;
+}
+.intro-start {
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.intro-start-button {
+  border-radius: 4px;
+  border: none;
+  background-color: $mono-100;
+  color: $primary-500;
+  padding: 8px;
+  animation: 1s 2s linear pop both;
+  font-weight: bold;
+  @include font-size(24);
+}
+@keyframes pop {
+  0% {
+    transform: scale(0);
+    box-shadow: 2px 2px 0 #000, 0 0 2px 0px transparentize($color: $primary-200, $amount: 0.1);
+  }
+  35% {
+    transform: scale(1.2);
+  }
+  50% {
+    transform: scale(0.9);
+  }
+  65% {
+    transform: scale(1.1);
+  }
+  75% {
+    transform: scale(1);
+  }
+  100% {
+    box-shadow: 2px 2px 0 #000, 0 0 4px 30px transparentize($color: $primary-200, $amount: 1),
+      0 0 4px 25px transparentize($color: $primary-200, $amount: 1),
+      0 0 4px 20px transparentize($color: $primary-200, $amount: 1);
+  }
+}
+.intro-wave {
+  width: 200%;
+  height: 48px;
+  margin-top: 64px;
+}
+.waveSVG-item {
+  animation: waveslide linear infinite;
+}
+@for $i from 1 through 4 {
+  .waveSVG-item-#{$i} {
+    animation-delay: $i * 1s - 35s;
+    animation-duration: $i * -3s + 30s;
+  }
+}
+@keyframes waveslide {
+  from {
+    transform: translate(-50%);
+  }
+  to {
+    transform: translate(0%);
+  }
+}
+
+/****** COURSE ******/
+.course {
+  max-width: 600px;
+  margin: 32px auto 0;
+}
+.course-title {
+  @include font-size(24);
+  color: $primary-400;
+}
+.course-list {
+  list-style: none;
+}
+.course-item {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  grid-column-gap: 16px;
+}
+.course-item-title {
+  grid-column: 2;
+  grid-row: 1;
+  @include font-size(20);
+  color: $primary-700;
+}
+.course-item-desc {
+  grid-column: 2;
+  grid-row: 2;
+  @include font-size(16);
+  color: $mono-20;
+}
+.course-item-image {
+  grid-column: 1;
+  grid-row: 1/3;
+}
+
+/****** FEATURE ******/
+.feature-item {
+  display: flex;
+  align-items: center;
+}
+.feature-item-left {
+  @extend .feature-item;
+  margin: -5vh auto;
+  .feature-item-image {
+    object-position: left;
+    border-right: none;
+    border-radius: 8px 0 0 8px;
+  }
+}
+.feature-item-right {
+  @extend .feature-item;
+  flex-direction: row-reverse;
+  margin: auto;
+  .feature-item-image {
+    object-position: right;
+    border-left: none;
+    border-radius: 0 8px 8px 0;
+  }
+}
+.feature-item-desc-title {
+  @include font-size(40);
+  background: linear-gradient(-90deg, #4d3399, #4060bf);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  width: fit-content;
+  letter-spacing: 6px;
+}
+.feature-item-desc {
+  flex: 3;
+  padding: 0 5vw;
+}
+
+.feature-item-desc-body {
+  @include font-size(16);
+  color: $mono-20;
+}
+.feature-item-image {
+  flex: 2;
+  min-width: 0;
+  object-fit: cover;
+  height: 50vh;
+  border: 4px solid $primary-200;
+}
+._letterSmall {
+  letter-spacing: 3px;
+  font-size: 0.9em;
+}
+._letterPlain {
+  letter-spacing: 0;
+}
+._letterSpaceM10 {
+  letter-spacing: -15px;
+}
+
+/****** START ******/
+.start {
+  padding: 20vh 0;
+  background-color: $primary-50;
+  margin-top: 5vh;
+  text-align: center;
+}
+.start-title {
+  @include font-size(48);
+  background: linear-gradient(-90deg, #4d3399, #4060bf);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  width: fit-content;
+  margin: auto;
+}
+.start-button {
+  background: $primary-600-grad-horizontal;
+  color: $mono-100;
+  padding: 8px 1em;
+  border-radius: 2em;
+  font-weight: bold;
+  @include font-size(24);
+  margin-top: 24px;
+}
+
+/****** FOOTER ******/
+.footer-wave {
+  display: block;
+  background-color: $primary-50;
+  width: 200%;
+  height: 64px;
+}
+.footer {
+  background: $primary-600-grad-vertical;
+  display: flex;
+  justify-content: center;
+  padding: 5vh 10vw;
+}
+.footer-logo {
+  width: 128px;
+  height: 48px;
+}
+.footer-copy {
+  color: $white-a50;
+  @include font-size(14);
+}
+.footer-col {
+  flex: 1;
+}
+.footer-col a {
+  color: $white-a75;
+  text-decoration: none;
+  display: block;
+}
+.footer-col a:hover {
+  color: $mono-100;
+  cursor: pointer;
+  text-decoration: underline;
+}

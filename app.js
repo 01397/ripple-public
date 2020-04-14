@@ -4,6 +4,7 @@ var path = require('path')
 var cookieParser = require('cookie-parser')
 var logger = require('morgan')
 var cors = require('cors')
+var fs = require('fs')
 
 var indexRouter = require('./routes/index')
 var usersRouter = require('./routes/users')
@@ -32,13 +33,21 @@ app.use(
   })
 )
 
+
+app.get('/index.html', function (req, res) {
+  res.redirect('/')
+})
+app.get('/', function (req, res) {
+  res.set('Content-Type', 'text/html')
+  res.sendFile('/static/index.html', { root: __dirname })
+})
+app.use('/assets', express.static(path.join(__dirname, '/static/assets')))
 app.use('/api/', indexRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/tts', ttsRouter)
 app.use('/api/addAdminExec', addAdminRouter)
 
-app.use(express.static(path.join(__dirname, '/dist/angular-app')))
-app.use('/*', express.static(path.join(__dirname, '/dist/angular-app/index.html')))
+app.use('/*', express.static(path.join(__dirname, '/dist/angular-app/')))
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
