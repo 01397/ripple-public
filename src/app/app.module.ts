@@ -75,6 +75,7 @@ import { UsersComponent } from './admin/users/users.component'
 import { pipe } from 'rxjs'
 import { map } from 'rxjs/operators'
 
+const origin = environment.origin
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
   autoUpgradeAnonymousUsers: false, // 匿名認証ユーザー自動アップグレード
   signInFlow: 'popup', // redirect or popup
@@ -86,9 +87,9 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
     firebase.auth.EmailAuthProvider.PROVIDER_ID,
   ],
   // // Team Of Service
-  // tosUrl: 'http://localhost:6200/TOS',
-  // privacyPolicyUrl: 'プライバシーポリシーのURL',
-  // signInSuccessUrl: 'http://localhost:6200/home',
+  tosUrl: origin + '/tos',
+  privacyPolicyUrl: origin + '/privacy',
+  signInSuccessUrl: origin + '/home',
   // credentialHelper: firebaseui.auth.CredentialHelper.ACCOUNT_CHOOSER_COM,
   siteName: 'Ripple',
 }

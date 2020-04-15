@@ -10,4 +10,5 @@ export const environment = {
     appId: '1:1010671820817:web:8edda9ebeaa6e5f401d1b0',
     measurementId: 'G-26TXFB16FH',
   },
+  origin: 'https://ripple.uec-programming.com',
 }
