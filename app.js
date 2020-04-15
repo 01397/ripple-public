@@ -40,6 +40,15 @@ app.get('/index.html', function (req, res) {
 app.get('/', function (req, res) {
   res.render('./index.ejs')
 })
+app.get('/tos', function (req, res) {
+  res.render('./tos.ejs')
+})
+app.get('/privacy', function (req, res) {
+  res.render('./privacy.ejs')
+})
+app.get('/contact', function (req, res) {
+  res.render('./contact.ejs')
+})
 app.use('/assets', express.static(path.join(__dirname, '/views/assets')))
 app.use('/api/', indexRouter)
 app.use('/api/users', usersRouter)
