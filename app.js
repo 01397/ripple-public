@@ -15,6 +15,7 @@ var addAdminRouter = require('./routes/addAdmin')
 var app = express()
 
 // view engine setup
+app.set('view engine', 'ejs')
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
@@ -33,15 +34,13 @@ app.use(
   })
 )
 
-
 app.get('/index.html', function (req, res) {
   res.redirect('/')
 })
 app.get('/', function (req, res) {
-  res.set('Content-Type', 'text/html')
-  res.sendFile('/static/index.html', { root: __dirname })
+  res.render('./index.ejs')
 })
-app.use('/assets', express.static(path.join(__dirname, '/static/assets')))
+app.use('/assets', express.static(path.join(__dirname, '/views/assets')))
 app.use('/api/', indexRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/tts', ttsRouter)

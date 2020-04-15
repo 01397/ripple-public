@@ -1,21 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja" prefix="og: http://ogp.me/ns#">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ripple - 初心者でも基礎から学べるプログラミング学習教材</title>
-    <link
-      href="https://fonts.googleapis.com/css?family=M+PLUS+1p:300,700&display=swap&subset=japanese"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="./assets/ress.min.css" />
-    <link rel="stylesheet" href="./assets/style.css" />
+    <% var data = { title: 'Ripple — プログラミング学習サービス', description:
+    'Ripple(リップル)は、プログラミングを基礎から学べるオンライン学習サービスです。初心者でも独自のスライド形式で簡単に入門できます。電気通信大学プログラミング教室が提供しているので安心してご利用いただけます。',
+    path: '/' }; %> <%- include('./includes/head', data) %>
   </head>
   <body>
-    <header class="header">
-      <a href="/" class="header-item header-logo"><img src="./assets/logo.svg" alt="Ripple" /></a>
-      <button class="header-item header-button">ログイン</button>
-    </header>
+    <%- include('./includes/header') %>
     <section class="intro">
       <h2 class="intro-title">
         <div class="intro-title-1">すべての人に</div>
@@ -114,17 +105,6 @@
       <use href="#waveSVG-0" class="waveSVG-item waveSVG-item-3" x="0" y="6" fill="rgba(77, 51, 153, 0.75)" />
       <use href="#waveSVG-0" class="waveSVG-item waveSVG-item-4" x="0" y="9" fill="rgba(77, 51, 153, 1.0)" />
     </svg>
-    <footer class="footer">
-      <div class="footer-col">
-        <img src="./assets/logo.svg" alt="Ripple" class="footer-logo" />
-        <div class="footer-copy">&copy; 2020 UEC Programming</div>
-      </div>
-      <div class="footer-col">
-        <a href="./s/privacy">プライバシーポリシー</a>
-        <a href="./s/tos">利用規約</a>
-        <a href="./s/contact">お問い合わせ</a>
-        <a href="https://www.uec-programming.com">電気通信大学プログラミング教室</a>
-      </div>
-    </footer>
+    <%- include('./includes/footer') %>
   </body>
 </html>
