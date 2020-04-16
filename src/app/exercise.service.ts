@@ -13,6 +13,7 @@ export interface ExerciseData {
   title: string
   description: SlideElementType[]
   defaultCode: string
+  stdinEnabled?: boolean
 }
 export interface ExerciseDataId extends ExerciseData {
   id: string
@@ -32,6 +33,7 @@ export class ExerciseService {
       title: '読み込み中',
       description: [],
       defaultCode: '',
+      stdinEnabled: false,
     },
   ])
   /**

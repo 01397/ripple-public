@@ -17,6 +17,9 @@ export class EditorComponent implements OnInit, OnDestroy {
   @ViewChild('editor', { static: false }) editor: AceEditorComponent
   public text: string = ''
   public options = { maxLines: 1000, printMargin: false }
+  public stdinOptions = { maxLines: 1000, printMargin: false, showGutter: false }
+  public stdinEnabled: boolean = false
+  public stdin: string = ''
   public stdout: string
   public stderr: string
   public errGuide: ExceptionGuide | null
@@ -41,10 +44,12 @@ export class EditorComponent implements OnInit, OnDestroy {
       this.executing = false
     })
     this.exService.exIndex.pipe(takeUntil(this.destroy)).subscribe((index) => {
-      const defaultCode = this.exService.exList.value[index].defaultCode
+      const exData = this.exService.exList.value[index]
+      const defaultCode = exData.defaultCode
       if (!defaultCode) {
         return
       }
+      this.stdinEnabled = exData.stdinEnabled ?? false
       this.text = defaultCode
       this.stdout = ''
       this.stderr = ''
@@ -54,11 +59,14 @@ export class EditorComponent implements OnInit, OnDestroy {
     const code = this.text
     return window.btoa(window.unescape(window.encodeURIComponent(code)))
   }
+  getStdin() {
+    return window.btoa(window.unescape(window.encodeURIComponent(this.stdin)))
+  }
   execute() {
     const data = {
       language_id: 71,
       source_code: this.getCode(),
-      stdin: '',
+      stdin: this.getStdin(),
     }
     this.websocketService.emit('execute', JSON.stringify(data))
     this.executing = true

@@ -73,6 +73,7 @@ export class ExerciseEditorComponent implements OnInit {
       index: this.exList.length,
       description: [],
       defaultCode: '# ここにコードを記入します\n',
+      stdinEnabled: false,
     })
     console.log(this.exList)
   }
