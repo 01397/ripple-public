@@ -116,6 +116,7 @@ export class ExerciseEditorComponent implements OnInit {
     this.exIndex = index
   }
   remove() {
+    if (confirm('演習問題を削除します')) return
     if (this.currentExerciseId !== null) {
       this.removedId.push(this.currentExerciseId)
     }
