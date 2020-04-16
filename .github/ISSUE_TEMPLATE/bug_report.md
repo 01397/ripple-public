@@ -2,8 +2,8 @@
 name: Bug report
 about: バグの報告
 title: ''
-labels: ''
-assignees: ''
+labels: bug
+assignees: '01397'
 
 ---
 
