@@ -32,7 +32,7 @@ export class SlideFillingCodeComponent extends SlideAbstractComponent {
   constructor(private sanitizer: DomSanitizer, private slideService: SlideService) {
     super()
     registerLanguage('plaintext', hljsPlain)
-    registerLanguage('plaintext', hljsPython)
+    registerLanguage('python', hljsPython)
   }
 
   ngOnInit() {
