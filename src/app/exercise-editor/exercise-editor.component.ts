@@ -68,7 +68,7 @@ export class ExerciseEditorComponent implements OnInit {
   }
   add() {
     this.exList.push({
-      id: null,
+      id: this.exRef.ref.doc().id,
       title: '',
       index: this.exList.length,
       description: [],
@@ -97,6 +97,7 @@ export class ExerciseEditorComponent implements OnInit {
       console.log(v.id)
       const ref = !v.id ? this.caseRef.ref.doc() : this.caseRef.doc<Testcase>(v.id).ref
       batch.set(ref, value)
+      v.id = ref.id
     })
     this.removedCaseId.map((id) => {
       batch.delete(this.caseRef.doc(id).ref)
