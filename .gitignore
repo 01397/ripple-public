@@ -6,6 +6,7 @@
 /out-tsc
 *.css.map
 *.css
+!views/assets/style/*.css
 
 # Only exists if Bazel was run
 /bazel-out
