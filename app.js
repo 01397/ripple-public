@@ -21,7 +21,9 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
-const whitelist = ['http://localhost:4200', 'https://ripple-public.appspot.com']
+
+// cors
+const whitelist = ['http://localhost:4200', 'http://localhost:3000', 'https://ripple-public.appspot.com']
 app.use(
   cors({
     origin: (origin, callback) => {
@@ -34,9 +36,17 @@ app.use(
   })
 )
 
-app.get('/index.html', function (req, res) {
-  res.redirect('/')
+// remove trailing slash
+app.use((req, res, next) => {
+  if (req.path.substr(-1) === '/' && req.path.length > 1) {
+    const query = req.url.slice(req.path.length)
+    res.redirect(301, req.path.slice(0, -1) + query)
+  } else {
+    next()
+  }
 })
+
+// static pages
 app.get('/', function (req, res) {
   res.render('./index.ejs')
 })
@@ -50,12 +60,16 @@ app.get('/contact', function (req, res) {
   res.render('./contact.ejs')
 })
 app.use('/assets', express.static(path.join(__dirname, '/views/assets')))
+
+// api
 app.use('/api/', indexRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/tts', ttsRouter)
 app.use('/api/addAdminExec', addAdminRouter)
 
-app.use('/*', express.static(path.join(__dirname, '/dist/angular-app/')))
+// app
+app.use(express.static(path.join(__dirname, '/dist/angular-app')))
+app.use('/*', express.static(path.join(__dirname, '/dist/angular-app/index.html')))
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
