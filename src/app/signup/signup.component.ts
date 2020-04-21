@@ -131,6 +131,7 @@ export class SignupComponent implements OnInit {
         }),
     ])
       .then(() => {
+        this.app.authState.next('authorised')
         this.router.navigate(['/home'])
       })
       .catch(() => {

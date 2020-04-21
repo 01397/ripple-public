@@ -74,6 +74,7 @@ import { LessonItemComponent } from './lesson-item/lesson-item.component'
 import { UsersComponent } from './admin/users/users.component'
 import { pipe } from 'rxjs'
 import { map } from 'rxjs/operators'
+import { RegisteredGuard } from './guard/registered.guard'
 
 const origin = environment.origin
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
@@ -107,8 +108,7 @@ const appRoutes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
-    canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin },
+    canActivate: [RegisteredGuard],
   },
   {
     path: 'login',
@@ -119,20 +119,17 @@ const appRoutes: Routes = [
   {
     path: 'signup',
     component: SignupComponent,
-    canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin },
+    canActivate: [RegisteredGuard],
   },
   {
     path: 'courses',
     component: CoursesComponent,
-    canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin },
+    canActivate: [RegisteredGuard],
   },
   {
     path: 'lesson',
     component: LessonComponent,
-    canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin },
+    canActivate: [RegisteredGuard],
   },
   {
     path: 'admin/slide-editor',
@@ -155,14 +152,12 @@ const appRoutes: Routes = [
   {
     path: 'notifications',
     component: NotificationsComponent,
-    canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin },
+    canActivate: [RegisteredGuard],
   },
   {
     path: 'settings',
     component: SettingsComponent,
-    canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin },
+    canActivate: [RegisteredGuard],
   },
   {
     path: 'admin/material',
