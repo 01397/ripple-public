@@ -261,4 +261,11 @@ export class SlideService {
   removeSlide(index: number) {
     this.slideData.splice(index, 1)
   }
+
+  /**
+   * 読み上げ音声を停止する
+   */
+  stopAudio() {
+    this.speechAudio.pause()
+  }
 }

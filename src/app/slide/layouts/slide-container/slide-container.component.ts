@@ -51,6 +51,7 @@ export class SlideContainerComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     this.destroy.next()
+    this.slideService.stopAudio()
     clearInterval(this.interval)
   }
 
