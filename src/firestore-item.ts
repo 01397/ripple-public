@@ -37,6 +37,7 @@ export interface UserItem {
   trigger: number
   interest: number[]
   experience: number
+  agreement: number
   lastLesson: {
     course: string
     lesson: string

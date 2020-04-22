@@ -6,6 +6,7 @@ import { Router } from '@angular/router'
 import { UserItem } from '../../firestore-item'
 import { take } from 'rxjs/operators'
 import { firestore } from 'firebase'
+import { interval } from 'rxjs'
 
 @Component({
   selector: 'app-signup',
@@ -112,11 +113,12 @@ export class SignupComponent implements OnInit {
       age: this.age,
       job: this.job,
       purpose: this.purpose,
-      region: this.region2 !== null ? this.region2List[this.region2].value : this.region,
+      region: this.region ?? this.region2List[this.region2].value,
       trigger: this.trigger,
       interest: this.getInterest(),
       experience: this.experience,
       lastLesson: null,
+      agreement: 0,
       modified: firestore.FieldValue.serverTimestamp(),
     }
     this.inProgress = true

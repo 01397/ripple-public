@@ -71,7 +71,7 @@
   <div class="form-item">
     <span class="form-label">地域</span>
     <div class="form-field">
-      <label *ngFor="let item of region2List; let i = index">
+      <label *ngFor="let item of region2List; let i = index" (click)="region = null">
         <input type="radio" name="region2" [(ngModel)]="region2" [value]="i" />
         <div>{{ item.label }}</div>
       </label>

@@ -74,7 +74,7 @@ import { LessonItemComponent } from './lesson-item/lesson-item.component'
 import { UsersComponent } from './admin/users/users.component'
 import { pipe } from 'rxjs'
 import { map } from 'rxjs/operators'
-import { RegisteredGuard } from './guard/registered.guard'
+import { RegisteredGuard } from './guard/registered.guard';
 
 const origin = environment.origin
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
