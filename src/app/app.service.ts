@@ -4,9 +4,9 @@ import { filter, map, take } from 'rxjs/operators'
 import { Subject, BehaviorSubject, Observable } from 'rxjs'
 import { AngularFireAuth } from '@angular/fire/auth'
 import { AngularFirestore } from '@angular/fire/firestore'
-import { LessonRecordItem, UserItem, LessonItemId, PickupItem } from 'firestore-item'
+import { LessonRecordItem, UserItem, LessonItemId, PickupItem } from '../firestore-item'
 
-export type AuthState = 'unknown' | 'unauthorized' | 'authorised' | 'unregistered'
+export type AuthState = 'unknown' | 'unauthorized' | 'unregistered' | 'unagreed' | 'authorised'
 
 @Injectable({
   providedIn: 'root',

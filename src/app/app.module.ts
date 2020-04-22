@@ -74,7 +74,8 @@ import { LessonItemComponent } from './lesson-item/lesson-item.component'
 import { UsersComponent } from './admin/users/users.component'
 import { pipe } from 'rxjs'
 import { map } from 'rxjs/operators'
-import { RegisteredGuard } from './guard/registered.guard';
+import { RegisteredGuard } from './guard/registered.guard'
+import { TermsComponent } from './terms/terms.component'
 
 const origin = environment.origin
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
@@ -119,6 +120,12 @@ const appRoutes: Routes = [
   {
     path: 'signup',
     component: SignupComponent,
+    canActivate: [RegisteredGuard],
+  },
+  // 規約更新時の同意確認
+  {
+    path: 'terms',
+    component: TermsComponent,
     canActivate: [RegisteredGuard],
   },
   {
@@ -212,6 +219,7 @@ const appRoutes: Routes = [
     FromNowPipe,
     LessonItemComponent,
     UsersComponent,
+    TermsComponent,
   ],
   entryComponents: [
     SlideCoverComponent,

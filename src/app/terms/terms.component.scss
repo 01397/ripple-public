@@ -1,0 +1,29 @@
+@import '~assets/styles/variables';
+@import '~assets/styles/extends';
+.container {
+  @extend .extend-card;
+  max-width: 600px;
+  margin: 32px auto;
+}
+.description {
+  text-align: center;
+  padding-bottom: 24px;
+  border: 1px solid $mono-90;
+}
+.terms ::ng-deep {
+  @include font-size(14);
+  ol {
+    list-style: none;
+    padding-left: 1em;
+  }
+  h1 {
+    @include font-size(24);
+    color: $primary-600;
+  }
+  h2 {
+    @include font-size(16);
+  }
+}
+.button {
+  @extend .extend-button1
+}
