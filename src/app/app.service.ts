@@ -4,7 +4,8 @@ import { filter, map, take } from 'rxjs/operators'
 import { Subject, BehaviorSubject, Observable } from 'rxjs'
 import { AngularFireAuth } from '@angular/fire/auth'
 import { AngularFirestore } from '@angular/fire/firestore'
-import { LessonRecordItem, UserItem, LessonItemId, PickupItem } from '../firestore-item'
+import { LessonRecordItem, UserItem, LessonItemId, PickupItem, SystemStatus } from '../firestore-item'
+import { firestore } from 'firebase'
 
 export type AuthState = 'unknown' | 'unauthorized' | 'unregistered' | 'unagreed' | 'authorised'
 
@@ -18,6 +19,8 @@ export class AppService {
   public authState = new BehaviorSubject<AuthState>('unknown')
   public lastLesson = new BehaviorSubject<LessonItemId | null>(null)
   public pickupList: Observable<PickupItem[]>
+  private systemStatus: SystemStatus
+  system: SystemStatus
   private get withHeader() {
     return ['/lesson', '/admin/material']
   }
@@ -43,6 +46,11 @@ export class AppService {
         this.sidebarVisiblity.next(false)
       }
     })
+    this.getSystemStatus().then(() => {
+      this.initAuthWatcher()
+    })
+  }
+  private initAuthWatcher() {
     this.auth.authState.subscribe((user) => {
       this.user = user
       if (this.user !== null && !!user?.uid) {
@@ -51,19 +59,33 @@ export class AppService {
           .get()
           .pipe(take(1))
           .subscribe((snapshot) => {
-            if (snapshot.exists) {
-              this.authState.next('authorised')
-              this.getRecords()
-              this.getPickup()
-            } else {
-              router.navigate(['signup'])
+            if (!snapshot.exists) {
+              this.router.navigate(['signup'])
               this.authState.next('unregistered')
+              return
+            }
+            const data = snapshot.data() as UserItem
+            const agreement = data?.agreement?.valueOf() ?? null
+            this.getRecords()
+            this.getPickup()
+            if (agreement === null || this.system.terms_update.valueOf() > agreement) {
+              this.authState.next('unagreed')
+            } else {
+              this.authState.next('authorised')
             }
           })
       } else {
         this.authState.next('unauthorized')
       }
     })
+  }
+  private async getSystemStatus() {
+    this.db
+      .doc('system/status')
+      .valueChanges()
+      .subscribe((snapshot: SystemStatus) => {
+        this.system = snapshot
+      })
   }
 
   /**************** USER ****************/
@@ -183,5 +205,12 @@ export class AppService {
     this.pickupList = this.db
       .collection<PickupItem>('pickup', (ref) => ref.where('private', '==', false))
       .valueChanges()
+  }
+
+  public agree() {
+    this.authState.next('authorised')
+    this.db.doc<UserItem>('user/' + this.getUserId()).update({
+      agreement: firestore.FieldValue.serverTimestamp(),
+    })
   }
 }

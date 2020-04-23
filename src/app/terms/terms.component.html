@@ -2,6 +2,14 @@
   <div class="description">
     サービスの利用を開始するには、利用規約の同意が必要です
   </div>
-  <div class="terms" [innerHTML]="termsString"></div>
-  <button class="button">利用規約に同意する</button>
+  <div class="terms" [innerHTML]="string" (scroll)="onScroll($event)"></div>
+  <div class="footer">
+    <button class="button" [disabled]="!read" (click)="agree()">
+      {{ agreeStatus === 0 ? '利用規約' : 'プライバシーポリシー' }}に同意する
+    </button>
+    <div class="scroll-warning">最後までスクロールしてお読みください。</div>
+    <div class="link-refuse">
+      <a href="/">同意しない</a>
+    </div>
+  </div>
 </div>

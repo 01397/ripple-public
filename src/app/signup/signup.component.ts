@@ -118,7 +118,7 @@ export class SignupComponent implements OnInit {
       interest: this.getInterest(),
       experience: this.experience,
       lastLesson: null,
-      agreement: 0,
+      agreement: null,
       modified: firestore.FieldValue.serverTimestamp(),
     }
     this.inProgress = true
@@ -133,7 +133,7 @@ export class SignupComponent implements OnInit {
         }),
     ])
       .then(() => {
-        this.app.authState.next('authorised')
+        this.app.authState.next('unagreed')
         this.router.navigate(['/home'])
       })
       .catch(() => {

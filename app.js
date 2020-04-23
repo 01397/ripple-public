@@ -63,7 +63,7 @@ app.get('/api/terms', function (req, res) {
   res.render('./includes/terms.ejs')
 })
 app.get('/api/privacy', function (req, res) {
-  res.render('./includes/terms.ejs')
+  res.render('./includes/privacy.ejs')
 })
 app.use('/assets', express.static(path.join(__dirname, '/views/assets')))
 

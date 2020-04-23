@@ -7,6 +7,9 @@
     </div>
   </div>
 </ng-container>
+<div class="terms" *ngIf="authState === 'unagreed'">
+  <app-terms></app-terms>
+</div>
 <div class="loader" [class.hidden]="authState !== 'unknown'">
   <img src="../assets/images/logo.svg" alt="Rippleロゴ" class="loader-logo" />
 </div>

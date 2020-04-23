@@ -47,6 +47,10 @@ service cloud.firestore {
     match /system/admin_users {
       allow read, write: if isAdmin()
     }
+    match /system/status {
+      allow read: if true;
+      allow update: if isAdmin()
+    }
 
     function isAuthenticated() {
       return request.auth != null

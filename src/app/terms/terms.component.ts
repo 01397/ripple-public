@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { AppService } from 'app/app.service'
 
 @Component({
   selector: 'app-terms',
@@ -6,8 +7,10 @@ import { Component, OnInit } from '@angular/core'
   styleUrls: ['./terms.component.scss'],
 })
 export class TermsComponent implements OnInit {
-  public termsString: string
-  constructor() {}
+  public string: string
+  public read: boolean = false
+  public agreeStatus: number = 0
+  constructor(private app: AppService) {}
 
   ngOnInit(): void {
     this.getTerms()
@@ -16,6 +19,30 @@ export class TermsComponent implements OnInit {
     const src = '/api/terms'
     const response = await fetch(src)
     const html = await response.text()
-    this.termsString = html
+    this.string = html
+  }
+  async getPolicy() {
+    const src = '/api/privacy'
+    const response = await fetch(src)
+    const html = await response.text()
+    this.string = html
+  }
+  agree() {
+    this.agreeStatus++
+    if (this.agreeStatus === 1) {
+      this.read = false
+      this.string = ''
+      this.getPolicy().then(() => {
+        this.read = false
+      })
+    } else if (this.agreeStatus === 2) {
+      this.app.agree()
+    }
+  }
+  onScroll(event: Event) {
+    const target = event.currentTarget as HTMLDivElement
+    if (target.scrollHeight - target.clientHeight - target.scrollTop === 0) {
+      this.read = true
+    }
   }
 }

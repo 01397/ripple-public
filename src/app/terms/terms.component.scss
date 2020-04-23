@@ -2,16 +2,26 @@
 @import '~assets/styles/extends';
 .container {
   @extend .extend-card;
-  max-width: 600px;
+  max-width: 800px;
   margin: 32px auto;
+  display: flex;
+  flex-direction: column;
+  height: 80%;
 }
 .description {
   text-align: center;
   padding-bottom: 24px;
-  border: 1px solid $mono-90;
 }
 .terms ::ng-deep {
   @include font-size(14);
+  border-top: 1px solid $mono-90;
+  border-bottom: 1px solid $mono-90;
+  margin-bottom: 1em;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  min-height: 30vh;
+  overflow: scroll;
+  flex: 1;
   ol {
     list-style: none;
     padding-left: 1em;
@@ -22,8 +32,36 @@
   }
   h2 {
     @include font-size(16);
+    color: $mono-20;
+    margin-top: 1em;
+  }
+
+  li {
+    margin-top: 0.3em;
   }
 }
+.button:disabled:hover + .scroll-warning {
+  opacity: 1;
+}
+.scroll-warning {
+  text-align: center;
+  opacity: 0;
+}
 .button {
-  @extend .extend-button1
+  @extend .extend-button1;
+  margin-top: 16px;
+}
+.label {
+  display: flex;
+  align-items: center;
+}
+.label-text {
+  margin-left: 1em;
+}
+.link-refuse {
+  margin-top: 1em;
+  text-align: center;
+  a {
+    color: $mono-60;
+  }
 }

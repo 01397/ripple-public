@@ -39,6 +39,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1001;
 }
 .loader.hidden {
   animation: hide 0.4s ease 0s both;
@@ -58,4 +59,15 @@
 .loader-logo {
   width: 240px;
   max-width: 60%;
+}
+
+.terms {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: $black-a50;
+  backdrop-filter: blur(4px);
 }

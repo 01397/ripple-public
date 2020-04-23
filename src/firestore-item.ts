@@ -37,7 +37,7 @@ export interface UserItem {
   trigger: number
   interest: number[]
   experience: number
-  agreement: number
+  agreement: firestore.Timestamp | firestore.FieldValue | null
   lastLesson: {
     course: string
     lesson: string
@@ -106,4 +106,8 @@ export type AdminUserList = {
 export interface AdminUser {
   granted: boolean
   name: string
+}
+
+export interface SystemStatus {
+  terms_update: firestore.Timestamp | firestore.FieldValue
 }
