@@ -1,0 +1,46 @@
+@import '~assets/styles/variables';
+
+:host {
+  background-image: url(../../assets/images/404.svg), $primary-600-grad-horizontal;
+  background-position: bottom;
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: block;
+  height: 100%;
+  padding: 1em;
+  box-sizing: border-box;
+}
+.logo {
+  margin: 1em;
+  width: 182px;
+  height: 64px;
+  opacity: 0.5;
+}
+.container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 10vh;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+h1 {
+  font-weight: 700;
+  color: #fff;
+}
+
+.navigate {
+  margin-top: 1em;
+  a {
+    color: $white-a75;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

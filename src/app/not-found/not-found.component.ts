@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { AppService } from 'app/app.service'
 
 @Component({
   selector: 'app-not-found',
@@ -6,7 +7,10 @@ import { Component, OnInit } from '@angular/core'
   styleUrls: ['./not-found.component.scss'],
 })
 export class NotFoundComponent implements OnInit {
-  constructor() {}
+  public loggedin: boolean = false
+  constructor(private app: AppService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.loggedin = this.app.authState.value === 'authorised'
+  }
 }

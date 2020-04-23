@@ -1,1 +1,8 @@
-<p>not-found works!</p>
+<img class="logo" src="../../assets/images/logo.svg" alt="ロゴ" />
+<div class="container">
+  <h1>ページが見つかりませんでした</h1>
+  <div class="navigate">
+    <a href="/" *ngIf="loggedIn">Rippleホームへ</a>
+    <a href="/" *ngIf="!loggedIn">トップページへ</a>
+  </div>
+</div>
