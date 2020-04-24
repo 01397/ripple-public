@@ -98,6 +98,9 @@ export class AppService {
   public getUser() {
     return this.auth.user
   }
+  public getAuthProvider() {
+    return this.user.providerId ?? 'unknown'
+  }
   /**
    * ユーザーIDの取得
    * authStateが 'authorised' or 'unregistered' である事を確認してから使用する

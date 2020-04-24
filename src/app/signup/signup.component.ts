@@ -6,6 +6,7 @@ import { take } from 'rxjs/operators'
 import { UserItem } from '../../firestore-item'
 import { AppService } from '../app.service'
 import * as constants from '../constants'
+import { AngularFireAnalytics } from '@angular/fire/analytics'
 
 @Component({
   selector: 'app-signup',
@@ -55,7 +56,12 @@ export class SignupComponent implements OnInit {
    */
   public inProgress: boolean = false
 
-  constructor(private db: AngularFirestore, private app: AppService, private router: Router) {}
+  constructor(
+    private db: AngularFirestore,
+    private app: AppService,
+    private router: Router,
+    private analytics: AngularFireAnalytics
+  ) {}
   ngOnInit() {
     this.app.authState.pipe(take(1)).subscribe((value) => {
       if (value === 'unregistered') {
@@ -132,6 +138,7 @@ export class SignupComponent implements OnInit {
         }),
     ])
       .then(() => {
+        this.analytics.logEvent('sign_up', { method: this.app.getAuthProvider() })
         this.app.authState.next('unagreed')
         this.router.navigate(['/home'])
       })

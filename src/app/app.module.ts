@@ -6,6 +6,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth'
 import { AngularFireAuthGuard, customClaims, redirectLoggedInTo } from '@angular/fire/auth-guard'
 import { AngularFirestoreModule } from '@angular/fire/firestore'
 import { AngularFireStorageModule, BUCKET } from '@angular/fire/storage'
+import { AngularFireAnalyticsModule } from '@angular/fire/analytics'
 import { FormsModule } from '@angular/forms'
 import { MatButtonModule } from '@angular/material/button'
 import { MatCardModule } from '@angular/material/card'
@@ -69,7 +70,6 @@ import { SlideOneColumnComponent } from './slide/layouts/slide-one-column/slide-
 import { SlideTopicComponent } from './slide/layouts/slide-topic/slide-topic.component'
 import { SlideTwoColumnComponent } from './slide/layouts/slide-two-column/slide-two-column.component'
 import { TermsComponent } from './terms/terms.component'
-
 
 const origin = environment.origin
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
@@ -229,6 +229,7 @@ const appRoutes: Routes = [
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAnalyticsModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only

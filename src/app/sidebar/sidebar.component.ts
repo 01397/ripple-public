@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { AngularFireAnalytics } from '@angular/fire/analytics'
 
 @Component({
   selector: 'app-sidebar',
@@ -12,7 +13,10 @@ export class SidebarComponent implements OnInit {
     { title: 'お知らせ', path: '/notifications', icon: 'notifications' },
     { title: '設定', path: '/settings', icon: 'settings' },
   ]
-  constructor() {}
+  constructor(private analytics: AngularFireAnalytics) {}
 
+  gaHP() {
+    this.analytics.logEvent('ext_link', { url: 'https://www.uec-programming.com', trigger: 'sidebar_button' })
+  }
   ngOnInit() {}
 }

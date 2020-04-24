@@ -4,6 +4,7 @@ import { Router } from '@angular/router'
 import { AppService } from '../app.service'
 import { FirebaseUISignInFailure, FirebaseUISignInSuccessWithAuthResult } from 'firebaseui-angular'
 import { take } from 'rxjs/operators'
+import { AngularFireAnalytics } from '@angular/fire/analytics'
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,12 @@ import { take } from 'rxjs/operators'
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  constructor(private router: Router, private app: AppService, private db: AngularFirestore) {}
+  constructor(
+    private router: Router,
+    private app: AppService,
+    private db: AngularFirestore,
+    private analytics: AngularFireAnalytics
+  ) {}
 
   ngOnInit() {}
 
@@ -29,6 +35,7 @@ export class LoginComponent implements OnInit {
         if (!snapshot.exists) {
           this.router.navigate(['/signup'])
         } else {
+          this.analytics.logEvent('sign_up', { method: this.app.getAuthProvider() })
           this.router.navigate(['/home'])
         }
       })
