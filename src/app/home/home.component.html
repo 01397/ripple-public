@@ -1,8 +1,29 @@
-<section class="card">
-  <h1>学習時間</h1>
-  <div class="card-body">
-    content
+<section class="card status">
+  <div class="status-item status-item_user">
+    <div class="status-icon-border">
+      <div class="status-icon-bg">
+        <i class="status-icon material-icons">person</i>
+      </div>
+    </div>
+    <div class="status-label">{{ userName }}</div>
+    <div class="status-sublabel">ユーザー</div>
   </div>
+  <div class="status-item">
+    <div class="status-icon-border">
+      <div class="status-icon-bg">
+        <i class="status-icon material-icons">assignment_turned_in</i>
+      </div>
+    </div>
+    <div class="status-label">{{ lessonCount }}レッスン</div>
+    <div class="status-sublabel">クリアした数</div>
+  </div>
+</section>
+
+<section class="pickup" *ngFor="let item of pickupList | async">
+  <h1>{{ item.title }}</h1>
+  <p class="card-body">
+    {{ item.body }}
+  </p>
 </section>
 
 <section class="card" *ngIf="lastLesson !== null">
@@ -10,11 +31,4 @@
   <div class="card-body">
     <app-lesson-item [lesson]="lastLesson"></app-lesson-item>
   </div>
-</section>
-
-<section class="pickup" *ngFor="let item of getPickupList() | async">
-  <h1>{{ item.title }}</h1>
-  <p class="card-body">
-    {{ item.body }}
-  </p>
 </section>

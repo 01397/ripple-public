@@ -30,6 +30,10 @@ export class AppService {
   private record: {
     [x: string]: { count: number; last: Date; lessons: { [x: string]: { count: number; last: Date; face: number } } }
   } = {}
+  private _lessonCount: number
+  public get lessonCount() {
+    return this._lessonCount
+  }
 
   constructor(private router: Router, private auth: AngularFireAuth, private db: AngularFirestore) {
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
@@ -137,6 +141,7 @@ export class AppService {
       .collection<LessonRecordItem>(lessonRecordPath)
       .valueChanges()
       .subscribe((docs) => {
+        this._lessonCount = docs.length
         const record: {
           [key in string]: {
             count: number

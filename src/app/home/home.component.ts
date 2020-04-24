@@ -10,6 +10,7 @@ import { AppService } from '../app.service'
 })
 export class HomeComponent implements OnInit {
   public lastLesson: LessonItemId = null
+  public userName: string = ''
   constructor(private app: AppService) {}
 
   ngOnInit() {
@@ -21,8 +22,12 @@ export class HomeComponent implements OnInit {
       .subscribe((lesson) => {
         this.lastLesson = lesson
       })
+    this.userName = this.app.getUserName()
   }
-  getPickupList() {
+  get lessonCount() {
+    return this.app.lessonCount
+  }
+  get pickupList() {
     return this.app.pickupList
   }
 }

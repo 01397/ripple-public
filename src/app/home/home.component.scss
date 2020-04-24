@@ -13,3 +13,55 @@
 .card {
   @extend .extend-card;
 }
+
+.status-item {
+  display: grid;
+  grid-template-columns: 3em 1fr;
+  column-gap: 8px;
+  line-height: 1;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.status-item_user {
+  .status-icon-bg {
+    background-color: #fffd;
+  }
+  .status-icon {
+    background-image: $primary-600-grad-vertical;
+    background-clip: text;
+    color: transparent;
+    -webkit-background-clip: text;
+  }
+}
+.status-icon-border {
+  width: 3em;
+  height: 3em;
+  padding: 2px;
+  box-sizing: border-box;
+  border-radius: 100%;
+  background-image: $primary-600-grad-vertical;
+  grid-row: 1/3;
+}
+.status-icon-bg {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  box-sizing: border-box;
+  border-radius: 100%;
+  align-items: center;
+  justify-content: center;
+}
+.status-icon {
+  font-size: 2.2em;
+  color: $white-a75;
+}
+.status-label {
+  font-size: 20px;
+  font-weight: bold;
+  color: $primary-600;
+}
+.status-sublabel {
+  font-size: 16px;
+  color: $mono-60;
+}
