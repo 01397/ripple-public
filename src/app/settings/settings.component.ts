@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { AngularFireAuth } from '@angular/fire/auth'
-import { Route, Routes, Router } from '@angular/router'
-import { AppService } from 'app/app.service'
+import { Router } from '@angular/router'
+import { AppService } from '../app.service'
 
 @Component({
   selector: 'app-settings',

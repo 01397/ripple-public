@@ -1,10 +1,10 @@
 import { Component, Input, ViewChild, ViewContainerRef } from '@angular/core'
-import { SlideAbstractComponent } from '../slide-abstract-element.component'
-import { registerLanguage, highlight } from 'highlight.js'
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
+import { highlight, registerLanguage } from 'highlight.js'
 import hljsPlain from 'highlight.js/lib/languages/plaintext'
 import hljsPython from 'highlight.js/lib/languages/python'
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
 import { SlideService } from '../../../slide/slide.service'
+import { SlideAbstractComponent } from '../slide-abstract-element.component'
 
 export interface FillingCodeElementType {
   type: 'fillingCode'

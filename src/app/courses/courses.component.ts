@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 import { AngularFirestore } from '@angular/fire/firestore'
-import { CourseItem, LessonItemId } from '../../firestore-item'
-import { map } from 'rxjs/operators'
 import { Observable, Subscription } from 'rxjs'
+import { map } from 'rxjs/operators'
+import { CourseItem, LessonItemId } from '../../firestore-item'
 import { AppService } from '../app.service'
 
 interface CourseItemId extends CourseItem {

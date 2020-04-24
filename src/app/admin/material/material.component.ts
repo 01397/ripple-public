@@ -1,13 +1,13 @@
-import { Component, OnInit, Inject } from '@angular/core'
+import { Component, Inject, OnInit } from '@angular/core'
 import { AngularFirestore } from '@angular/fire/firestore'
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
+import { MatSnackBar } from '@angular/material/snack-bar'
+import { Router } from '@angular/router'
+import { firestore } from 'firebase/app'
 import { Observable } from 'rxjs'
 import { map, take } from 'rxjs/operators'
-import { MatSnackBar } from '@angular/material/snack-bar'
-import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
-import { firestore } from 'firebase/app'
-import { Router } from '@angular/router'
-import { CourseItemId, LessonItemId, CourseItem, LessonItem } from '../../../firestore-item'
-import { AppService } from 'app/app.service'
+import { CourseItem, CourseItemId, LessonItem, LessonItemId } from '../../../firestore-item'
+import { AppService } from '../../app.service'
 
 export interface DialogData {
   name: string

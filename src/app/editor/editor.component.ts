@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core'
 import * as ace from 'ace-builds'
 import { AceEditorComponent } from 'ng2-ace-editor'
-import { WebsocketService } from '../websocket.service'
-import { JudgeResult } from '../../../routes/judge'
-import { ExerciseService } from '../exercise.service'
-import { translate as peg, ExceptionGuide } from '../pyExceptionGuide'
 import { Subject } from 'rxjs'
 import { takeUntil } from 'rxjs/operators'
+import { JudgeResult } from '../../../routes/judge'
+import { ExerciseService } from '../exercise.service'
+import { ExceptionGuide, translate as peg } from '../pyExceptionGuide'
+import { WebsocketService } from '../websocket.service'
 
 @Component({
   selector: 'app-editor',

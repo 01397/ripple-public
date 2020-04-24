@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core'
+import { SlideService } from '../../slide.service'
 import { SlideAbstractComponent } from '../slide-abstract-element.component'
-import { SlideService } from 'app/slide/slide.service'
 
 export interface QuizElementType {
   type: 'quiz1'

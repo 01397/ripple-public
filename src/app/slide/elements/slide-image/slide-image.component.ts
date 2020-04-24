@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core'
-import { SlideAbstractComponent } from '../slide-abstract-element.component'
 import { AngularFireStorage } from '@angular/fire/storage'
 import { take } from 'rxjs/operators'
+import { SlideAbstractComponent } from '../slide-abstract-element.component'
 
 export interface ImageElementType {
   type: 'image'

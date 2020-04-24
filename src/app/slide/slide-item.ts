@@ -1,17 +1,17 @@
 import { Type } from '@angular/core'
-import { SlideCoverComponent, CoverSlideType } from './layouts/slide-cover/slide-cover.component'
-import { SlideOneColumnComponent, OneColumnSlideType } from './layouts/slide-one-column/slide-one-column.component'
-import { SlideComponent } from './layouts/slide.component'
-import { SlideTwoColumnComponent, TwoColumnSlideType } from './layouts/slide-two-column/slide-two-column.component'
-import { SlideTopicComponent, TopicSlideType } from './layouts/slide-topic/slide-topic.component'
 import { CodeElementType, SlideCodeComponent } from './elements/slide-code/slide-code.component'
-import { ParagraphElementType, SlideParagraphComponent } from './elements/slide-paragraph/slide-paragraph.component'
-import { ImageElementType, SlideImageComponent } from './elements/slide-image/slide-image.component'
-import { QuizElementType, SlideQuiz1Component } from './elements/slide-quiz1/slide-quiz1.component'
 import {
   FillingCodeElementType,
   SlideFillingCodeComponent,
 } from './elements/slide-filling-code/slide-filling-code.component'
+import { ImageElementType, SlideImageComponent } from './elements/slide-image/slide-image.component'
+import { ParagraphElementType, SlideParagraphComponent } from './elements/slide-paragraph/slide-paragraph.component'
+import { QuizElementType, SlideQuiz1Component } from './elements/slide-quiz1/slide-quiz1.component'
+import { CoverSlideType, SlideCoverComponent } from './layouts/slide-cover/slide-cover.component'
+import { OneColumnSlideType, SlideOneColumnComponent } from './layouts/slide-one-column/slide-one-column.component'
+import { SlideTopicComponent, TopicSlideType } from './layouts/slide-topic/slide-topic.component'
+import { SlideTwoColumnComponent, TwoColumnSlideType } from './layouts/slide-two-column/slide-two-column.component'
+import { SlideComponent } from './layouts/slide.component'
 
 export interface SlideData {
   title: string

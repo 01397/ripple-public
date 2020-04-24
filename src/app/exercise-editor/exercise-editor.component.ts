@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core'
-import { ActivatedRoute, Router } from '@angular/router'
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore'
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop'
-import { map, take } from 'rxjs/operators'
+import { Component, OnInit } from '@angular/core'
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore'
+import { ActivatedRoute, Router } from '@angular/router'
 import { Observable } from 'rxjs'
-import { ExerciseData, ExerciseDataId } from '../exercise.service'
+import { map, take } from 'rxjs/operators'
 import { Testcase } from '../../../routes/judge'
+import { ExerciseData, ExerciseDataId } from '../exercise.service'
 
 interface TestcaseId extends Testcase {
   id: string

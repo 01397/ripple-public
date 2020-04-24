@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
-import { AppService } from '../app.service'
-import { take, filter } from 'rxjs/operators'
+import { filter, take } from 'rxjs/operators'
 import { LessonItemId } from '../../firestore-item'
+import { AppService } from '../app.service'
 
 @Component({
   selector: 'app-home',

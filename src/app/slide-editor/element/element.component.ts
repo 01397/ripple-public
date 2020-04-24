@@ -1,13 +1,13 @@
-import { Component, Input, OnDestroy } from '@angular/core'
-import { SlideElementType, SlideItem } from '../../slide/slide-item'
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar'
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop'
+import { Component, Input, OnDestroy } from '@angular/core'
 import { AngularFireStorage } from '@angular/fire/storage'
-import { ImageElementType } from '../../slide/elements/slide-image/slide-image.component'
-import { SlideService } from '../../slide/slide.service'
-import { FillingCodeElementType } from '../../slide/elements/slide-filling-code/slide-filling-code.component'
-import { SlideEditorService } from '../slide-editor.service'
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar'
 import { take } from 'rxjs/operators'
+import { FillingCodeElementType } from '../../slide/elements/slide-filling-code/slide-filling-code.component'
+import { ImageElementType } from '../../slide/elements/slide-image/slide-image.component'
+import { SlideElementType, SlideItem } from '../../slide/slide-item'
+import { SlideService } from '../../slide/slide.service'
+import { SlideEditorService } from '../slide-editor.service'
 
 @Component({
   selector: 'app-slide-editor-element',

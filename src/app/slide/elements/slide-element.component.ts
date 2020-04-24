@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver, Input, Type } from '@angular/core'
-import { SlideParagraphComponent } from './slide-paragraph/slide-paragraph.component'
+import { Component, ComponentFactoryResolver, Input, OnInit, Type, ViewChild, ViewContainerRef } from '@angular/core'
 import { SlideElementType } from '../slide-item'
-import { SlideImageComponent } from './slide-image/slide-image.component'
-import { SlideCodeComponent } from './slide-code/slide-code.component'
-import { SlideQuiz1Component } from './slide-quiz1/slide-quiz1.component'
 import { SlideAbstractComponent } from './slide-abstract-element.component'
+import { SlideCodeComponent } from './slide-code/slide-code.component'
 import { SlideFillingCodeComponent } from './slide-filling-code/slide-filling-code.component'
+import { SlideImageComponent } from './slide-image/slide-image.component'
+import { SlideParagraphComponent } from './slide-paragraph/slide-paragraph.component'
+import { SlideQuiz1Component } from './slide-quiz1/slide-quiz1.component'
 
 export enum QuizType {
   selection,

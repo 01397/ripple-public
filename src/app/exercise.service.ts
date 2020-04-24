@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core'
 import { AngularFirestore, DocumentReference } from '@angular/fire/firestore'
-import { SlideElementType } from './slide/slide-item'
-import { Subject, BehaviorSubject } from 'rxjs'
-import { map, take } from 'rxjs/operators'
-import { WebsocketService } from './websocket.service'
-import { LessonDisplay } from './lesson/lesson.component'
-import { LessonLogItem, LessonRecordItem, UserItem } from './../firestore-item'
 import { firestore } from 'firebase/app'
+import { BehaviorSubject, Subject } from 'rxjs'
+import { map, take } from 'rxjs/operators'
+import { LessonLogItem, LessonRecordItem, UserItem } from './../firestore-item'
 import { AppService } from './app.service'
+import { LessonDisplay } from './lesson/lesson.component'
+import { SlideElementType } from './slide/slide-item'
+import { WebsocketService } from './websocket.service'
 export interface ExerciseData {
   index: number
   title: string

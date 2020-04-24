@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core'
-import { FirebaseUISignInSuccessWithAuthResult, FirebaseUISignInFailure } from 'firebaseui-angular'
-import { Router } from '@angular/router'
-import { AppService } from 'app/app.service'
-import { filter, take } from 'rxjs/operators'
 import { AngularFirestore } from '@angular/fire/firestore'
+import { Router } from '@angular/router'
+import { AppService } from '../app.service'
+import { FirebaseUISignInFailure, FirebaseUISignInSuccessWithAuthResult } from 'firebaseui-angular'
+import { take } from 'rxjs/operators'
 
 @Component({
   selector: 'app-login',

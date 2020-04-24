@@ -1,4 +1,4 @@
-import { Component, ViewChild, Input } from '@angular/core'
+import { Component, Input, ViewChild } from '@angular/core'
 import { AceEditorComponent } from 'ng2-ace-editor'
 import { SlideAbstractComponent } from '../slide-abstract-element.component'
 

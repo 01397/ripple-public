@@ -1,4 +1,4 @@
-import { OnInit, Input } from '@angular/core'
+import { Input, OnInit } from '@angular/core'
 
 export abstract class SlideAbstractComponent implements OnInit {
   @Input() content: any

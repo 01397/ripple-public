@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core'
-import * as constants from '../constants'
 import { AngularFirestore } from '@angular/fire/firestore'
-import { AppService } from '../app.service'
 import { Router } from '@angular/router'
-import { UserItem } from '../../firestore-item'
-import { take } from 'rxjs/operators'
 import { firestore } from 'firebase'
-import { interval } from 'rxjs'
+import { take } from 'rxjs/operators'
+import { UserItem } from '../../firestore-item'
+import { AppService } from '../app.service'
+import * as constants from '../constants'
 
 @Component({
   selector: 'app-signup',

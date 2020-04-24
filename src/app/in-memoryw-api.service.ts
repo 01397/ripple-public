@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
-
 import { InMemoryDbService } from 'angular-in-memory-web-api'
 import { SlideData } from './slide/slide-item'
+
 
 @Injectable()
 export class InMemoryApiService implements InMemoryDbService {

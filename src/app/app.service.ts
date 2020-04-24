@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core'
-import { Router, NavigationStart, NavigationEnd } from '@angular/router'
-import { filter, map, take } from 'rxjs/operators'
-import { Subject, BehaviorSubject, Observable } from 'rxjs'
 import { AngularFireAuth } from '@angular/fire/auth'
 import { AngularFirestore } from '@angular/fire/firestore'
-import { LessonRecordItem, UserItem, LessonItemId, PickupItem, SystemStatus } from '../firestore-item'
+import { NavigationEnd, Router } from '@angular/router'
 import { firestore } from 'firebase'
+import { BehaviorSubject, Observable, Subject } from 'rxjs'
+import { filter, take } from 'rxjs/operators'
+import { LessonItemId, LessonRecordItem, PickupItem, SystemStatus, UserItem } from '../firestore-item'
 
 export type AuthState = 'unknown' | 'unauthorized' | 'unregistered' | 'unagreed' | 'authorised'
 
@@ -19,8 +19,7 @@ export class AppService {
   public authState = new BehaviorSubject<AuthState>('unknown')
   public lastLesson = new BehaviorSubject<LessonItemId | null>(null)
   public pickupList: Observable<PickupItem[]>
-  private systemStatus: SystemStatus
-  system: SystemStatus
+  private system: SystemStatus
   private get withHeader() {
     return ['/lesson', '/admin/material']
   }

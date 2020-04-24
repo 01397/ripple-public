@@ -8,12 +8,12 @@ import {
   ViewChild,
 } from '@angular/core'
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser'
+import { Subject } from 'rxjs'
+import { takeUntil } from 'rxjs/operators'
 import { SlideData, SlideItem } from '../../slide-item'
 import { SlideService } from '../../slide.service'
 import { SlideComponent } from '../slide.component'
 import { SlideDirective } from './slide.directive'
-import { Subject } from 'rxjs'
-import { takeUntil } from 'rxjs/operators'
 
 @Component({
   selector: 'app-slide-container',

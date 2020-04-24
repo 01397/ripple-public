@@ -1,9 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'
-import { Observable, Subscription } from 'rxjs'
-import { NotificationItem, NotificationItemId } from '../../firestore-item'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 import { AngularFirestore } from '@angular/fire/firestore'
-import { map } from 'rxjs/operators'
 import { firestore } from 'firebase/app'
+import { Observable, Subscription } from 'rxjs'
+import { map } from 'rxjs/operators'
+import { NotificationItem, NotificationItemId } from '../../firestore-item'
 
 @Component({
   selector: 'app-notifications',

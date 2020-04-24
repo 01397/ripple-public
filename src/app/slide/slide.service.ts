@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core'
-import { SlideData, SlideType, SlideItem } from './slide-item'
-import { BehaviorSubject, Subject } from 'rxjs'
 import { HttpClient } from '@angular/common/http'
+import { Injectable } from '@angular/core'
 import { AngularFirestore } from '@angular/fire/firestore'
-import { LessonItem } from '../../firestore-item'
-import { MatSnackBar } from '@angular/material/snack-bar'
-import { LessonDisplay } from '../lesson/lesson.component'
 import { AngularFireStorage } from '@angular/fire/storage'
-import { environment } from 'environments/environment'
+import { MatSnackBar } from '@angular/material/snack-bar'
+import { environment } from '../../environments/environment'
+import { BehaviorSubject, Subject } from 'rxjs'
+import { LessonItem } from '../../firestore-item'
+import { LessonDisplay } from '../lesson/lesson.component'
+import { SlideData, SlideItem, SlideType } from './slide-item'
 
 @Injectable({
   providedIn: 'root',

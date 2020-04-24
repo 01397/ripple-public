@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { AngularFirestore } from '@angular/fire/firestore'
-import { UserItem, AdminUserList } from '../../../firestore-item'
-import { take } from 'rxjs/operators'
 import { Observable } from 'rxjs'
+import { AdminUserList, UserItem } from '../../../firestore-item'
 
 @Component({
   selector: 'app-users',

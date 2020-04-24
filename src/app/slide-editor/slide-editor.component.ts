@@ -1,11 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'
-import { SlideType, SlideData } from 'app/slide/slide-item'
-import { SlideService } from 'app/slide/slide.service'
-import { ActivatedRoute, Router } from '@angular/router'
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop'
-import { SlideEditorService } from './slide-editor.service'
-import { takeUntil } from 'rxjs/operators'
+import { Component, OnDestroy, OnInit } from '@angular/core'
+import { ActivatedRoute, Router } from '@angular/router'
 import { Subject } from 'rxjs'
+import { takeUntil } from 'rxjs/operators'
+import { SlideData, SlideType } from '../slide/slide-item'
+import { SlideService } from '../slide/slide.service'
+import { SlideEditorService } from './slide-editor.service'
 
 @Component({
   selector: 'app-slide-editor',

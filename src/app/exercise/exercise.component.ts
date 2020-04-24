@@ -1,7 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'
-import { ExerciseService, ExerciseData } from '../exercise.service'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 import { Subject } from 'rxjs'
 import { takeUntil } from 'rxjs/operators'
+import { ExerciseData, ExerciseService } from '../exercise.service'
 
 @Component({
   selector: 'app-exercise',

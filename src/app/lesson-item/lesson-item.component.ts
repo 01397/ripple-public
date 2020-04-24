@@ -1,6 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core'
-import { LessonItemId } from 'firestore-item'
-import { AppService } from 'app/app.service'
+import { Component, Input, OnInit } from '@angular/core'
+import { AppService } from '../app.service'
+import { LessonItemId } from '../../firestore-item'
 
 @Component({
   selector: 'app-lesson-item',
