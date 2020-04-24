@@ -6,6 +6,7 @@ import { firestore } from 'firebase'
 import { BehaviorSubject, Observable, Subject } from 'rxjs'
 import { filter, take } from 'rxjs/operators'
 import { LessonItemId, LessonRecordItem, PickupItem, SystemStatus, UserItem } from '../firestore-item'
+import { Title } from '@angular/platform-browser'
 
 export type AuthState = 'unknown' | 'unauthorized' | 'unregistered' | 'unagreed' | 'authorised'
 
@@ -26,6 +27,9 @@ export class AppService {
   private get withSidebar() {
     return ['/home', '/courses', '/notifications', '/settings']
   }
+  private get titleList() {
+    return { '/home': 'ホーム', '/courses': 'コース一覧', '/notifications': 'お知らせ', '/settings': '設定' }
+  }
   private user: firebase.User
   private record: {
     [x: string]: { count: number; last: Date; lessons: { [x: string]: { count: number; last: Date; face: number } } }
@@ -35,7 +39,12 @@ export class AppService {
     return this._lessonCount
   }
 
-  constructor(private router: Router, private auth: AngularFireAuth, private db: AngularFirestore) {
+  constructor(
+    private router: Router,
+    private auth: AngularFireAuth,
+    private db: AngularFirestore,
+    private title: Title
+  ) {
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
       const url = event.urlAfterRedirects.match(/^[^;?]*/)[0]
       if (this.withHeader.includes(url)) {
@@ -47,6 +56,10 @@ export class AppService {
       } else {
         this.headerVisiblity.next(false)
         this.sidebarVisiblity.next(false)
+      }
+      const pageTitle = this.titleList[url] ?? null
+      if (pageTitle) {
+        this.title.setTitle(pageTitle + ' | Ripple')
       }
     })
     this.getSystemStatus().then(() => {
@@ -132,6 +145,7 @@ export class AppService {
     // ExpressionChangedAfterItHasBeenCheckedError を回避するために非同期関数を利用
     setTimeout(() => {
       this.headerTitle = title
+      this.title.setTitle(title + ' | Ripple')
     })
   }
 

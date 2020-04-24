@@ -6,7 +6,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth'
 import { AngularFireAuthGuard, customClaims, redirectLoggedInTo } from '@angular/fire/auth-guard'
 import { AngularFirestoreModule } from '@angular/fire/firestore'
 import { AngularFireStorageModule, BUCKET } from '@angular/fire/storage'
-import { AngularFireAnalyticsModule } from '@angular/fire/analytics'
+import { AngularFireAnalyticsModule, ScreenTrackingService, UserTrackingService } from '@angular/fire/analytics'
 import { FormsModule } from '@angular/forms'
 import { MatButtonModule } from '@angular/material/button'
 import { MatCardModule } from '@angular/material/card'
@@ -263,7 +263,13 @@ const appRoutes: Routes = [
     DragDropModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [InMemoryApiService, { provide: BUCKET, useValue: 'ripple-public.appspot.com' }, AngularFireAuthGuard],
+  providers: [
+    InMemoryApiService,
+    { provide: BUCKET, useValue: 'ripple-public.appspot.com' },
+    AngularFireAuthGuard,
+    ScreenTrackingService,
+    UserTrackingService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

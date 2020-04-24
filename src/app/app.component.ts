@@ -7,7 +7,6 @@ import { AppService, AuthState } from './app.service'
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'ripple-public'
   headerVisiblity = false
   sidebarVisiblity = false
   authState: AuthState = 'unknown'
