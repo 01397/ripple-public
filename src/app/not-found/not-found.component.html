@@ -2,7 +2,7 @@
 <div class="container">
   <h1>ページが見つかりませんでした</h1>
   <div class="navigate">
-    <a href="/" *ngIf="loggedIn">Rippleホームへ</a>
+    <a routerLink="/home" *ngIf="loggedIn">Rippleホームへ</a>
     <a href="/" *ngIf="!loggedIn">トップページへ</a>
   </div>
 </div>
