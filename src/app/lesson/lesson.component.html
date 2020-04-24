@@ -1,8 +1,10 @@
 <ng-container *ngIf="displayMode === 'slide' || displayMode === 'review'">
   <div class="tools">
+    <!--
     <div class="tools-item">
       <i class="material-icons">list</i>
     </div>
+  -->
     <div class="tools-item" [class.playing]="isPlaying" (click)="toggleMute()">
       <i class="material-icons">{{ isMuted ? 'volume_mute' : 'volume_up' }}</i>
     </div>
