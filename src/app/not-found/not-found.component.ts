@@ -7,10 +7,10 @@ import { AppService } from 'app/app.service'
   styleUrls: ['./not-found.component.scss'],
 })
 export class NotFoundComponent implements OnInit {
-  public loggedin: boolean = false
+  public loggedIn: boolean = false
   constructor(private app: AppService) {}
 
   ngOnInit() {
-    this.loggedin = this.app.authState.value === 'authorised'
+    this.loggedIn = this.app.authState.value === 'authorised'
   }
 }
