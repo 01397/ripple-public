@@ -43,6 +43,10 @@
         ></ace-editor>
       </div>
       <div class="right-content">
+        <h3>入力欄</h3>
+        <mat-checkbox color="primary" [(ngModel)]="exList[exIndex].stdinEnabled">標準入力欄を表示</mat-checkbox>
+      </div>
+      <div class="right-content">
         <h3>テストケース</h3>
         <b>末尾に改行を入れること！</b>
         <ng-container *ngFor="let item of caseList; let i = index">
