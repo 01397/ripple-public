@@ -9,6 +9,6 @@ export class DurationPipe implements PipeTransform {
     const min = Math.floor(sec / 60)
     const secStr = (sec % 60).toString().padStart(2, '0')
     const minStr = min.toString().padStart(2, '0')
-    return `${secStr}分${minStr}秒`
+    return `${minStr}分${secStr}秒`
   }
 }
