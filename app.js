@@ -22,8 +22,23 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
+// redirect https
+app.use(function (req, res, next) {
+  var schema = (req.headers['x-forwarded-proto'] || '').toLowerCase()
+  if (schema === 'https' || isLocalhost(req)) {
+    next()
+  } else {
+    res.redirect(301, 'https://' + req.headers.host + req.url)
+  }
+})
+
 // cors
-const whitelist = ['http://localhost:4200', 'http://localhost:3000', 'https://ripple-public.appspot.com']
+const whitelist = [
+  'http://localhost:4200',
+  'http://localhost:3000',
+  'https://ripple-public.appspot.com',
+  'https://ripple.uec-programming.com',
+]
 app.use(
   cors({
     origin: (origin, callback) => {
@@ -35,7 +50,6 @@ app.use(
     },
   })
 )
-
 // remove trailing slash
 app.use((req, res, next) => {
   if (req.path.substr(-1) === '/' && req.path.length > 1) {
@@ -93,5 +107,9 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500)
   res.send('error')
 })
+
+function isLocalhost(req) {
+  return req.headers.host.includes('localhost')
+}
 
 module.exports = app
