@@ -25,7 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 // redirect https
 app.use(function (req, res, next) {
   var schema = (req.headers['x-forwarded-proto'] || '').toLowerCase()
-  if (schema === 'https' || req.headers.host.includes('localhost')) {
+  if (schema === 'https' || isLocalhost(req)) {
     next()
   } else {
     res.redirect(301, 'https://' + req.headers.host + req.url)
@@ -107,5 +107,9 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500)
   res.send('error')
 })
+
+function isLocalhost(req) {
+  return req.headers.host.includes('localhost')
+}
 
 module.exports = app
