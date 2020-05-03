@@ -38,6 +38,7 @@ const whitelist = [
   'http://localhost:3000',
   'https://ripple-public.appspot.com',
   'https://ripple.uec-programming.com',
+  'https://www.ripple.uec-programming.com',
 ]
 app.use(
   cors({
