@@ -41,7 +41,8 @@ export class TermsComponent implements OnInit {
   }
   onScroll(event: Event) {
     const target = event.currentTarget as HTMLDivElement
-    if (target.scrollHeight - target.clientHeight - target.scrollTop === 0) {
+    // ブラウザの表示倍率によって、1未満の誤差が出る
+    if (target.scrollHeight - target.clientHeight - target.scrollTop < 10) {
       this.read = true
     }
   }
