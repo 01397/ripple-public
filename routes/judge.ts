@@ -1,5 +1,7 @@
 import * as https from 'https'
 import * as admin from 'firebase-admin'
+import * as SocketIO from 'socket.io'
+
 const serviceAccount = require('../secrets/ripple-public-firebase-adminsdk-zui6n-6c4f5d50e5.json')
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -28,15 +30,15 @@ export interface Testcase {
   exercise: string
 }
 
-const judge = async (msg: string, io) => {
+const judge = async (msg: string, io: SocketIO.Server, id: string) => {
   const { exercise, source_code, language_id } = JSON.parse(msg)
   const snapshot = await db.collection('testcase').where('exercise', '==', exercise).get()
   if (snapshot.empty) {
-    io.emit('judge', { error: true, done: true, result: [] })
+    io.to(id).emit('judge', { error: true, done: true, result: [] })
     return
   }
   const result: number[] = new Array(snapshot.docs.length)
-  io.emit('judge', { error: false, done: false, result })
+  io.to(id).emit('judge', { error: false, done: false, result })
   const docs = snapshot.docs
   for (let i = 0; i < docs.length; i++) {
     const doc = docs[i]
@@ -47,19 +49,19 @@ const judge = async (msg: string, io) => {
     const jResult: JudgeResult = await callApi(postData)
     result[i] = jResult.status.id
     console.log(jResult)
-    io.emit('judge', { error: false, done: false, result })
+    io.to(id).emit('judge', { error: false, done: false, result })
   }
-  io.emit('judge', { error: false, done: true, result })
+  io.to(id).emit('judge', { error: false, done: true, result })
 }
 
-const execute = async (msg: string, io) => {
+const execute = async (msg: string, io: SocketIO.Server, id: string) => {
   const postData: JudgeConfig = JSON.parse(msg)
   callApi(postData)
     .then((result) => {
-      io.emit('execute', result)
+      io.to(id).emit('execute', result)
     })
     .catch((err) => {
-      io.emit('execute', err)
+      io.to(id).emit('execute', err)
     })
 }
 

@@ -67,7 +67,7 @@ var execConfig = {
     enable_per_process_and_thread_memory_limit: true,
     max_file_size: '1024',
 };
-var judge = function (msg, io) { return __awaiter(void 0, void 0, void 0, function () {
+var judge = function (msg, io, id) { return __awaiter(void 0, void 0, void 0, function () {
     var _a, exercise, source_code, language_id, snapshot, result, docs, i, doc, data, stdin, expected_output, postData, jResult;
     return __generator(this, function (_b) {
         switch (_b.label) {
@@ -77,11 +77,11 @@ var judge = function (msg, io) { return __awaiter(void 0, void 0, void 0, functi
             case 1:
                 snapshot = _b.sent();
                 if (snapshot.empty) {
-                    io.emit('judge', { error: true, done: true, result: [] });
+                    io.to(id).emit('judge', { error: true, done: true, result: [] });
                     return [2 /*return*/];
                 }
                 result = new Array(snapshot.docs.length);
-                io.emit('judge', { error: false, done: false, result: result });
+                io.to(id).emit('judge', { error: false, done: false, result: result });
                 docs = snapshot.docs;
                 i = 0;
                 _b.label = 2;
@@ -97,27 +97,27 @@ var judge = function (msg, io) { return __awaiter(void 0, void 0, void 0, functi
                 jResult = _b.sent();
                 result[i] = jResult.status.id;
                 console.log(jResult);
-                io.emit('judge', { error: false, done: false, result: result });
+                io.to(id).emit('judge', { error: false, done: false, result: result });
                 _b.label = 4;
             case 4:
                 i++;
                 return [3 /*break*/, 2];
             case 5:
-                io.emit('judge', { error: false, done: true, result: result });
+                io.to(id).emit('judge', { error: false, done: true, result: result });
                 return [2 /*return*/];
         }
     });
 }); };
-var execute = function (msg, io) { return __awaiter(void 0, void 0, void 0, function () {
+var execute = function (msg, io, id) { return __awaiter(void 0, void 0, void 0, function () {
     var postData;
     return __generator(this, function (_a) {
         postData = JSON.parse(msg);
         callApi(postData)
             .then(function (result) {
-            io.emit('execute', result);
+            io.to(id).emit('execute', result);
         })
             .catch(function (err) {
-            io.emit('execute', err);
+            io.to(id).emit('execute', err);
         });
         return [2 /*return*/];
     });

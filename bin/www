@@ -28,19 +28,20 @@ var server = http.createServer(app)
  */
 
 var io = require('socket.io')(server)
-io.on('connection', function(socket) {
+io.on('connection', function (socket) {
   console.log('connected')
-  socket.on('judge', msg => judge(msg, io))
-  socket.on('execute', msg => execute(msg, io))
-  socket.on('test message', msg => {
+  const id = socket.id
+  socket.on('judge', (msg) => judge(msg, io, id))
+  socket.on('execute', (msg) => execute(msg, io, id))
+  socket.on('test message', (msg) => {
     console.log(msg)
-    PythonShell.runString(msg, null, function(err, result) {
+    PythonShell.runString(msg, null, function (err, result) {
       if (err) throw err
-      io.emit('test message', result)
+      io.to(id).emit('test message', result)
     })
   })
 })
-server.listen(port, function() {
+server.listen(port, function () {
   console.log('server listening. Port:' + port)
 })
 server.on('error', onError)
